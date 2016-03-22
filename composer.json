@@ -1,27 +1,35 @@
 {
-    "name": "beberlei/porpaginas",
+    "name": "zenstruck/porpaginas",
     "description": "Library that generically solves several pagination issues with DAO/repository abstractions.",
-    "keywords": ["page","paging", "paginator", "pagination"],
+    "keywords": ["page", "paging", "paginator", "pagination"],
     "type": "library",
     "license": "MIT",
     "authors": [
-        {"name": "Benjamin Eberlei", "email": "kontakt@beberlei.de"}
+        {
+            "name": "Benjamin Eberlei",
+            "email": "kontakt@beberlei.de"
+        },
+        {
+            "name": "Kevin Bond",
+            "email": "kevinbond@gmail.com"
+        }
     ],
     "autoload": {
-        "psr-0": {"Porpaginas\\": "src/"}
+        "psr-4": { "Zenstruck\\Porpaginas\\": "src/" }
     },
     "autoload-dev": {
-        "psr-0": {"Porpaginas\\": "tests/"}
+        "psr-4": { "Zenstruck\\Porpaginas\\Tests\\": "tests/" }
     },
     "require-dev": {
         "doctrine/orm": ">=2.2",
-        "pagerfanta/pagerfanta": "@stable",
-        "knplabs/knp-components": "@stable",
-        "symfony/event-dispatcher": "@stable",
-        "twig/twig": "@stable",
-        "phake/phake": "@stable"
+        "pagerfanta/pagerfanta": "@stable"
     },
     "suggest": {
         "pagerfanta/pagerfanta": "For rendering pagination with Pagerfanta"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
     }
 }

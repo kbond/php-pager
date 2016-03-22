@@ -1,9 +1,9 @@
 <?php
 
-namespace Porpaginas\Pagerfanta;
+namespace Zenstruck\Porpaginas\Bridge\Pagerfanta;
 
 use Pagerfanta\Adapter\AdapterInterface;
-use Porpaginas\Result;
+use Zenstruck\Porpaginas\Result;
 
 class PorpaginasAdapter implements AdapterInterface
 {
@@ -15,24 +15,17 @@ class PorpaginasAdapter implements AdapterInterface
     }
 
     /**
-     * Returns the number of results.
-     *
-     * @return integer The number of results.
+     * {@inheritdoc}
      */
-    function getNbResults()
+    public function getNbResults()
     {
         return $this->result->take(0, 1)->totalCount();
     }
 
     /**
-     * Returns an slice of the results.
-     *
-     * @param integer $offset The offset.
-     * @param integer $length The length.
-     *
-     * @return array|\Traversable The slice.
+     * {@inheritdoc}
      */
-    function getSlice($offset, $length)
+    public function getSlice($offset, $length)
     {
         return iterator_to_array($this->result->take($offset, $length));
     }

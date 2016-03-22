@@ -1,25 +1,11 @@
 <?php
-/**
- * Porpaginas
- *
- * LICENSE
- *
- * This source file is subject to the MIT license that is bundled
- * with this package in the file LICENSE.txt.
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to kontakt@beberlei.de so I can send you a copy immediately.
- */
 
-namespace Porpaginas;
-
-use IteratorAggregate;
-use Countable;
+namespace Zenstruck\Porpaginas;
 
 /**
- * Interface for lazy paginators
+ * Interface for lazy paginators.
  */
-interface Page extends Countable, IteratorAggregate
+interface Page extends \Countable, \IteratorAggregate
 {
     /**
      * @return int
@@ -53,7 +39,7 @@ interface Page extends Countable, IteratorAggregate
     /**
      * Return an iterator over selected windows of results of the paginatable.
      *
-     * @return Iterator
+     * @return \Iterator
      */
     public function getIterator();
 }

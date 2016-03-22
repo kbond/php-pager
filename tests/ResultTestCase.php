@@ -1,8 +1,10 @@
 <?php
 
-namespace Porpaginas;
+namespace Zenstruck\Porpaginas\Tests;
 
-abstract class AbstractResultTestCase extends \PHPUnit_Framework_TestCase
+use Zenstruck\Porpaginas\Result;
+
+abstract class ResultTestCase extends \PHPUnit_Framework_TestCase
 {
     /**
      * @test
@@ -81,5 +83,10 @@ abstract class AbstractResultTestCase extends \PHPUnit_Framework_TestCase
         $this->assertCount(5, $page);
     }
 
+    /**
+     * @param int $count
+     *
+     * @return Result
+     */
     abstract protected function createResultWithItems($count);
 }

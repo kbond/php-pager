@@ -1,20 +1,8 @@
 <?php
-/**
- * Porpaginas
- *
- * LICENSE
- *
- * This source file is subject to the MIT license that is bundled
- * with this package in the file LICENSE.txt.
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to kontakt@beberlei.de so I can send you a copy immediately.
- */
 
-namespace Porpaginas\Arrays;
+namespace Zenstruck\Porpaginas\Arrays;
 
-use Porpaginas\Page;
-use ArrayIterator;
+use Zenstruck\Porpaginas\Page;
 
 class ArrayPage implements Page
 {
@@ -23,6 +11,12 @@ class ArrayPage implements Page
     private $limit;
     private $totalCount;
 
+    /**
+     * @param array $slice
+     * @param int   $offset
+     * @param int   $limit
+     * @param int   $totalCount
+     */
     public function __construct(array $slice, $offset, $limit, $totalCount)
     {
         $this->slice = $slice;
@@ -32,7 +26,7 @@ class ArrayPage implements Page
     }
 
     /**
-     * @return int
+     * {@inheritdoc}
      */
     public function getCurrentOffset()
     {
@@ -40,7 +34,7 @@ class ArrayPage implements Page
     }
 
     /**
-     * @return int
+     * {@inheritdoc}
      */
     public function getCurrentPage()
     {
@@ -48,7 +42,7 @@ class ArrayPage implements Page
     }
 
     /**
-     * @return int
+     * {@inheritdoc}
      */
     public function getCurrentLimit()
     {
@@ -56,9 +50,7 @@ class ArrayPage implements Page
     }
 
     /**
-     * Return the number of results on the currrent page of the {@link Result}.
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function count()
     {
@@ -66,9 +58,7 @@ class ArrayPage implements Page
     }
 
     /**
-     * Return the number of ALL results in the paginatable of {@link Result}.
-     *
-     * @return int
+     * {@inheritdoc}
      */
     public function totalCount()
     {
@@ -76,12 +66,10 @@ class ArrayPage implements Page
     }
 
     /**
-     * Return an iterator over selected windows of results of the paginatable.
-     *
-     * @return Iterator
+     * {@inheritdoc}
      */
     public function getIterator()
     {
-        return new ArrayIterator($this->slice);
+        return new \ArrayIterator($this->slice);
     }
 }

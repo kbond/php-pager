@@ -1,21 +1,27 @@
 language: php
 
-sudo: false
-
-cache:
-  directories:
-    - $HOME/.composer/cache/files
-
 php:
-  - 5.3
   - 5.4
   - 5.5
   - 5.6
   - 7.0
   - hhvm
 
-install:
-  - composer install
-  
-script:
-  - phpunit
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache/files
+
+matrix:
+  include:
+    - php: 5.4
+      env: COMPOSER_FLAGS="--prefer-lowest"
+
+install: composer update $COMPOSER_FLAGS
+
+script: phpunit --coverage-clover=coverage.clover
+
+after_script:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover

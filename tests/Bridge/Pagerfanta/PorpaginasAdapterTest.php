@@ -1,9 +1,10 @@
 <?php
 
-namespace Porpaginas\Pagerfanta;
+namespace Zenstruck\Porpaginas\Tests\Bridge\Pagerfanta;
 
-use Porpaginas\Arrays\ArrayResult;
 use Pagerfanta\Pagerfanta;
+use Zenstruck\Porpaginas\Arrays\ArrayResult;
+use Zenstruck\Porpaginas\Bridge\Pagerfanta\PorpaginasAdapter;
 
 class PorpaginasAdapterTest extends \PHPUnit_Framework_TestCase
 {
@@ -14,7 +15,7 @@ class PorpaginasAdapterTest extends \PHPUnit_Framework_TestCase
     {
         $pagerfanta = new Pagerfanta(
             new PorpaginasAdapter(
-                new ArrayResult(array(1, 2, 3, 4))
+                new ArrayResult([1, 2, 3, 4])
             )
         );
 
@@ -28,17 +29,17 @@ class PorpaginasAdapterTest extends \PHPUnit_Framework_TestCase
     {
         $pagerfanta = new Pagerfanta(
             new PorpaginasAdapter(
-                new ArrayResult(array(1, 2, 3, 4))
+                new ArrayResult([1, 2, 3, 4])
             )
         );
 
         $pagerfanta->setMaxPerPage(2);
         $pagerfanta->setCurrentPage(1);
 
-        $this->assertEquals(array(1, 2), $pagerfanta->getCurrentPageResults());
+        $this->assertEquals([1, 2], $pagerfanta->getCurrentPageResults());
 
         $pagerfanta->setCurrentPage(2);
 
-        $this->assertEquals(array(3, 4), $pagerfanta->getCurrentPageResults());
+        $this->assertEquals([3, 4], $pagerfanta->getCurrentPageResults());
     }
 }

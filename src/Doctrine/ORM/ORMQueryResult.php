@@ -1,49 +1,24 @@
 <?php
-/**
- * Porpaginas
- *
- * LICENSE
- *
- * This source file is subject to the MIT license that is bundled
- * with this package in the file LICENSE.txt.
- * If you did not receive a copy of the license and are unable to
- * obtain it through the world-wide-web, please send an email
- * to kontakt@beberlei.de so I can send you a copy immediately.
- */
 
-namespace Porpaginas\Doctrine\ORM;
-
-use Porpaginas\Arrays\ArrayPage;
-use Porpaginas\Result;
+namespace Zenstruck\Porpaginas\Doctrine\ORM;
 
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
-
-use ArrayIterator;
+use Zenstruck\Porpaginas\Arrays\ArrayPage;
+use Zenstruck\Porpaginas\Result;
 
 class ORMQueryResult implements Result
 {
-    /**
-     * @var \Doctrine\ORM\Query
-     */
     private $query;
-
-    /**
-     * @var bool
-     */
     private $fetchCollection;
-
-    /**
-     * @var array
-     */
     private $result;
-
-    /**
-     * @var int
-     */
     private $count;
 
+    /**
+     * @param Query|QueryBuilder $query
+     * @param bool               $fetchCollection
+     */
     public function __construct($query, $fetchCollection = true)
     {
         if ($query instanceof QueryBuilder) {
@@ -55,8 +30,7 @@ class ORMQueryResult implements Result
     }
 
     /**
-     * @param int $offset
-     * @return \Porpaginas\Page
+     * {@inheritdoc}
      */
     public function take($offset, $limit)
     {
@@ -69,14 +43,11 @@ class ORMQueryResult implements Result
             );
         }
 
-
         return new ORMQueryPage($this->getPaginator($offset, $limit));
     }
 
     /**
-     * Return the number of all results in the paginatable.
-
-     * @return int
+     * {@inheritdoc}
      */
     public function count()
     {
@@ -88,9 +59,7 @@ class ORMQueryResult implements Result
     }
 
     /**
-     * Return an iterator over all results of the paginatable.
-     *
-     * @return Iterator
+     * {@inheritdoc}
      */
     public function getIterator()
     {
@@ -99,7 +68,7 @@ class ORMQueryResult implements Result
             $this->count = count($this->result);
         }
 
-        return new ArrayIterator($this->result);
+        return new \ArrayIterator($this->result);
     }
 
     /**

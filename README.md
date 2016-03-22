@@ -98,6 +98,7 @@ interface Page extends Countable, IteratorAggregate
 
 - Array
 - Doctrine ORM
+- Doctrine DBAL
 
 ## Example
 

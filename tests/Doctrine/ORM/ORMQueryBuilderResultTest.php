@@ -19,5 +19,4 @@ class ORMQueryBuilderResultTest extends DoctrineResultTestCase
 
         return new ORMQueryResult($qb);
     }
-
 }

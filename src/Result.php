@@ -20,7 +20,7 @@ interface Result extends \Countable, \IteratorAggregate
 
     /**
      * Return the number of all results in the paginatable.
-     
+     *
      * @return int
      */
     public function count();

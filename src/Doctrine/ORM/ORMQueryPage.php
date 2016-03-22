@@ -64,10 +64,10 @@ class ORMQueryPage implements Page
      */
     public function getIterator()
     {
-        if ($this->result) {
+        if ($this->result !== null) {
             return new \ArrayIterator($this->result);
         }
 
-        return $this->paginator;
+        return $this->paginator->getIterator();
     }
 }

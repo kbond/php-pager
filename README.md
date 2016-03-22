@@ -1,6 +1,6 @@
-# Porpaginas
+# zenstruck/porpaginas
 
-[![Build Status](https://travis-ci.org/beberlei/porpaginas.svg)](https://travis-ci.org/beberlei/porpaginas)
+**NOTE**: This library is a fork of [beberlei/porpaginas](https://github.com/beberlei/porpaginas).
 
 This library solves a bunch of issues that comes up with APIs of Repository
 classes alot:
@@ -23,14 +23,14 @@ Pager, this library is not about reimplementating the view part of pagination.
 Central part of this library is the interface `Result`:
 
 ```php
-<?php
-namespace Porpaginas;
+namespace Zenstruck\Porpaginas;
 
 interface Result extends Countable, IteratorAggregate
 {
     /**
      * @param int $offset
      * @param int $limit
+     *
      * @return Page
      */
     public function take($offset, $limit);
@@ -45,37 +45,34 @@ interface Result extends Countable, IteratorAggregate
     /**
      * Return an iterator over all results of the paginatable.
      *
-     * @return Iterator
+     * @return \Iterator
      */
     public function getIterator();
 }
 ```
 
 This API offers you two ways to iterate over the paginatable result,
-either the full result or a paginated window of the result using ``take()``.
+either the full result or a paginated window of the result using `take()`.
 One drawback is that the query is always lazily executed inside
-the ``Result`` and not directly in the repository.
+the `Result` and not directly in the repository.
 
-The ``Page`` interface returned from ``Result#take()``
-looks like this:
+The `Page` interface returned from `Result::take()` looks like this:
 
 ```php
-<?php
-
-namespace Porpaginas;
+namespace Zenstruck\Porpaginas;
 
 interface Page extends Countable, IteratorAggregate
 {
     /**
      * Return the number of results on the current page.
-
+     *
      * @return int
      */
     public function count();
 
     /**
      * Return the number of ALL results in the paginatable.
-
+     *
      * @return int
      */
     public function totalCount();
@@ -99,11 +96,10 @@ interface Page extends Countable, IteratorAggregate
 Take the following example using Doctrine ORM:
 
 ```php
-<?php
 class UserRepository extends EntityRepository
 {
     /**
-     * @return \Porpaginas\Result
+     * @return Zenstruck\Porpaginas\Result
      */
     public function findAllUsers()
     {
@@ -132,28 +128,9 @@ class UserController
     {
         $result = $this->userRepository->findAllUsers();
 
-        $paginator = $result->take( ($request->get('page')-1) * 20, 20 );
+        $paginator = $result->take(($request->get('page', 1)-1) * 20, 20);
 
         return array('users' => $paginator);
     }
 }
 ```
-
-Now in the template for `porpaginasListAction` using the `porpaginas` Twig
-extension for example:
-
-```jinja
-We found a total of <strong>{{ porpaginas_total(users) }}</strong> users:
-
-<ul>
-{% for user in users %}
-    <li>{{ user.name }}</li>
-{% endfor %}
-</ul>
-
-{{ porpaginas_render(users) }}
-```
-
-## Pager Library Support
-
-* For Pagerfanta use the ``Porpaginas\Pagerfanta\PorpaginasAdapter`` and pass it a result as first argument.

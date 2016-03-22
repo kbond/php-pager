@@ -5,7 +5,7 @@ namespace Zenstruck\Porpaginas\Bridge\Pagerfanta;
 use Pagerfanta\Adapter\AdapterInterface;
 use Zenstruck\Porpaginas\Result;
 
-class PorpaginasAdapter implements AdapterInterface
+final class PorpaginasAdapter implements AdapterInterface
 {
     private $result;
 

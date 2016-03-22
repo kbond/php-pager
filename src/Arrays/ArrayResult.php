@@ -4,7 +4,7 @@ namespace Zenstruck\Porpaginas\Arrays;
 
 use Zenstruck\Porpaginas\Result;
 
-class ArrayResult implements Result
+final class ArrayResult implements Result
 {
     private $data;
 

@@ -8,7 +8,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
 use Zenstruck\Porpaginas\Arrays\ArrayPage;
 use Zenstruck\Porpaginas\Result;
 
-class ORMQueryResult implements Result
+final class ORMQueryResult implements Result
 {
     private $query;
     private $fetchCollection;

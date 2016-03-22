@@ -4,7 +4,7 @@ namespace Zenstruck\Porpaginas\Arrays;
 
 use Zenstruck\Porpaginas\Page;
 
-class ArrayPage implements Page
+final class ArrayPage implements Page
 {
     private $slice;
     private $offset;

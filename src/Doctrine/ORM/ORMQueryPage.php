@@ -5,7 +5,7 @@ namespace Zenstruck\Porpaginas\Doctrine\ORM;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Zenstruck\Porpaginas\Page;
 
-class ORMQueryPage implements Page
+final class ORMQueryPage implements Page
 {
     private $paginator;
     private $result;

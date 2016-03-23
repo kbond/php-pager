@@ -1,12 +1,11 @@
 <?php
 
-namespace Zenstruck\Porpaginas\Doctrine\ORM;
+namespace Zenstruck\Porpaginas\Doctrine;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Zenstruck\Porpaginas\Callback\CallbackPage;
-use Zenstruck\Porpaginas\Doctrine\DBAL\DBALQueryBuilderResult;
 use Zenstruck\Porpaginas\Result;
 
 /**

@@ -1,9 +1,8 @@
 <?php
 
-namespace Zenstruck\Porpaginas\Tests\Doctrine\ORM;
+namespace Zenstruck\Porpaginas\Tests\Doctrine;
 
-use Zenstruck\Porpaginas\Doctrine\ORM\ORMQueryResult;
-use Zenstruck\Porpaginas\Tests\Doctrine\DoctrineResultTestCase;
+use Zenstruck\Porpaginas\Doctrine\ORMQueryResult;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -15,7 +14,7 @@ class ORMQueryBuilderResultTest extends DoctrineResultTestCase
         $entityManager = $this->setupEntityManager($count);
         $qb = $entityManager->createQueryBuilder()
             ->select('e')
-            ->from('Zenstruck\Porpaginas\Tests\Doctrine\DoctrineOrmEntity', 'e');
+            ->from(DoctrineOrmEntity::class, 'e');
 
         return new ORMQueryResult($qb);
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Zenstruck\Porpaginas\Doctrine\ORM;
+namespace Zenstruck\Porpaginas\Doctrine;
 
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;

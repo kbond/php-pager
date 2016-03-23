@@ -1,6 +1,6 @@
 <?php
 
-namespace Zenstruck\Porpaginas\Doctrine\DBAL;
+namespace Zenstruck\Porpaginas\Doctrine;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use Zenstruck\Porpaginas\Callback\CallbackPage;

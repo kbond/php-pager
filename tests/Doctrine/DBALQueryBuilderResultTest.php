@@ -1,9 +1,8 @@
 <?php
 
-namespace Zenstruck\Porpaginas\Tests\Doctrine\DBAL;
+namespace Zenstruck\Porpaginas\Tests\Doctrine;
 
-use Zenstruck\Porpaginas\Doctrine\DBAL\DBALQueryBuilderResult;
-use Zenstruck\Porpaginas\Tests\Doctrine\DoctrineResultTestCase;
+use Zenstruck\Porpaginas\Doctrine\DBALQueryBuilderResult;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>

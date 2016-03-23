@@ -1,11 +1,9 @@
 <?php
 
-namespace Zenstruck\Porpaginas\Tests\Doctrine\ORM;
+namespace Zenstruck\Porpaginas\Tests\Doctrine;
 
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
-use Zenstruck\Porpaginas\Doctrine\ORM\RSMQueryResult;
-use Zenstruck\Porpaginas\Tests\Doctrine\DoctrineOrmEntity;
-use Zenstruck\Porpaginas\Tests\Doctrine\DoctrineResultTestCase;
+use Zenstruck\Porpaginas\Doctrine\RSMQueryResult;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>

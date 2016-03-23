@@ -15,7 +15,7 @@ final class RSMQueryResultTest extends DoctrineResultTestCase
     protected function createResultWithItems($count)
     {
         $em = $this->setupEntityManager($count);
-        $rsm = new ResultSetMappingBuilder($em, ResultSetMappingBuilder::COLUMN_RENAMING_INCREMENT);
+        $rsm = new ResultSetMappingBuilder($em);
         $rsm->addRootEntityFromClassMetadata(DoctrineOrmEntity::class, 'e');
 
         $qb = $em->getConnection()->createQueryBuilder()

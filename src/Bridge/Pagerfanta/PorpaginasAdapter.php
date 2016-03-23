@@ -27,6 +27,6 @@ final class PorpaginasAdapter implements AdapterInterface
      */
     public function getSlice($offset, $length)
     {
-        return iterator_to_array($this->result->take($offset, $length));
+        return $this->result->take($offset, $length);
     }
 }

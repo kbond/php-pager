@@ -6,6 +6,7 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Zenstruck\Porpaginas\Callback\CallbackPage;
+use Zenstruck\Porpaginas\Doctrine\DBAL\DBALQueryBuilderResult;
 use Zenstruck\Porpaginas\Result;
 
 /**
@@ -17,8 +18,7 @@ final class RSMQueryResult implements Result
     private $em;
     private $rsm;
     private $qb;
-    private $countQueryBuilderModifier;
-    private $count;
+    private $queryBuilderResult;
 
     /**
      * @param EntityManagerInterface  $em
@@ -31,9 +31,7 @@ final class RSMQueryResult implements Result
         $this->em = $em;
         $this->rsm = $rsm;
         $this->qb = $qb;
-        $this->countQueryBuilderModifier = $countQueryBuilderModifier ?: function (QueryBuilder $qb) {
-            return $qb->select('COUNT(*)');
-        };
+        $this->queryBuilderResult = new DBALQueryBuilderResult($qb, $countQueryBuilderModifier);
     }
 
     /**
@@ -60,15 +58,7 @@ final class RSMQueryResult implements Result
      */
     public function count()
     {
-        if ($this->count !== null) {
-            return $this->count;
-        }
-
-        $qb = clone $this->qb;
-
-        call_user_func($this->countQueryBuilderModifier, $qb);
-
-        return $this->count = (int) $qb->execute()->fetchColumn();
+        return $this->queryBuilderResult->count();
     }
 
     /**

@@ -12,11 +12,19 @@ use Zenstruck\Porpaginas\Result;
 final class DBALQueryBuilderResult implements Result
 {
     private $qb;
+    private $countQueryBuilderModifier;
     private $count;
 
-    public function __construct(QueryBuilder $qb)
+    /**
+     * @param QueryBuilder  $qb
+     * @param callable|null $countQueryBuilderModifier
+     */
+    public function __construct(QueryBuilder $qb, callable $countQueryBuilderModifier = null)
     {
         $this->qb = $qb;
+        $this->countQueryBuilderModifier = $countQueryBuilderModifier ?: function (QueryBuilder $qb) {
+            return $qb->select('COUNT(*)');
+        };
     }
 
     /**
@@ -46,11 +54,10 @@ final class DBALQueryBuilderResult implements Result
         }
 
         $qb = clone $this->qb;
-        $stmt = $qb->select('COUNT(*) as cnt')
-            ->orderBy('cnt')
-            ->execute();
 
-        return $this->count = (int) $stmt->fetch(\PDO::FETCH_COLUMN);
+        call_user_func($this->countQueryBuilderModifier, $qb);
+
+        return $this->count = (int) $qb->execute()->fetchColumn();
     }
 
     /**

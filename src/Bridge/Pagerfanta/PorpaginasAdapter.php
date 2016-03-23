@@ -19,7 +19,7 @@ final class PorpaginasAdapter implements AdapterInterface
      */
     public function getNbResults()
     {
-        return $this->result->take(0, 1)->totalCount();
+        return $this->result->count();
     }
 
     /**

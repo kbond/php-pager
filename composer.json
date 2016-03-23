@@ -21,8 +21,10 @@
         "psr-4": { "Zenstruck\\Porpaginas\\Tests\\": "tests/" }
     },
     "require-dev": {
-        "doctrine/orm": ">=2.2",
-        "pagerfanta/pagerfanta": "@stable"
+        "doctrine/orm": "^2.2",
+        "pagerfanta/pagerfanta": "^1.0",
+        "knplabs/knp-components": "^1.0",
+        "symfony/event-dispatcher": "^2.5|^3.0"
     },
     "suggest": {
         "pagerfanta/pagerfanta": "For rendering pagination with Pagerfanta"

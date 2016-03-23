@@ -34,7 +34,7 @@ final class ORMQueryResult implements Result
     public function take($offset, $limit)
     {
         $results = function ($offset, $limit) {
-            return $this->createPaginator($offset, $limit)->getIterator();
+            return iterator_to_array($this->createPaginator($offset, $limit));
         };
 
         return new CallbackPage($results, [$this, 'count'], $offset, $limit);

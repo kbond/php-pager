@@ -17,7 +17,7 @@ final class CallbackPage implements Page
     private $results;
 
     /**
-     * @param callable $resultCallback     Returns an iterator
+     * @param callable $resultCallback     Returns an array
      * @param callable $totalCountCallback Returns an integer
      * @param int      $offset
      * @param int      $limit

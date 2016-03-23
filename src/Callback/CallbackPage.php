@@ -16,6 +16,12 @@ final class CallbackPage implements Page
     private $totalCount;
     private $results;
 
+    /**
+     * @param callable $resultCallback     Returns an iterator
+     * @param callable $totalCountCallback Returns an integer
+     * @param int      $offset
+     * @param int      $limit
+     */
     public function __construct(callable $resultCallback, callable $totalCountCallback, $offset, $limit)
     {
         $this->resultCallback = $resultCallback;
@@ -37,7 +43,7 @@ final class CallbackPage implements Page
      */
     public function getCurrentPage()
     {
-        return floor($this->offset / $this->limit) + 1;
+        return (int) (floor($this->offset / $this->limit) + 1);
     }
 
     /**

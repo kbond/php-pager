@@ -16,6 +16,8 @@ matrix:
   include:
     - php: 5.5
       env: COMPOSER_FLAGS="--prefer-lowest"
+  allow_failures:
+    - php: hhvm
 
 install: composer update $COMPOSER_FLAGS
 

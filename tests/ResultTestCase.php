@@ -94,6 +94,18 @@ abstract class ResultTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
+     */
+    public function it_can_have_empty_results()
+    {
+        $result = $this->createResultWithItems(0);
+
+        $this->assertCount(0, $result);
+        $this->assertSame([], iterator_to_array($result));
+        $this->assertSame([], iterator_to_array($result->take(0, 10)));
+    }
+
+    /**
      * @param int $count
      *
      * @return Result

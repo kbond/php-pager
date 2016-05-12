@@ -65,7 +65,7 @@ final class RSMQueryResult implements Result
      */
     public function getIterator()
     {
-        $query = $this->em->createNativeQuery($this->qb->getSql(), $this->rsm);
+        $query = $this->em->createNativeQuery($this->qb->getSQL(), $this->rsm);
         $query->setParameters($this->qb->getParameters());
 
         foreach ($query->iterate() as $row) {

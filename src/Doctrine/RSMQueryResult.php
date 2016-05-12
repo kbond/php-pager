@@ -4,6 +4,7 @@ namespace Zenstruck\Porpaginas\Doctrine;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NativeQuery;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Zenstruck\Porpaginas\Callback\CallbackPage;
 use Zenstruck\Porpaginas\Result;
@@ -43,10 +44,7 @@ final class RSMQueryResult implements Result
             $qb->setFirstResult($offset)
                 ->setMaxResults($limit);
 
-            $query = $this->em->createNativeQuery($qb->getSql(), $this->rsm);
-            $query->setParameters($qb->getParameters());
-
-            return $query->execute();
+            return $this->createQuery($qb)->execute();
         };
 
         return new CallbackPage($results, [$this, 'count'], $offset, $limit);
@@ -65,11 +63,27 @@ final class RSMQueryResult implements Result
      */
     public function getIterator()
     {
-        $query = $this->em->createNativeQuery($this->qb->getSQL(), $this->rsm);
+        return new \ArrayIterator($this->getQuery()->execute());
+    }
+
+    /**
+     * @return NativeQuery
+     */
+    public function getQuery()
+    {
+        return $this->createQuery($this->qb);
+    }
+
+    /**
+     * @param QueryBuilder $qb
+     *
+     * @return NativeQuery
+     */
+    private function createQuery(QueryBuilder $qb)
+    {
+        $query = $this->em->createNativeQuery($qb->getSQL(), $this->rsm);
         $query->setParameters($this->qb->getParameters());
 
-        foreach ($query->iterate() as $row) {
-            yield $row[0];
-        }
+        return $query;
     }
 }

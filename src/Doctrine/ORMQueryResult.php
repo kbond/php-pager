@@ -5,6 +5,7 @@ namespace Zenstruck\Porpaginas\Doctrine;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Zenstruck\Porpaginas\Arrays\ArrayPage;
 use Zenstruck\Porpaginas\Callback\CallbackPage;
 use Zenstruck\Porpaginas\Result;
 
@@ -13,6 +14,7 @@ final class ORMQueryResult implements Result
     private $query;
     private $fetchCollection;
     private $count;
+    private $result;
 
     /**
      * @param Query|QueryBuilder $query
@@ -33,6 +35,15 @@ final class ORMQueryResult implements Result
      */
     public function take($offset, $limit)
     {
+        if ($this->result !== null) {
+            return new ArrayPage(
+                array_slice($this->result, $offset, $limit),
+                $offset,
+                $limit,
+                count($this->result)
+            );
+        }
+
         $results = function ($offset, $limit) {
             return iterator_to_array($this->createPaginator($offset, $limit));
         };
@@ -57,9 +68,12 @@ final class ORMQueryResult implements Result
      */
     public function getIterator()
     {
-        foreach ($this->query->iterate() as $row) {
-            yield $row[0];
+        if (null === $this->result) {
+            $this->result = $this->query->execute();
+            $this->count = count($this->result);
         }
+
+        return new \ArrayIterator($this->result);
     }
 
     /**

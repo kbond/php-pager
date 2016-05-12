@@ -57,7 +57,9 @@ final class ORMQueryResult implements Result
      */
     public function getIterator()
     {
-        return $this->query->iterate();
+        foreach ($this->query->iterate() as $row) {
+            yield $row[0];
+        }
     }
 
     /**

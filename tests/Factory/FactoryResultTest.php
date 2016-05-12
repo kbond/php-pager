@@ -29,6 +29,11 @@ class FactoryResultTest extends ResultTestCase
         return new FactoryResult([$this, 'factory'], new ArrayResult(array_fill(0, $count, 'value')));
     }
 
+    protected function getExpectedFirstValue()
+    {
+        return 'factory value';
+    }
+
     public function factory($result)
     {
         return 'factory '.$result;

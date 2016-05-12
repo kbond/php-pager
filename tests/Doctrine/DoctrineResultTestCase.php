@@ -40,6 +40,11 @@ abstract class DoctrineResultTestCase extends ResultTestCase
 
         return $entityManager;
     }
+
+    protected function getExpectedFirstValue()
+    {
+        return new DoctrineOrmEntity(1);
+    }
 }
 
 /**
@@ -51,4 +56,9 @@ class DoctrineOrmEntity
      * @Id @Column(type="integer") @GeneratedValue
      */
     private $id;
+
+    public function __construct($id = null)
+    {
+        $this->id = $id;
+    }
 }

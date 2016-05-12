@@ -68,6 +68,8 @@ final class RSMQueryResult implements Result
         $query = $this->em->createNativeQuery($this->qb->getSql(), $this->rsm);
         $query->setParameters($this->qb->getParameters());
 
-        return $query->iterate();
+        foreach ($query->iterate() as $row) {
+            yield $row[0];
+        }
     }
 }

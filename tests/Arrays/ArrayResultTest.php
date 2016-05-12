@@ -11,4 +11,9 @@ class ArrayResultTest extends ResultTestCase
     {
         return new ArrayResult(array_fill(0, $count, 'value'));
     }
+
+    protected function getExpectedFirstValue()
+    {
+        return 'value';
+    }
 }

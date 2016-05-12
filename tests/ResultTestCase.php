@@ -84,9 +84,24 @@ abstract class ResultTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @test
+     */
+    public function results_match_the_expected_value()
+    {
+        $result = $this->createResultWithItems(1);
+
+        $this->assertEquals($this->getExpectedFirstValue(), iterator_to_array($result)[0]);
+    }
+
+    /**
      * @param int $count
      *
      * @return Result
      */
     abstract protected function createResultWithItems($count);
+
+    /**
+     * @return mixed
+     */
+    abstract protected function getExpectedFirstValue();
 }

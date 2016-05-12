@@ -77,6 +77,14 @@ final class ORMQueryResult implements Result
     }
 
     /**
+     * @return Query
+     */
+    public function getQuery()
+    {
+        return $this->query;
+    }
+
+    /**
      * @param int $offset
      * @param int $limit
      *

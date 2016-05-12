@@ -9,7 +9,7 @@ class ArrayResultTest extends ResultTestCase
 {
     protected function createResultWithItems($count)
     {
-        return new ArrayResult(array_fill(0, $count, 'value'));
+        return new ArrayResult($count ? array_fill(0, $count, 'value') : []);
     }
 
     protected function getExpectedFirstValue()

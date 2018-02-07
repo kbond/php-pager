@@ -2,9 +2,10 @@
 
 namespace Zenstruck\Porpaginas\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Zenstruck\Porpaginas\Result;
 
-abstract class ResultTestCase extends \PHPUnit_Framework_TestCase
+abstract class ResultTestCase extends TestCase
 {
     /**
      * @test

@@ -4,13 +4,14 @@ namespace Zenstruck\Porpaginas\Tests\Bridge\KnpPager;
 
 use Knp\Component\Pager\Event\ItemsEvent;
 use Knp\Component\Pager\Paginator;
+use PHPUnit\Framework\TestCase;
 use Zenstruck\Porpaginas\Arrays\ArrayResult;
 use Zenstruck\Porpaginas\Bridge\KnpPager\PorpaginasSubscriber;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-final class PorpaginasSubscriberTest extends \PHPUnit_Framework_TestCase
+final class PorpaginasSubscriberTest extends TestCase
 {
     /**
      * @test

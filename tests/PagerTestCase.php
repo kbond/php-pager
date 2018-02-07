@@ -2,12 +2,13 @@
 
 namespace Zenstruck\Porpaginas\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Zenstruck\Porpaginas\Pager;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-abstract class PagerTestCase extends \PHPUnit_Framework_TestCase
+abstract class PagerTestCase extends TestCase
 {
     /**
      * @test

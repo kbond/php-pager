@@ -3,10 +3,11 @@
 namespace Zenstruck\Porpaginas\Tests\Bridge\Pagerfanta;
 
 use Pagerfanta\Pagerfanta;
+use PHPUnit\Framework\TestCase;
 use Zenstruck\Porpaginas\Arrays\ArrayResult;
 use Zenstruck\Porpaginas\Bridge\Pagerfanta\PorpaginasAdapter;
 
-class PorpaginasAdapterTest extends \PHPUnit_Framework_TestCase
+class PorpaginasAdapterTest extends TestCase
 {
     /**
      * @test

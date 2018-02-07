@@ -5,6 +5,7 @@ namespace Zenstruck\Porpaginas\Doctrine;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
+use Zenstruck\Porpaginas\JsonSerializableIterator;
 use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
 
@@ -13,6 +14,8 @@ use Zenstruck\Porpaginas\Result;
  */
 final class RSMQueryIterateResult implements Result
 {
+    use JsonSerializableIterator;
+
     private $child;
     private $em;
 

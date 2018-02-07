@@ -5,7 +5,7 @@ namespace Zenstruck\Porpaginas;
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-abstract class Pager implements \Countable, \IteratorAggregate
+abstract class Pager implements \Countable, \IteratorAggregate, \JsonSerializable
 {
     final public function getNextPage(): ?int
     {
@@ -48,6 +48,22 @@ abstract class Pager implements \Countable, \IteratorAggregate
     final public function pagesCount(): int
     {
         return $this->getLastPage();
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'items' => \iterator_to_array($this),
+            'count' => $this->count(),
+            'total' => $this->totalCount(),
+            'limit' => $this->getLimit(),
+            'pages' => $this->pagesCount(),
+            'first' => $this->getFirstPage(),
+            'previous' => $this->getPreviousPage(),
+            'current' => $this->getCurrentPage(),
+            'next' => $this->getNextPage(),
+            'last' => $this->getLastPage(),
+        ];
     }
 
     abstract public function getCurrentPage(): int;

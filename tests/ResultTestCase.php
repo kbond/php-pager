@@ -106,6 +106,26 @@ abstract class ResultTestCase extends TestCase
         $this->assertSame([], \iterator_to_array($result->take(0, 10)));
     }
 
+    /**
+     * @test
+     */
+    public function result_is_json_serialzable()
+    {
+        $result = $this->createResultWithItems(10);
+
+        $this->assertSame(\json_encode(\iterator_to_array($result)), \json_encode($result));
+    }
+
+    /**
+     * @test
+     */
+    public function page_is_json_serializable()
+    {
+        $page = $this->createResultWithItems(10)->take(5, 3);
+
+        $this->assertSame(\json_encode(\iterator_to_array($page)), \json_encode($page));
+    }
+
     abstract protected function createResultWithItems(int $count): Result;
 
     abstract protected function getExpectedFirstValue();

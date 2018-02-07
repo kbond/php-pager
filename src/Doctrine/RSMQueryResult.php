@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NativeQuery;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Zenstruck\Porpaginas\Callback\CallbackPage;
+use Zenstruck\Porpaginas\JsonSerializableIterator;
 use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
 
@@ -16,6 +17,8 @@ use Zenstruck\Porpaginas\Result;
  */
 final class RSMQueryResult implements Result
 {
+    use JsonSerializableIterator;
+
     private $em;
     private $rsm;
     private $qb;

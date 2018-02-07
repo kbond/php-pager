@@ -37,10 +37,10 @@ class PorpaginasAdapterTest extends TestCase
         $pagerfanta->setMaxPerPage(2);
         $pagerfanta->setCurrentPage(1);
 
-        $this->assertEquals([1, 2], iterator_to_array($pagerfanta->getCurrentPageResults()));
+        $this->assertEquals([1, 2], \iterator_to_array($pagerfanta->getCurrentPageResults()));
 
         $pagerfanta->setCurrentPage(2);
 
-        $this->assertEquals([3, 4], iterator_to_array($pagerfanta->getCurrentPageResults()));
+        $this->assertEquals([3, 4], \iterator_to_array($pagerfanta->getCurrentPageResults()));
     }
 }

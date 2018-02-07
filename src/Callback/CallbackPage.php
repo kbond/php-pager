@@ -43,7 +43,7 @@ final class CallbackPage implements Page
      */
     public function getCurrentPage()
     {
-        return (int) (floor($this->offset / $this->limit) + 1);
+        return (int) (\floor($this->offset / $this->limit) + 1);
     }
 
     /**
@@ -59,7 +59,7 @@ final class CallbackPage implements Page
      */
     public function count()
     {
-        return count($this->getResults());
+        return \count($this->getResults());
     }
 
     /**
@@ -67,11 +67,11 @@ final class CallbackPage implements Page
      */
     public function totalCount()
     {
-        if ($this->totalCount !== null) {
+        if (null !== $this->totalCount) {
             return $this->totalCount;
         }
 
-        return $this->totalCount = call_user_func($this->totalCountCallback);
+        return $this->totalCount = \call_user_func($this->totalCountCallback);
     }
 
     /**
@@ -87,10 +87,10 @@ final class CallbackPage implements Page
      */
     private function getResults()
     {
-        if ($this->results !== null) {
+        if (null !== $this->results) {
             return $this->results;
         }
 
-        return $this->results = new \ArrayIterator(call_user_func($this->resultCallback, $this->offset, $this->limit));
+        return $this->results = new \ArrayIterator(\call_user_func($this->resultCallback, $this->offset, $this->limit));
     }
 }

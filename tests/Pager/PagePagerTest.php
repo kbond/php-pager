@@ -14,8 +14,8 @@ final class PagePagerTest extends PagerTestCase
     protected function createPager(array $results, $page, $limit)
     {
         $offset = (int) (($page - 1) * $limit);
-        $slice = array_values(array_slice($results, $offset, $limit));
+        $slice = \array_values(\array_slice($results, $offset, $limit));
 
-        return new PagePager(new ArrayPage($slice, $offset, $limit, count($results)));
+        return new PagePager(new ArrayPage($slice, $offset, $limit, \count($results)));
     }
 }

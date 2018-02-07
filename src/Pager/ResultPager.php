@@ -10,7 +10,7 @@ use Zenstruck\Porpaginas\Result;
  */
 final class ResultPager extends Pager
 {
-    const DEFAULT_LIMIT = 20;
+    public const DEFAULT_LIMIT = 20;
 
     private $result;
     private $page;
@@ -24,11 +24,11 @@ final class ResultPager extends Pager
      */
     public function __construct(Result $result, $page = 1, $limit = self::DEFAULT_LIMIT)
     {
-        if (!is_numeric($page)) {
+        if (!\is_numeric($page)) {
             $page = 1;
         }
 
-        if (!is_numeric($limit)) {
+        if (!\is_numeric($limit)) {
             $limit = self::DEFAULT_LIMIT;
         }
 
@@ -91,7 +91,7 @@ final class ResultPager extends Pager
      */
     public function getResults()
     {
-        if ($this->cachedPage !== null) {
+        if (null !== $this->cachedPage) {
             return $this->cachedPage;
         }
 

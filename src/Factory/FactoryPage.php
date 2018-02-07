@@ -64,7 +64,7 @@ final class FactoryPage implements Page
     public function getIterator()
     {
         foreach ($this->page as $result) {
-            yield call_user_func($this->factory, $result);
+            yield \call_user_func($this->factory, $result);
         }
     }
 }

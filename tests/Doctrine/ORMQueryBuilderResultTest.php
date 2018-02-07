@@ -14,7 +14,8 @@ class ORMQueryBuilderResultTest extends DoctrineResultTestCase
         $entityManager = $this->setupEntityManager($count);
         $qb = $entityManager->createQueryBuilder()
             ->select('e')
-            ->from(DoctrineOrmEntity::class, 'e');
+            ->from(DoctrineOrmEntity::class, 'e')
+        ;
 
         return new ORMQueryResult($qb);
     }

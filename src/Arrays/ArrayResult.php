@@ -19,10 +19,10 @@ final class ArrayResult implements Result
     public function take($offset, $limit)
     {
         return new ArrayPage(
-            array_slice($this->data, $offset, $limit),
+            \array_slice($this->data, $offset, $limit),
             $offset,
             $limit,
-            count($this->data)
+            \count($this->data)
         );
     }
 
@@ -31,7 +31,7 @@ final class ArrayResult implements Result
      */
     public function count()
     {
-        return count($this->data);
+        return \count($this->data);
     }
 
     /**

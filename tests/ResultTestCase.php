@@ -24,7 +24,7 @@ abstract class ResultTestCase extends TestCase
     {
         $result = $this->createResultWithItems(11);
 
-        $this->assertCount(11, iterator_to_array($result));
+        $this->assertCount(11, \iterator_to_array($result));
     }
 
     /**
@@ -68,7 +68,7 @@ abstract class ResultTestCase extends TestCase
         $page = $result->take(10, 5);
 
         $this->assertCount(5, $page);
-        $this->assertCount(5, iterator_to_array($page));
+        $this->assertCount(5, \iterator_to_array($page));
     }
 
     /**
@@ -80,7 +80,7 @@ abstract class ResultTestCase extends TestCase
 
         $page = $result->take(10, 5);
 
-        $this->assertCount(5, iterator_to_array($page));
+        $this->assertCount(5, \iterator_to_array($page));
         $this->assertCount(5, $page);
     }
 
@@ -91,7 +91,7 @@ abstract class ResultTestCase extends TestCase
     {
         $result = $this->createResultWithItems(1);
 
-        $this->assertEquals($this->getExpectedFirstValue(), iterator_to_array($result)[0]);
+        $this->assertEquals($this->getExpectedFirstValue(), \iterator_to_array($result)[0]);
     }
 
     /**
@@ -102,8 +102,8 @@ abstract class ResultTestCase extends TestCase
         $result = $this->createResultWithItems(0);
 
         $this->assertCount(0, $result);
-        $this->assertSame([], iterator_to_array($result));
-        $this->assertSame([], iterator_to_array($result->take(0, 10)));
+        $this->assertSame([], \iterator_to_array($result));
+        $this->assertSame([], \iterator_to_array($result->take(0, 10)));
     }
 
     /**

@@ -14,7 +14,8 @@ class DBALQueryBuilderResultTest extends DoctrineResultTestCase
         $em = $this->setupEntityManager($count);
         $qb = $em->getConnection()->createQueryBuilder()
             ->select('*')
-            ->from('DoctrineOrmEntity', 'e');
+            ->from('DoctrineOrmEntity', 'e')
+        ;
 
         return new DBALQueryBuilderResult($qb);
     }

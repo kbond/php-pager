@@ -36,11 +36,11 @@ final class PorpaginasSubscriberTest extends TestCase
 
         $results = $paginator->paginate($result, 1, 2);
 
-        $this->assertEquals([1, 2], iterator_to_array($results));
+        $this->assertEquals([1, 2], \iterator_to_array($results));
 
         $results = $paginator->paginate($result, 2, 2);
 
-        $this->assertEquals([3, 4], iterator_to_array($results));
+        $this->assertEquals([3, 4], \iterator_to_array($results));
     }
 
     /**

@@ -42,7 +42,8 @@ final class RSMQueryResult implements Result
         $qb = clone $this->qb;
         $results = function ($offset, $limit) use ($qb) {
             $qb->setFirstResult($offset)
-                ->setMaxResults($limit);
+                ->setMaxResults($limit)
+            ;
 
             return $this->createQuery($qb)->execute();
         };

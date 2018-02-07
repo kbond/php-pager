@@ -23,5 +23,6 @@ return PhpCsFixer\Config::create()
         'mb_str_functions' => true,
     ])
     ->setRiskyAllowed(true)
+    ->setUsingCache(false)
     ->setFinder($finder)
 ;

@@ -38,7 +38,8 @@ final class DBALQueryBuilderResult implements Result
                 ->setFirstResult($offset)
                 ->setMaxResults($limit)
                 ->execute()
-                ->fetchAll();
+                ->fetchAll()
+            ;
         };
 
         return new CallbackPage($results, [$this, 'count'], $offset, $limit);
@@ -49,13 +50,13 @@ final class DBALQueryBuilderResult implements Result
      */
     public function count()
     {
-        if ($this->count !== null) {
+        if (null !== $this->count) {
             return $this->count;
         }
 
         $qb = clone $this->qb;
 
-        call_user_func($this->countQueryBuilderModifier, $qb);
+        \call_user_func($this->countQueryBuilderModifier, $qb);
 
         return $this->count = (int) $qb->execute()->fetchColumn();
     }

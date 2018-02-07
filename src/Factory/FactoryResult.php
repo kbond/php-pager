@@ -40,7 +40,7 @@ final class FactoryResult implements Result
     public function getIterator()
     {
         foreach ($this->result as $result) {
-            yield call_user_func($this->factory, $result);
+            yield \call_user_func($this->factory, $result);
         }
     }
 }

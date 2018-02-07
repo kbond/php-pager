@@ -18,7 +18,8 @@ final class RSMQueryIterateResultTest extends DoctrineResultTestCase
 
         $qb = $em->getConnection()->createQueryBuilder()
             ->select($rsm->generateSelectClause())
-            ->from('DoctrineOrmEntity', 'e');
+            ->from('DoctrineOrmEntity', 'e')
+        ;
 
         return new RSMQueryIterateResult($em, $rsm, $qb);
     }

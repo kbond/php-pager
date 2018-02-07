@@ -38,7 +38,7 @@ final class ArrayPage implements Page
      */
     public function getCurrentPage()
     {
-        return (int) (floor($this->offset / $this->limit) + 1);
+        return (int) (\floor($this->offset / $this->limit) + 1);
     }
 
     /**
@@ -54,7 +54,7 @@ final class ArrayPage implements Page
      */
     public function count()
     {
-        return count($this->slice);
+        return \count($this->slice);
     }
 
     /**

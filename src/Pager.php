@@ -28,7 +28,7 @@ abstract class Pager implements \Countable
     {
         $page = $this->getCurrentPage();
 
-        if ($page === 1) {
+        if (1 === $page) {
             return null;
         }
 
@@ -50,11 +50,11 @@ abstract class Pager implements \Countable
     {
         $totalCount = $this->totalCount();
 
-        if ($totalCount === 0) {
+        if (0 === $totalCount) {
             return 1;
         }
 
-        return (int) ceil($totalCount / $this->getLimit());
+        return (int) \ceil($totalCount / $this->getLimit());
     }
 
     /**

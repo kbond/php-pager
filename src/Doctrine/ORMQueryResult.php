@@ -35,17 +35,17 @@ final class ORMQueryResult implements Result
      */
     public function take($offset, $limit)
     {
-        if ($this->result !== null) {
+        if (null !== $this->result) {
             return new ArrayPage(
-                array_slice($this->result, $offset, $limit),
+                \array_slice($this->result, $offset, $limit),
                 $offset,
                 $limit,
-                count($this->result)
+                \count($this->result)
             );
         }
 
         $results = function ($offset, $limit) {
-            return iterator_to_array($this->createPaginator($offset, $limit));
+            return \iterator_to_array($this->createPaginator($offset, $limit));
         };
 
         return new CallbackPage($results, [$this, 'count'], $offset, $limit);
@@ -60,7 +60,7 @@ final class ORMQueryResult implements Result
             return $this->count;
         }
 
-        return $this->count = count($this->createPaginator(0, 1));
+        return $this->count = \count($this->createPaginator(0, 1));
     }
 
     /**
@@ -70,7 +70,7 @@ final class ORMQueryResult implements Result
     {
         if (null === $this->result) {
             $this->result = $this->query->execute();
-            $this->count = count($this->result);
+            $this->count = \count($this->result);
         }
 
         return new \ArrayIterator($this->result);

@@ -7,39 +7,26 @@ namespace Zenstruck\Porpaginas;
  */
 interface Page extends \Countable, \IteratorAggregate
 {
-    /**
-     * @return int
-     */
-    public function getCurrentOffset();
+    public function getCurrentOffset(): int;
 
-    /**
-     * @return int
-     */
-    public function getCurrentPage();
+    public function getCurrentPage(): int;
 
-    /**
-     * @return int
-     */
-    public function getCurrentLimit();
+    public function getCurrentLimit(): int;
 
     /**
      * Return the number of results on the currrent page of the {@link Result}.
-     *
-     * @return int
      */
-    public function count();
+    public function count(): int;
 
     /**
      * Return the number of ALL results in the paginatable of {@link Result}.
      *
      * @return int
      */
-    public function totalCount();
+    public function totalCount(): int;
 
     /**
      * Return an iterator over selected windows of results of the paginatable.
-     *
-     * @return \Iterator
      */
-    public function getIterator();
+    public function getIterator(): \Iterator;
 }

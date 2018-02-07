@@ -7,6 +7,7 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Zenstruck\Porpaginas\Arrays\ArrayPage;
 use Zenstruck\Porpaginas\Callback\CallbackPage;
+use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
 
 final class ORMQueryResult implements Result
@@ -18,9 +19,8 @@ final class ORMQueryResult implements Result
 
     /**
      * @param Query|QueryBuilder $query
-     * @param bool               $fetchCollection
      */
-    public function __construct($query, $fetchCollection = true)
+    public function __construct($query, bool $fetchCollection = true)
     {
         if ($query instanceof QueryBuilder) {
             $query = $query->getQuery();
@@ -30,10 +30,7 @@ final class ORMQueryResult implements Result
         $this->fetchCollection = $fetchCollection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function take($offset, $limit)
+    public function take(int $offset, int $limit): Page
     {
         if (null !== $this->result) {
             return new ArrayPage(
@@ -51,10 +48,7 @@ final class ORMQueryResult implements Result
         return new CallbackPage($results, [$this, 'count'], $offset, $limit);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function count()
+    public function count(): int
     {
         if (null !== $this->count) {
             return $this->count;
@@ -63,10 +57,7 @@ final class ORMQueryResult implements Result
         return $this->count = \count($this->createPaginator(0, 1));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getIterator()
+    public function getIterator(): \Iterator
     {
         if (null === $this->result) {
             $this->result = $this->query->execute();
@@ -76,21 +67,12 @@ final class ORMQueryResult implements Result
         return new \ArrayIterator($this->result);
     }
 
-    /**
-     * @return Query
-     */
-    public function getQuery()
+    public function getQuery(): Query
     {
         return $this->query;
     }
 
-    /**
-     * @param int $offset
-     * @param int $limit
-     *
-     * @return Paginator
-     */
-    private function createPaginator($offset, $limit)
+    private function createPaginator(int $offset, int $limit): Paginator
     {
         $query = clone $this->query;
         $query->setParameters($this->query->getParameters());

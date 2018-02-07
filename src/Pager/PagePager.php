@@ -17,43 +17,28 @@ final class PagePager extends Pager
         $this->page = $page;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCurrentPage()
+    public function getCurrentPage(): int
     {
         return $this->page->getCurrentPage();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getLimit()
+    public function getLimit(): int
     {
         return $this->page->getCurrentLimit();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function count()
+    public function count(): int
     {
         return $this->page->count();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function totalCount()
+    public function totalCount(): int
     {
         return $this->page->totalCount();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getResults()
+    public function getIterator(): \Iterator
     {
-        return $this->page;
+        return $this->page->getIterator();
     }
 }

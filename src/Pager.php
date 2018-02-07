@@ -5,12 +5,9 @@ namespace Zenstruck\Porpaginas;
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-abstract class Pager implements \Countable
+abstract class Pager implements \Countable, \IteratorAggregate
 {
-    /**
-     * @return int|null
-     */
-    final public function getNextPage()
+    final public function getNextPage(): ?int
     {
         $currentPage = $this->getCurrentPage();
 
@@ -21,10 +18,7 @@ abstract class Pager implements \Countable
         return ++$currentPage;
     }
 
-    /**
-     * @return int|null
-     */
-    final public function getPreviousPage()
+    final public function getPreviousPage(): ?int
     {
         $page = $this->getCurrentPage();
 
@@ -35,18 +29,12 @@ abstract class Pager implements \Countable
         return --$page;
     }
 
-    /**
-     * @return int
-     */
-    final public function getFirstPage()
+    final public function getFirstPage(): int
     {
         return 1;
     }
 
-    /**
-     * @return int
-     */
-    final public function getLastPage()
+    final public function getLastPage(): int
     {
         $totalCount = $this->totalCount();
 
@@ -57,40 +45,27 @@ abstract class Pager implements \Countable
         return (int) \ceil($totalCount / $this->getLimit());
     }
 
-    /**
-     * @return int
-     */
-    final public function pagesCount()
+    final public function pagesCount(): int
     {
         return $this->getLastPage();
     }
 
-    /**
-     * @return int
-     */
-    abstract public function getCurrentPage();
+    abstract public function getCurrentPage(): int;
 
-    /**
-     * @return int
-     */
-    abstract public function getLimit();
+    abstract public function getLimit(): int;
 
     /**
      * The result count for the current page.
-     *
-     * @return int
      */
-    abstract public function count();
+    abstract public function count(): int;
 
     /**
      * The total result count.
-     *
-     * @return int
      */
-    abstract public function totalCount();
+    abstract public function totalCount(): int;
 
     /**
-     * @return Page
+     * Return an iterator over selected windows of results of the paginatable.
      */
-    abstract public function getResults();
+    abstract public function getIterator(): \Iterator;
 }

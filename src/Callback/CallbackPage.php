@@ -19,10 +19,8 @@ final class CallbackPage implements Page
     /**
      * @param callable $resultCallback     Returns an array
      * @param callable $totalCountCallback Returns an integer
-     * @param int      $offset
-     * @param int      $limit
      */
-    public function __construct(callable $resultCallback, callable $totalCountCallback, $offset, $limit)
+    public function __construct(callable $resultCallback, callable $totalCountCallback, int $offset, int $limit)
     {
         $this->resultCallback = $resultCallback;
         $this->totalCountCallback = $totalCountCallback;
@@ -30,42 +28,27 @@ final class CallbackPage implements Page
         $this->limit = $limit;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCurrentOffset()
+    public function getCurrentOffset(): int
     {
         return $this->offset;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCurrentPage()
+    public function getCurrentPage(): int
     {
         return (int) (\floor($this->offset / $this->limit) + 1);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCurrentLimit()
+    public function getCurrentLimit(): int
     {
         return $this->limit;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function count()
+    public function count(): int
     {
         return \count($this->getResults());
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function totalCount()
+    public function totalCount(): int
     {
         if (null !== $this->totalCount) {
             return $this->totalCount;
@@ -74,18 +57,12 @@ final class CallbackPage implements Page
         return $this->totalCount = \call_user_func($this->totalCountCallback);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getIterator()
+    public function getIterator(): \Iterator
     {
         return $this->getResults();
     }
 
-    /**
-     * @return \ArrayIterator
-     */
-    private function getResults()
+    private function getResults(): \ArrayIterator
     {
         if (null !== $this->results) {
             return $this->results;

@@ -11,13 +11,7 @@ final class ArrayPage implements Page
     private $limit;
     private $totalCount;
 
-    /**
-     * @param array $slice
-     * @param int   $offset
-     * @param int   $limit
-     * @param int   $totalCount
-     */
-    public function __construct(array $slice, $offset, $limit, $totalCount)
+    public function __construct(array $slice, int $offset, int $limit, int $totalCount)
     {
         $this->slice = $slice;
         $this->offset = $offset;
@@ -25,50 +19,32 @@ final class ArrayPage implements Page
         $this->totalCount = $totalCount;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCurrentOffset()
+    public function getCurrentOffset(): int
     {
         return $this->offset;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCurrentPage()
+    public function getCurrentPage(): int
     {
         return (int) (\floor($this->offset / $this->limit) + 1);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCurrentLimit()
+    public function getCurrentLimit(): int
     {
         return $this->limit;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function count()
+    public function count(): int
     {
         return \count($this->slice);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function totalCount()
+    public function totalCount(): int
     {
         return $this->totalCount;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getIterator()
+    public function getIterator(): \Iterator
     {
         return new \ArrayIterator($this->slice);
     }

@@ -2,6 +2,7 @@
 
 namespace Zenstruck\Porpaginas\Arrays;
 
+use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
 
 final class ArrayResult implements Result
@@ -13,10 +14,7 @@ final class ArrayResult implements Result
         $this->data = $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function take($offset, $limit)
+    public function take(int $offset, int $limit): Page
     {
         return new ArrayPage(
             \array_slice($this->data, $offset, $limit),
@@ -26,18 +24,12 @@ final class ArrayResult implements Result
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function count()
+    public function count(): int
     {
         return \count($this->data);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getIterator()
+    public function getIterator(): \Iterator
     {
         return new \ArrayIterator($this->data);
     }

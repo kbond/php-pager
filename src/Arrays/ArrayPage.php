@@ -2,12 +2,12 @@
 
 namespace Zenstruck\Porpaginas\Arrays;
 
-use Zenstruck\Porpaginas\JsonSerializableIterator;
+use Zenstruck\Porpaginas\JsonSerializable;
 use Zenstruck\Porpaginas\Page;
 
 final class ArrayPage implements Page
 {
-    use JsonSerializableIterator;
+    use JsonSerializable;
 
     private $slice;
     private $offset;

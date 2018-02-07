@@ -4,7 +4,7 @@ namespace Zenstruck\Porpaginas\Doctrine;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use Zenstruck\Porpaginas\Callback\CallbackPage;
-use Zenstruck\Porpaginas\JsonSerializableIterator;
+use Zenstruck\Porpaginas\JsonSerializable;
 use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
 
@@ -13,7 +13,7 @@ use Zenstruck\Porpaginas\Result;
  */
 final class DBALQueryBuilderResult implements Result
 {
-    use JsonSerializableIterator;
+    use JsonSerializable;
 
     private $qb;
     private $countQueryBuilderModifier;

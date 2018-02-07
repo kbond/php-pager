@@ -2,13 +2,13 @@
 
 namespace Zenstruck\Porpaginas\Arrays;
 
-use Zenstruck\Porpaginas\JsonSerializableIterator;
+use Zenstruck\Porpaginas\JsonSerializable;
 use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
 
 final class ArrayResult implements Result
 {
-    use JsonSerializableIterator;
+    use JsonSerializable;
 
     private $data;
 

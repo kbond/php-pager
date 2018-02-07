@@ -2,7 +2,7 @@
 
 namespace Zenstruck\Porpaginas\Factory;
 
-use Zenstruck\Porpaginas\JsonSerializableIterator;
+use Zenstruck\Porpaginas\JsonSerializable;
 use Zenstruck\Porpaginas\Page;
 
 /**
@@ -10,7 +10,7 @@ use Zenstruck\Porpaginas\Page;
  */
 final class FactoryPage implements Page
 {
-    use JsonSerializableIterator;
+    use JsonSerializable;
 
     private $factory;
     private $page;

@@ -2,7 +2,7 @@
 
 namespace Zenstruck\Porpaginas\Callback;
 
-use Zenstruck\Porpaginas\JsonSerializableIterator;
+use Zenstruck\Porpaginas\JsonSerializable;
 use Zenstruck\Porpaginas\Page;
 
 /**
@@ -10,7 +10,7 @@ use Zenstruck\Porpaginas\Page;
  */
 final class CallbackPage implements Page
 {
-    use JsonSerializableIterator;
+    use JsonSerializable;
 
     private $resultCallback;
     private $totalCountCallback;

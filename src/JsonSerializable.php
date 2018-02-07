@@ -7,7 +7,7 @@ namespace Zenstruck\Porpaginas;
  *
  * @mixin \IteratorAggregate
  */
-trait JsonSerializableIterator
+trait JsonSerializable
 {
     public function jsonSerialize(): array
     {

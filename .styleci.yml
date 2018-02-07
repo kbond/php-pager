@@ -3,4 +3,4 @@ enabled:
   - short_array_syntax
   - ordered_use
 disabled:
-  - empty_return
+  - property_separation

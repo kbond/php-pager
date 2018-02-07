@@ -4,6 +4,7 @@ namespace Zenstruck\Porpaginas\Tests\Factory;
 
 use Zenstruck\Porpaginas\Arrays\ArrayResult;
 use Zenstruck\Porpaginas\Factory\FactoryResult;
+use Zenstruck\Porpaginas\Result;
 use Zenstruck\Porpaginas\Tests\ResultTestCase;
 
 /**
@@ -29,7 +30,7 @@ class FactoryResultTest extends ResultTestCase
         return 'factory '.$result;
     }
 
-    protected function createResultWithItems($count)
+    protected function createResultWithItems(int $count): Result
     {
         return new FactoryResult([$this, 'factory'], new ArrayResult($count ? \array_fill(0, $count, 'value') : []));
     }

@@ -106,15 +106,7 @@ abstract class ResultTestCase extends TestCase
         $this->assertSame([], \iterator_to_array($result->take(0, 10)));
     }
 
-    /**
-     * @param int $count
-     *
-     * @return Result
-     */
-    abstract protected function createResultWithItems($count);
+    abstract protected function createResultWithItems(int $count): Result;
 
-    /**
-     * @return mixed
-     */
     abstract protected function getExpectedFirstValue();
 }

@@ -4,13 +4,14 @@ namespace Zenstruck\Porpaginas\Tests\Doctrine;
 
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Zenstruck\Porpaginas\Doctrine\RSMQueryResult;
+use Zenstruck\Porpaginas\Result;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
 final class RSMQueryResultTest extends DoctrineResultTestCase
 {
-    protected function createResultWithItems($count)
+    protected function createResultWithItems(int $count): Result
     {
         $em = $this->setupEntityManager($count);
         $rsm = new ResultSetMappingBuilder($em);

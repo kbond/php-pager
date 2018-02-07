@@ -95,12 +95,5 @@ abstract class PagerTestCase extends TestCase
         $this->assertSame(\range(1, 10), \iterator_to_array($pager));
     }
 
-    /**
-     * @param array $results
-     * @param int   $page
-     * @param int   $limit
-     *
-     * @return Pager
-     */
-    abstract protected function createPager(array $results, $page, $limit);
+    abstract protected function createPager(array $results, int $page, int $limit): Pager;
 }

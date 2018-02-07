@@ -3,6 +3,7 @@
 namespace Zenstruck\Porpaginas\Tests\Pager;
 
 use Zenstruck\Porpaginas\Arrays\ArrayResult;
+use Zenstruck\Porpaginas\Pager;
 use Zenstruck\Porpaginas\Pager\ResultPager;
 use Zenstruck\Porpaginas\Tests\PagerTestCase;
 
@@ -50,7 +51,7 @@ final class ResultPagerTest extends PagerTestCase
         $this->assertSame(20, $pager->getLimit());
     }
 
-    protected function createPager(array $results, $page, $limit)
+    protected function createPager(array $results, int $page, int $limit): Pager
     {
         return new ResultPager(new ArrayResult($results), $page, $limit);
     }

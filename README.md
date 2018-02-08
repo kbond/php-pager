@@ -32,29 +32,19 @@ Central part of this library is the interface `Result`:
 ```php
 namespace Zenstruck\Porpaginas;
 
-interface Result extends Countable, IteratorAggregate
+interface Result extends \Countable, \IteratorAggregate, \JsonSerializable
 {
-    /**
-     * @param int $offset
-     * @param int $limit
-     *
-     * @return Page
-     */
-    public function take($offset, $limit);
+    public function take(int $offset, int $limit): Page;
 
     /**
      * Return the number of all results in the paginatable.
-     *
-     * @return int
      */
-    public function count();
+    public function count(): int;
 
     /**
      * Return an iterator over all results of the paginatable.
-     *
-     * @return \Iterator
      */
-    public function getIterator();
+    public function getIterator(): \Iterator;
 }
 ```
 
@@ -68,28 +58,22 @@ The `Page` interface returned from `Result::take()` looks like this:
 ```php
 namespace Zenstruck\Porpaginas;
 
-interface Page extends Countable, IteratorAggregate
+interface Page extends \Countable, \IteratorAggregate, \JsonSerializable
 {
     /**
-     * Return the number of results on the current page.
-     *
-     * @return int
+     * Return the number of results on the currrent page.
      */
-    public function count();
+    public function count(): int;
 
     /**
-     * Return the number of ALL results in the paginatable.
-     *
-     * @return int
+     * Return the number of ALL results in the paginatable..
      */
-    public function totalCount();
+    public function totalCount(): int;
 
     /**
      * Return an iterator over selected windows of results of the paginatable.
-     *
-     * @return Iterator
      */
-    public function getIterator();
+    public function getIterator(): \Iterator;
 }
 ```
 
@@ -104,12 +88,11 @@ interface Page extends Countable, IteratorAggregate
 Take the following example using Doctrine ORM:
 
 ```php
+use Zenstruck\Porpaginas\Result;
+
 class UserRepository extends EntityRepository
 {
-    /**
-     * @return Zenstruck\Porpaginas\Result
-     */
-    public function findAllUsers()
+    public function findAllUsers(): Result
     {
         $qb = $this->createQueryBuilder('u')->orderBy('u.username');
 
@@ -139,6 +122,30 @@ class UserController
         $paginator = $result->take(($request->get('page', 1)-1) * 20, 20);
 
         return array('users' => $paginator);
+    }
+}
+```
+
+This library also comes with `Pager` helpers. Using the `ResultPager`, the above controller's
+`porpaginasListAction()` could be re-written as follows:
+
+```php
+use Zenstruck\Porpaginas\Pager\ResultPager;
+
+class UserController
+{
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
+    public function porpaginasListAction(Request $request)
+    {
+        $result = $this->userRepository->findAllUsers();
+
+        $pager = new ResultPager($result, $request->get('page', 1);
+
+        return array('users' => $pager);
     }
 }
 ```

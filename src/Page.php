@@ -20,8 +20,6 @@ interface Page extends \Countable, \IteratorAggregate, \JsonSerializable
 
     /**
      * Return the number of ALL results in the paginatable of {@link Result}.
-     *
-     * @return int
      */
     public function totalCount(): int;
 

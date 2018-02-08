@@ -2,6 +2,7 @@
 
 namespace Zenstruck\Porpaginas\Callback;
 
+use Zenstruck\Porpaginas\JsonSerializable;
 use Zenstruck\Porpaginas\Page;
 
 /**
@@ -9,6 +10,8 @@ use Zenstruck\Porpaginas\Page;
  */
 final class CallbackPage implements Page
 {
+    use JsonSerializable;
+
     private $resultCallback;
     private $totalCountCallback;
     private $offset;
@@ -19,10 +22,8 @@ final class CallbackPage implements Page
     /**
      * @param callable $resultCallback     Returns an array
      * @param callable $totalCountCallback Returns an integer
-     * @param int      $offset
-     * @param int      $limit
      */
-    public function __construct(callable $resultCallback, callable $totalCountCallback, $offset, $limit)
+    public function __construct(callable $resultCallback, callable $totalCountCallback, int $offset, int $limit)
     {
         $this->resultCallback = $resultCallback;
         $this->totalCountCallback = $totalCountCallback;
@@ -30,67 +31,46 @@ final class CallbackPage implements Page
         $this->limit = $limit;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCurrentOffset()
+    public function getCurrentOffset(): int
     {
         return $this->offset;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCurrentPage()
+    public function getCurrentPage(): int
     {
-        return (int) (floor($this->offset / $this->limit) + 1);
+        return (int) (\floor($this->offset / $this->limit) + 1);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCurrentLimit()
+    public function getCurrentLimit(): int
     {
         return $this->limit;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function count()
+    public function count(): int
     {
-        return count($this->getResults());
+        return \count($this->getResults());
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function totalCount()
+    public function totalCount(): int
     {
-        if ($this->totalCount !== null) {
+        if (null !== $this->totalCount) {
             return $this->totalCount;
         }
 
-        return $this->totalCount = call_user_func($this->totalCountCallback);
+        return $this->totalCount = \call_user_func($this->totalCountCallback);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getIterator()
+    public function getIterator(): \Iterator
     {
         return $this->getResults();
     }
 
-    /**
-     * @return \ArrayIterator
-     */
-    private function getResults()
+    private function getResults(): \ArrayIterator
     {
-        if ($this->results !== null) {
+        if (null !== $this->results) {
             return $this->results;
         }
 
-        return $this->results = new \ArrayIterator(call_user_func($this->resultCallback, $this->offset, $this->limit));
+        return $this->results = new \ArrayIterator(\call_user_func($this->resultCallback, $this->offset, $this->limit));
     }
 }

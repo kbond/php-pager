@@ -7,10 +7,14 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Zenstruck\Porpaginas\Arrays\ArrayPage;
 use Zenstruck\Porpaginas\Callback\CallbackPage;
+use Zenstruck\Porpaginas\JsonSerializable;
+use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
 
 final class ORMQueryResult implements Result
 {
+    use JsonSerializable;
+
     private $query;
     private $fetchCollection;
     private $count;
@@ -18,9 +22,8 @@ final class ORMQueryResult implements Result
 
     /**
      * @param Query|QueryBuilder $query
-     * @param bool               $fetchCollection
      */
-    public function __construct($query, $fetchCollection = true)
+    public function __construct($query, bool $fetchCollection = true)
     {
         if ($query instanceof QueryBuilder) {
             $query = $query->getQuery();
@@ -30,67 +33,49 @@ final class ORMQueryResult implements Result
         $this->fetchCollection = $fetchCollection;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function take($offset, $limit)
+    public function take(int $offset, int $limit): Page
     {
-        if ($this->result !== null) {
+        if (null !== $this->result) {
             return new ArrayPage(
-                array_slice($this->result, $offset, $limit),
+                \array_slice($this->result, $offset, $limit),
                 $offset,
                 $limit,
-                count($this->result)
+                \count($this->result)
             );
         }
 
         $results = function ($offset, $limit) {
-            return iterator_to_array($this->createPaginator($offset, $limit));
+            return \iterator_to_array($this->createPaginator($offset, $limit));
         };
 
         return new CallbackPage($results, [$this, 'count'], $offset, $limit);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function count()
+    public function count(): int
     {
         if (null !== $this->count) {
             return $this->count;
         }
 
-        return $this->count = count($this->createPaginator(0, 1));
+        return $this->count = \count($this->createPaginator(0, 1));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getIterator()
+    public function getIterator(): \Iterator
     {
         if (null === $this->result) {
             $this->result = $this->query->execute();
-            $this->count = count($this->result);
+            $this->count = \count($this->result);
         }
 
         return new \ArrayIterator($this->result);
     }
 
-    /**
-     * @return Query
-     */
-    public function getQuery()
+    public function getQuery(): Query
     {
         return $this->query;
     }
 
-    /**
-     * @param int $offset
-     * @param int $limit
-     *
-     * @return Paginator
-     */
-    private function createPaginator($offset, $limit)
+    private function createPaginator(int $offset, int $limit): Paginator
     {
         $query = clone $this->query;
         $query->setParameters($this->query->getParameters());

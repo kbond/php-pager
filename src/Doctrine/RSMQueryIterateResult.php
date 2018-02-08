@@ -5,6 +5,8 @@ namespace Zenstruck\Porpaginas\Doctrine;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
+use Zenstruck\Porpaginas\JsonSerializable;
+use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
 
 /**
@@ -12,41 +14,28 @@ use Zenstruck\Porpaginas\Result;
  */
 final class RSMQueryIterateResult implements Result
 {
+    use JsonSerializable;
+
     private $child;
     private $em;
 
-    /**
-     * @param EntityManagerInterface  $em
-     * @param ResultSetMappingBuilder $rsm
-     * @param QueryBuilder            $qb
-     * @param callable|null           $countQueryBuilderModifier
-     */
     public function __construct(EntityManagerInterface $em, ResultSetMappingBuilder $rsm, QueryBuilder $qb, callable $countQueryBuilderModifier = null)
     {
         $this->em = $em;
         $this->child = new RSMQueryResult($em, $rsm, $qb, $countQueryBuilderModifier);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function take($offset, $limit)
+    public function take(int $offset, int $limit): Page
     {
         return $this->child->take($offset, $limit);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function count()
+    public function count(): int
     {
         return $this->child->count();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getIterator()
+    public function getIterator(): \Iterator
     {
         foreach ($this->child->getQuery()->iterate() as $row) {
             yield $row[0];

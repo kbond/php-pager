@@ -23,9 +23,6 @@ final class PorpaginasSubscriber implements EventSubscriberInterface
         $event->stopPropagation();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function getSubscribedEvents()
     {
         return ['knp_pager.items' => ['items', 0]];

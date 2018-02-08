@@ -14,17 +14,11 @@ final class PorpaginasAdapter implements AdapterInterface
         $this->result = $result;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getNbResults()
     {
         return $this->result->count();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getSlice($offset, $length)
     {
         return $this->result->take($offset, $length);

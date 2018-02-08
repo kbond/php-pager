@@ -2,10 +2,14 @@
 
 namespace Zenstruck\Porpaginas\Arrays;
 
+use Zenstruck\Porpaginas\JsonSerializable;
+use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
 
 final class ArrayResult implements Result
 {
+    use JsonSerializable;
+
     private $data;
 
     public function __construct(array $data)
@@ -13,31 +17,22 @@ final class ArrayResult implements Result
         $this->data = $data;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function take($offset, $limit)
+    public function take(int $offset, int $limit): Page
     {
         return new ArrayPage(
-            array_slice($this->data, $offset, $limit),
+            \array_slice($this->data, $offset, $limit),
             $offset,
             $limit,
-            count($this->data)
+            \count($this->data)
         );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function count()
+    public function count(): int
     {
-        return count($this->data);
+        return \count($this->data);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getIterator()
+    public function getIterator(): \Iterator
     {
         return new \ArrayIterator($this->data);
     }

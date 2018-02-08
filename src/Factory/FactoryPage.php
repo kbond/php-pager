@@ -2,6 +2,7 @@
 
 namespace Zenstruck\Porpaginas\Factory;
 
+use Zenstruck\Porpaginas\JsonSerializable;
 use Zenstruck\Porpaginas\Page;
 
 /**
@@ -9,6 +10,8 @@ use Zenstruck\Porpaginas\Page;
  */
 final class FactoryPage implements Page
 {
+    use JsonSerializable;
+
     private $factory;
     private $page;
 
@@ -18,53 +21,35 @@ final class FactoryPage implements Page
         $this->page = $page;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCurrentOffset()
+    public function getCurrentOffset(): int
     {
         return $this->page->getCurrentOffset();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCurrentPage()
+    public function getCurrentPage(): int
     {
         return $this->page->getCurrentPage();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCurrentLimit()
+    public function getCurrentLimit(): int
     {
         return $this->page->getCurrentLimit();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function count()
+    public function count(): int
     {
         return $this->page->count();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function totalCount()
+    public function totalCount(): int
     {
         return $this->page->totalCount();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getIterator()
+    public function getIterator(): \Iterator
     {
         foreach ($this->page as $result) {
-            yield call_user_func($this->factory, $result);
+            yield \call_user_func($this->factory, $result);
         }
     }
 }

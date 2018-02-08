@@ -2,9 +2,10 @@
 
 namespace Zenstruck\Porpaginas\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Zenstruck\Porpaginas\Result;
 
-abstract class ResultTestCase extends \PHPUnit_Framework_TestCase
+abstract class ResultTestCase extends TestCase
 {
     /**
      * @test
@@ -23,7 +24,7 @@ abstract class ResultTestCase extends \PHPUnit_Framework_TestCase
     {
         $result = $this->createResultWithItems(11);
 
-        $this->assertCount(11, iterator_to_array($result));
+        $this->assertCount(11, \iterator_to_array($result));
     }
 
     /**
@@ -67,7 +68,7 @@ abstract class ResultTestCase extends \PHPUnit_Framework_TestCase
         $page = $result->take(10, 5);
 
         $this->assertCount(5, $page);
-        $this->assertCount(5, iterator_to_array($page));
+        $this->assertCount(5, \iterator_to_array($page));
     }
 
     /**
@@ -79,7 +80,7 @@ abstract class ResultTestCase extends \PHPUnit_Framework_TestCase
 
         $page = $result->take(10, 5);
 
-        $this->assertCount(5, iterator_to_array($page));
+        $this->assertCount(5, \iterator_to_array($page));
         $this->assertCount(5, $page);
     }
 
@@ -90,7 +91,7 @@ abstract class ResultTestCase extends \PHPUnit_Framework_TestCase
     {
         $result = $this->createResultWithItems(1);
 
-        $this->assertEquals($this->getExpectedFirstValue(), iterator_to_array($result)[0]);
+        $this->assertEquals($this->getExpectedFirstValue(), \iterator_to_array($result)[0]);
     }
 
     /**
@@ -101,19 +102,31 @@ abstract class ResultTestCase extends \PHPUnit_Framework_TestCase
         $result = $this->createResultWithItems(0);
 
         $this->assertCount(0, $result);
-        $this->assertSame([], iterator_to_array($result));
-        $this->assertSame([], iterator_to_array($result->take(0, 10)));
+        $this->assertSame([], \iterator_to_array($result));
+        $this->assertSame([], \iterator_to_array($result->take(0, 10)));
     }
 
     /**
-     * @param int $count
-     *
-     * @return Result
+     * @test
      */
-    abstract protected function createResultWithItems($count);
+    public function result_is_json_serialzable()
+    {
+        $result = $this->createResultWithItems(10);
+
+        $this->assertSame(\json_encode(\iterator_to_array($result)), \json_encode($result));
+    }
 
     /**
-     * @return mixed
+     * @test
      */
+    public function page_is_json_serializable()
+    {
+        $page = $this->createResultWithItems(10)->take(5, 3);
+
+        $this->assertSame(\json_encode(\iterator_to_array($page)), \json_encode($page));
+    }
+
+    abstract protected function createResultWithItems(int $count): Result;
+
     abstract protected function getExpectedFirstValue();
 }

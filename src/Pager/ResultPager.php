@@ -2,6 +2,7 @@
 
 namespace Zenstruck\Porpaginas\Pager;
 
+use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Pager;
 use Zenstruck\Porpaginas\Result;
 
@@ -10,48 +11,23 @@ use Zenstruck\Porpaginas\Result;
  */
 final class ResultPager extends Pager
 {
-    const DEFAULT_LIMIT = 20;
+    public const DEFAULT_LIMIT = 20;
 
     private $result;
     private $page;
     private $limit;
+
+    /** @var Page|null */
     private $cachedPage;
 
-    /**
-     * @param Result $result
-     * @param int    $page
-     * @param int    $limit
-     */
-    public function __construct(Result $result, $page = 1, $limit = self::DEFAULT_LIMIT)
+    public function __construct(Result $result, int $page = 1, int $limit = self::DEFAULT_LIMIT)
     {
-        if (!is_numeric($page)) {
-            $page = 1;
-        }
-
-        if (!is_numeric($limit)) {
-            $limit = self::DEFAULT_LIMIT;
-        }
-
-        $page = (int) $page;
-        $limit = (int) $limit;
-
-        if ($page < 1) {
-            $page = 1;
-        }
-
-        if ($limit < 1) {
-            $limit = 1;
-        }
-
         $this->result = $result;
-        $this->page = $page;
-        $this->limit = $limit;
+        $this->page = $page < 1 ? 1 : $page;
+        $this->limit = $limit < 1 ? self::DEFAULT_LIMIT : $limit;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCurrentPage()
+    public function getCurrentPage(): int
     {
         $lastPage = $this->getLastPage();
 
@@ -62,36 +38,29 @@ final class ResultPager extends Pager
         return $this->page;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getLimit()
+    public function getLimit(): int
     {
         return $this->limit;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function count()
+    public function count(): int
     {
-        return $this->getResults()->count();
+        return $this->getPage()->count();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function totalCount()
+    public function totalCount(): int
     {
         return $this->result->count();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getResults()
+    public function getIterator(): \Iterator
     {
-        if ($this->cachedPage !== null) {
+        return $this->getPage()->getIterator();
+    }
+
+    private function getPage(): Page
+    {
+        if ($this->cachedPage) {
             return $this->cachedPage;
         }
 

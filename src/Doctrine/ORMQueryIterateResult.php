@@ -5,6 +5,8 @@ namespace Zenstruck\Porpaginas\Doctrine;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
+use Zenstruck\Porpaginas\JsonSerializable;
+use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
 
 /**
@@ -12,40 +14,31 @@ use Zenstruck\Porpaginas\Result;
  */
 final class ORMQueryIterateResult implements Result
 {
+    use JsonSerializable;
+
     private $em;
     private $child;
 
     /**
-     * @param EntityManagerInterface $em
-     * @param Query|QueryBuilder     $query
-     * @param bool                   $fetchCollection
+     * @param Query|QueryBuilder $query
      */
-    public function __construct(EntityManagerInterface $em, $query, $fetchCollection = true)
+    public function __construct(EntityManagerInterface $em, $query, bool $fetchCollection = true)
     {
         $this->em = $em;
         $this->child = new ORMQueryResult($query, $fetchCollection);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function take($offset, $limit)
+    public function take(int $offset, int $limit): Page
     {
         return $this->child->take($offset, $limit);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function count()
+    public function count(): int
     {
         return $this->child->count();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getIterator()
+    public function getIterator(): \Iterator
     {
         foreach ($this->child->getQuery()->iterate() as $row) {
             yield $row[0];

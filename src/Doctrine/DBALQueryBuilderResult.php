@@ -4,6 +4,8 @@ namespace Zenstruck\Porpaginas\Doctrine;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use Zenstruck\Porpaginas\Callback\CallbackPage;
+use Zenstruck\Porpaginas\JsonSerializable;
+use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
 
 /**
@@ -11,14 +13,12 @@ use Zenstruck\Porpaginas\Result;
  */
 final class DBALQueryBuilderResult implements Result
 {
+    use JsonSerializable;
+
     private $qb;
     private $countQueryBuilderModifier;
     private $count;
 
-    /**
-     * @param QueryBuilder  $qb
-     * @param callable|null $countQueryBuilderModifier
-     */
     public function __construct(QueryBuilder $qb, callable $countQueryBuilderModifier = null)
     {
         $this->qb = $qb;
@@ -27,10 +27,7 @@ final class DBALQueryBuilderResult implements Result
         };
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function take($offset, $limit)
+    public function take(int $offset, int $limit): Page
     {
         $qb = clone $this->qb;
         $results = function ($offset, $limit) use ($qb) {
@@ -38,32 +35,27 @@ final class DBALQueryBuilderResult implements Result
                 ->setFirstResult($offset)
                 ->setMaxResults($limit)
                 ->execute()
-                ->fetchAll();
+                ->fetchAll()
+            ;
         };
 
         return new CallbackPage($results, [$this, 'count'], $offset, $limit);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function count()
+    public function count(): int
     {
-        if ($this->count !== null) {
+        if (null !== $this->count) {
             return $this->count;
         }
 
         $qb = clone $this->qb;
 
-        call_user_func($this->countQueryBuilderModifier, $qb);
+        \call_user_func($this->countQueryBuilderModifier, $qb);
 
         return $this->count = (int) $qb->execute()->fetchColumn();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getIterator()
+    public function getIterator(): \Iterator
     {
         $stmt = $this->qb->execute();
 

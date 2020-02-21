@@ -5,6 +5,7 @@ namespace Zenstruck\Porpaginas\Doctrine;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use DoctrineBatchUtils\BatchProcessing\SimpleBatchIteratorAggregate;
 use Zenstruck\Porpaginas\Callback\CallbackPage;
 use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
@@ -56,6 +57,22 @@ final class ORMQueryResult implements Result
 
             $this->query->getEntityManager()->detach($row[0]);
         }
+    }
+
+    public function batchIterator(int $batchSize = 100): iterable
+    {
+        if (!\class_exists(SimpleBatchIteratorAggregate::class)) {
+            throw new \RuntimeException('To enable batch processing, you must install "ocramius/doctrine-batch-utils": composer require ocramius/doctrine-batch-utils');
+        }
+
+        $this->count = null; // reset count as entities may have been removed
+
+        $logger = $this->query->getEntityManager()->getConfiguration()->getSQLLogger();
+        $this->query->getEntityManager()->getConfiguration()->setSQLLogger(null);
+
+        yield from SimpleBatchIteratorAggregate::fromQuery($this->query, $batchSize);
+
+        $this->query->getEntityManager()->getConfiguration()->setSQLLogger($logger);
     }
 
     private function createPaginator(int $offset, int $limit): Paginator

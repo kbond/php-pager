@@ -24,6 +24,6 @@ class DBALQueryBuilderResultTest extends DoctrineResultTestCase
 
     protected function getExpectedFirstValue()
     {
-        return ['id' => 1];
+        return ['id' => 1, 'value' => 'value'];
     }
 }

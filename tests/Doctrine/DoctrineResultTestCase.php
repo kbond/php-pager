@@ -66,9 +66,16 @@ abstract class DoctrineResultTestCase extends ResultTestCase
 class DoctrineOrmEntity
 {
     /**
-     * @Id @Column(type="integer") @GeneratedValue
+     * @Id
+     * @Column(type="integer")
+     * @GeneratedValue
      */
-    private $id;
+    public $id;
+
+    /**
+     * @Column(type="string")
+     */
+    public $value = 'value';
 
     public function __construct($id = null)
     {

@@ -53,11 +53,6 @@ abstract class DoctrineResultTestCase extends ResultTestCase
         $this->em->flush();
         $this->em->clear();
     }
-
-    protected function getExpectedFirstValue()
-    {
-        return new DoctrineOrmEntity(1);
-    }
 }
 
 /**

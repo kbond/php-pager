@@ -48,4 +48,9 @@ abstract class ORMResultTest extends DoctrineResultTestCase
 
         $this->assertCount(0, $result);
     }
+
+    protected function getExpectedFirstValue()
+    {
+        return new DoctrineOrmEntity(1);
+    }
 }

@@ -14,7 +14,7 @@ interface Page extends \Countable, \IteratorAggregate
     public function getCurrentLimit(): int;
 
     /**
-     * Return the number of results on the currrent page of the {@link Result}.
+     * Return the number of results on the current page of the {@link Result}.
      */
     public function count(): int;
 
@@ -26,5 +26,5 @@ interface Page extends \Countable, \IteratorAggregate
     /**
      * Return an iterator over selected windows of results of the paginatable.
      */
-    public function getIterator(): \Iterator;
+    public function getIterator(): iterable;
 }

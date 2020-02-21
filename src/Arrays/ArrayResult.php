@@ -29,7 +29,7 @@ final class ArrayResult implements Result
         return \count($this->data);
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): iterable
     {
         return new \ArrayIterator($this->data);
     }

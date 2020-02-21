@@ -44,7 +44,7 @@ final class ArrayPage implements Page
         return $this->totalCount;
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): iterable
     {
         return new \ArrayIterator($this->slice);
     }

@@ -53,7 +53,7 @@ final class ResultPager extends Pager
         return $this->result->count();
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): iterable
     {
         return $this->getPage()->getIterator();
     }

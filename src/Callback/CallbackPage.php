@@ -57,7 +57,7 @@ final class CallbackPage implements Page
         return $this->totalCount = \call_user_func($this->totalCountCallback);
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): iterable
     {
         return $this->getResults();
     }

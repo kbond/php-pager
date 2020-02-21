@@ -35,7 +35,7 @@ final class ORMQueryIterateResult implements Result
         return $this->child->count();
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): iterable
     {
         foreach ($this->child->getQuery()->iterate() as $row) {
             yield $row[0];

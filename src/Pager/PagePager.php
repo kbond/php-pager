@@ -37,7 +37,7 @@ final class PagePager extends Pager
         return $this->page->totalCount();
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): iterable
     {
         return $this->page->getIterator();
     }

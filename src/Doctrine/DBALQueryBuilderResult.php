@@ -52,7 +52,7 @@ final class DBALQueryBuilderResult implements Result
         return $this->count = (int) $qb->execute()->fetchColumn();
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): iterable
     {
         $stmt = $this->qb->execute();
 

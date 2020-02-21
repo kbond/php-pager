@@ -57,7 +57,7 @@ final class ORMQueryResult implements Result
         return $this->count = \count($this->createPaginator(0, 1));
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): iterable
     {
         if (null === $this->result) {
             $this->result = $this->query->execute();

@@ -50,7 +50,7 @@ final class FactoryPager extends Pager
         return $this->inner->totalCount();
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): iterable
     {
         return $this->inner->getIterator();
     }

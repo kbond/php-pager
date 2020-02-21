@@ -29,7 +29,7 @@ final class FactoryResult implements Result
         return $this->result->count();
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): iterable
     {
         foreach ($this->result as $result) {
             yield \call_user_func($this->factory, $result);

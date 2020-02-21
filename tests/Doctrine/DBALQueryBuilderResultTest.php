@@ -12,8 +12,9 @@ class DBALQueryBuilderResultTest extends DoctrineResultTestCase
 {
     protected function createResultWithItems(int $count): Result
     {
-        $em = $this->setupEntityManager($count);
-        $qb = $em->getConnection()->createQueryBuilder()
+        $this->persistEntities($count);
+
+        $qb = $this->em->getConnection()->createQueryBuilder()
             ->select('*')
             ->from('DoctrineOrmEntity', 'e')
         ;

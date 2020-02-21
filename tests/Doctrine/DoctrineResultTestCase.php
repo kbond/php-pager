@@ -12,8 +12,13 @@ use Zenstruck\Porpaginas\Tests\ResultTestCase;
  */
 abstract class DoctrineResultTestCase extends ResultTestCase
 {
-    protected function setupEntityManager($count)
+    /** @var EntityManager */
+    protected $em;
+
+    protected function setUp()
     {
+        parent::setUp();
+
         $paths = [];
         $isDevMode = false;
 
@@ -24,21 +29,29 @@ abstract class DoctrineResultTestCase extends ResultTestCase
         ];
 
         $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
-        $entityManager = EntityManager::create($dbParams, $config);
+        $this->em = EntityManager::create($dbParams, $config);
 
-        $schemaTool = new SchemaTool($entityManager);
+        $schemaTool = new SchemaTool($this->em);
         $schemaTool->createSchema([
-            $entityManager->getClassMetadata(__NAMESPACE__.'\\DoctrineOrmEntity'),
+            $this->em->getClassMetadata(__NAMESPACE__.'\\DoctrineOrmEntity'),
         ]);
+    }
 
+    protected function tearDown()
+    {
+        parent::tearDown();
+
+        $this->em = null;
+    }
+
+    protected function persistEntities(int $count): void
+    {
         for ($i = 0; $i < $count; ++$i) {
-            $entityManager->persist(new DoctrineOrmEntity());
+            $this->em->persist(new DoctrineOrmEntity());
         }
 
-        $entityManager->flush();
-        $entityManager->clear();
-
-        return $entityManager;
+        $this->em->flush();
+        $this->em->clear();
     }
 
     protected function getExpectedFirstValue()

@@ -13,13 +13,13 @@ use Zenstruck\Porpaginas\Result;
 final class DBALQueryBuilderResult implements Result
 {
     private $qb;
-    private $countQueryBuilderModifier;
+    private $countModifier;
     private $count;
 
-    public function __construct(QueryBuilder $qb, callable $countQueryBuilderModifier = null)
+    public function __construct(QueryBuilder $qb, callable $countModifier = null)
     {
         $this->qb = $qb;
-        $this->countQueryBuilderModifier = $countQueryBuilderModifier ?: function (QueryBuilder $qb) {
+        $this->countModifier = $countModifier ?: function (QueryBuilder $qb) {
             return $qb->select('COUNT(*)');
         };
     }
@@ -47,7 +47,7 @@ final class DBALQueryBuilderResult implements Result
 
         $qb = clone $this->qb;
 
-        \call_user_func($this->countQueryBuilderModifier, $qb);
+        \call_user_func($this->countModifier, $qb);
 
         return $this->count = (int) $qb->execute()->fetchColumn();
     }

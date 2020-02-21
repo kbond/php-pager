@@ -5,7 +5,6 @@ namespace Zenstruck\Porpaginas\Doctrine;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
-use Zenstruck\Porpaginas\Arrays\ArrayPage;
 use Zenstruck\Porpaginas\Callback\CallbackPage;
 use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
@@ -15,7 +14,6 @@ final class ORMQueryResult implements Result
     private $query;
     private $fetchCollection;
     private $count;
-    private $result;
 
     /**
      * @param Query|QueryBuilder $query
@@ -32,20 +30,14 @@ final class ORMQueryResult implements Result
 
     public function take(int $offset, int $limit): Page
     {
-        if (null !== $this->result) {
-            return new ArrayPage(
-                \array_slice($this->result, $offset, $limit),
-                $offset,
-                $limit,
-                \count($this->result)
-            );
-        }
-
-        $results = function ($offset, $limit) {
-            return \iterator_to_array($this->createPaginator($offset, $limit));
-        };
-
-        return new CallbackPage($results, [$this, 'count'], $offset, $limit);
+        return new CallbackPage(
+            function ($offset, $limit) {
+                return \iterator_to_array($this->createPaginator($offset, $limit));
+            },
+            [$this, 'count'],
+            $offset,
+            $limit
+        );
     }
 
     public function count(): int
@@ -54,22 +46,16 @@ final class ORMQueryResult implements Result
             return $this->count;
         }
 
-        return $this->count = \count($this->createPaginator(0, 1));
+        return $this->count = \count(new Paginator($this->query, $this->fetchCollection));
     }
 
     public function getIterator(): iterable
     {
-        if (null === $this->result) {
-            $this->result = $this->query->execute();
-            $this->count = \count($this->result);
+        foreach ($this->query->iterate() as $row) {
+            yield $row[0];
+
+            $this->query->getEntityManager()->detach($row[0]);
         }
-
-        return new \ArrayIterator($this->result);
-    }
-
-    public function getQuery(): Query
-    {
-        return $this->query;
     }
 
     private function createPaginator(int $offset, int $limit): Paginator

@@ -5,7 +5,7 @@ namespace Zenstruck\Porpaginas;
 /**
  * Interface for lazy paginators.
  */
-interface Page extends \Countable, \IteratorAggregate, \JsonSerializable
+interface Page extends \Countable, \IteratorAggregate
 {
     public function getCurrentOffset(): int;
 

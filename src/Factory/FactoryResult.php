@@ -2,7 +2,6 @@
 
 namespace Zenstruck\Porpaginas\Factory;
 
-use Zenstruck\Porpaginas\JsonSerializable;
 use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
 
@@ -11,8 +10,6 @@ use Zenstruck\Porpaginas\Result;
  */
 final class FactoryResult implements Result
 {
-    use JsonSerializable;
-
     private $factory;
     private $result;
 

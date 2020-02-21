@@ -2,14 +2,11 @@
 
 namespace Zenstruck\Porpaginas\Arrays;
 
-use Zenstruck\Porpaginas\JsonSerializable;
 use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
 
 final class ArrayResult implements Result
 {
-    use JsonSerializable;
-
     private $data;
 
     public function __construct(array $data)

@@ -5,7 +5,6 @@ namespace Zenstruck\Porpaginas\Doctrine;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
-use Zenstruck\Porpaginas\JsonSerializable;
 use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
 
@@ -14,8 +13,6 @@ use Zenstruck\Porpaginas\Result;
  */
 final class ORMQueryIterateResult implements Result
 {
-    use JsonSerializable;
-
     private $em;
     private $child;
 

@@ -95,27 +95,5 @@ abstract class PagerTestCase extends TestCase
         $this->assertSame(\range(1, 10), \iterator_to_array($pager));
     }
 
-    /**
-     * @test
-     */
-    public function it_is_json_serializable()
-    {
-        $pager = $this->createPager(\range(1, 10), 2, 3);
-        $expected = \json_encode([
-            'items' => \range(4, 6),
-            'count' => 3,
-            'total' => 10,
-            'limit' => 3,
-            'pages' => 4,
-            'first' => 1,
-            'previous' => 1,
-            'current' => 2,
-            'next' => 3,
-            'last' => 4,
-        ]);
-
-        $this->assertSame($expected, \json_encode($pager));
-    }
-
     abstract protected function createPager(array $results, int $page, int $limit): Pager;
 }

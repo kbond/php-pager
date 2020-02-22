@@ -51,11 +51,16 @@ final class ORMQueryResult implements Result
 
     public function getIterator(): \Traversable
     {
+        $logger = $this->query->getEntityManager()->getConfiguration()->getSQLLogger();
+        $this->query->getEntityManager()->getConfiguration()->setSQLLogger(null);
+
         foreach ($this->query->iterate() as $row) {
             yield $row[0];
 
-            $this->query->getEntityManager()->detach($row[0]);
+            $this->query->getEntityManager()->clear();
         }
+
+        $this->query->getEntityManager()->getConfiguration()->setSQLLogger($logger);
     }
 
     public function batchIterator(int $batchSize = 100): ORMBatchProcessor

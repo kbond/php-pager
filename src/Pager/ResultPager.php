@@ -53,7 +53,7 @@ final class ResultPager extends Pager
         return $this->result->count();
     }
 
-    public function getIterator(): iterable
+    public function getIterator(): \Traversable
     {
         return $this->getPage()->getIterator();
     }

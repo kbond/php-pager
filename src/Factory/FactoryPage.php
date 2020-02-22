@@ -43,7 +43,7 @@ final class FactoryPage implements Page
         return $this->page->totalCount();
     }
 
-    public function getIterator(): iterable
+    public function getIterator(): \Traversable
     {
         foreach ($this->page as $result) {
             yield \call_user_func($this->factory, $result);

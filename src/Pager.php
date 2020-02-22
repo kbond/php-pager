@@ -67,5 +67,5 @@ abstract class Pager implements \Countable, \IteratorAggregate
     /**
      * Return an iterator over selected windows of results of the paginatable.
      */
-    abstract public function getIterator(): iterable;
+    abstract public function getIterator(): \Traversable;
 }

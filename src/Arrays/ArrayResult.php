@@ -29,7 +29,7 @@ final class ArrayResult implements Result
         return \count($this->data);
     }
 
-    public function getIterator(): iterable
+    public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->data);
     }

@@ -50,7 +50,7 @@ final class ORMQueryResult implements Result
         return $this->count = \count(new Paginator($this->query, $this->fetchCollection));
     }
 
-    public function getIterator(): iterable
+    public function getIterator(): \Traversable
     {
         foreach ($this->query->iterate() as $row) {
             yield $row[0];
@@ -59,7 +59,7 @@ final class ORMQueryResult implements Result
         }
     }
 
-    public function batchIterator(int $batchSize = 100): iterable
+    public function batchIterator(int $batchSize = 100): \Traversable
     {
         if (!\class_exists(SimpleBatchIteratorAggregate::class)) {
             throw new \RuntimeException('To enable batch processing, you must install "ocramius/doctrine-batch-utils": composer require ocramius/doctrine-batch-utils');

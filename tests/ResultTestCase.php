@@ -89,9 +89,20 @@ abstract class ResultTestCase extends TestCase
      */
     public function results_match_the_expected_value()
     {
-        $result = $this->createResultWithItems(1);
+        $result = $this->createResultWithItems(11);
 
-        $this->assertEquals($this->getExpectedFirstValue(), \iterator_to_array($result)[0]);
+        $this->assertEquals($this->getExpectedValueAtPosition(1), \iterator_to_array($result)[0]);
+        $this->assertEquals($this->getExpectedValueAtPosition(5), \iterator_to_array($result)[4]);
+        $this->assertEquals($this->getExpectedValueAtPosition(11), \iterator_to_array($result)[10]);
+
+        $page = $result->take(0, 10);
+
+        $this->assertEquals($this->getExpectedValueAtPosition(1), \iterator_to_array($page)[0]);
+        $this->assertEquals($this->getExpectedValueAtPosition(10), \iterator_to_array($page)[9]);
+
+        $page = $result->take(10, 10);
+
+        $this->assertEquals($this->getExpectedValueAtPosition(11), \iterator_to_array($page)[0]);
     }
 
     /**
@@ -108,5 +119,8 @@ abstract class ResultTestCase extends TestCase
 
     abstract protected function createResultWithItems(int $count): Result;
 
-    abstract protected function getExpectedFirstValue();
+    /**
+     * @return mixed
+     */
+    abstract protected function getExpectedValueAtPosition(int $position);
 }

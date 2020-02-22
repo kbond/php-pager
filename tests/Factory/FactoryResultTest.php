@@ -32,11 +32,17 @@ class FactoryResultTest extends ResultTestCase
 
     protected function createResultWithItems(int $count): Result
     {
-        return new FactoryResult([$this, 'factory'], new ArrayResult($count ? \array_fill(0, $count, 'value') : []));
+        $array = [];
+
+        for ($i = 1; $i <= $count; ++$i) {
+            $array[] = 'value '.$i;
+        }
+
+        return new FactoryResult([$this, 'factory'], new ArrayResult($array));
     }
 
-    protected function getExpectedFirstValue()
+    protected function getExpectedValueAtPosition(int $position)
     {
-        return 'factory value';
+        return 'factory value '.$position;
     }
 }

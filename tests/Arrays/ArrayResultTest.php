@@ -10,11 +10,17 @@ class ArrayResultTest extends ResultTestCase
 {
     protected function createResultWithItems(int $count): Result
     {
-        return new ArrayResult($count ? \array_fill(0, $count, 'value') : []);
+        $array = [];
+
+        for ($i = 1; $i <= $count; ++$i) {
+            $array[] = 'value '.$i;
+        }
+
+        return new ArrayResult($array);
     }
 
-    protected function getExpectedFirstValue()
+    protected function getExpectedValueAtPosition(int $position)
     {
-        return 'value';
+        return 'value '.$position;
     }
 }

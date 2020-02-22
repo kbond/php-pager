@@ -22,8 +22,8 @@ class DBALQueryBuilderResultTest extends DoctrineResultTestCase
         return new DBALQueryBuilderResult($qb);
     }
 
-    protected function getExpectedFirstValue()
+    protected function getExpectedValueAtPosition(int $position)
     {
-        return ['id' => 1, 'value' => 'value'];
+        return ['id' => $position, 'value' => 'value'];
     }
 }

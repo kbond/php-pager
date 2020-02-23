@@ -11,7 +11,7 @@ class ORMQueryResultTest extends ORMResultTest
     {
         $this->persistEntities($count);
 
-        $query = $this->em->createQuery(\sprintf('SELECT e FROM %s e', DoctrineOrmEntity::class));
+        $query = $this->em->createQuery(\sprintf('SELECT e FROM %s e', ORMEntity::class));
 
         return new ORMQueryResult($query);
     }

@@ -16,7 +16,7 @@ class ORMQueryBuilderResultTest extends ORMResultTest
 
         $qb = $this->em->createQueryBuilder()
             ->select('e')
-            ->from(DoctrineOrmEntity::class, 'e')
+            ->from(ORMEntity::class, 'e')
         ;
 
         return new ORMQueryResult($qb);

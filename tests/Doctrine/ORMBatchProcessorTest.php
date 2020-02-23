@@ -29,10 +29,10 @@ class ORMBatchProcessorTest extends TestCase
         $this->assertCount(211, $batchProcessor);
 
         foreach ($batchProcessor as $item) {
-            $this->em->persist(new DoctrineOrmEntity(null, $item));
+            $this->em->persist(new ORMEntity($item));
         }
 
-        $entities = $this->em->getRepository(DoctrineOrmEntity::class)->findAll();
+        $entities = $this->em->getRepository(ORMEntity::class)->findAll();
 
         $this->assertCount(211, $entities);
         $this->assertSame('value 32', $entities[31]->value);

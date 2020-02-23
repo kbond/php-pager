@@ -20,9 +20,9 @@ abstract class ORMResultTest extends DoctrineResultTestCase
     public function can_batch_update_results()
     {
         $result = $this->createResultWithItems(2);
-        $values = \array_map(function (DoctrineOrmEntity $entity) { return $entity->value; }, \iterator_to_array($result));
+        $values = \array_map(function (ORMEntity $entity) { return $entity->value; }, \iterator_to_array($result));
 
-        $this->assertSame(['value', 'value'], $values);
+        $this->assertSame(['value 1', 'value 2'], $values);
 
         $batchIterator = $result->batchIterator();
 
@@ -33,11 +33,11 @@ abstract class ORMResultTest extends DoctrineResultTestCase
         }
 
         $values = \array_map(
-            function (DoctrineOrmEntity $entity) { return $entity->value; },
-            $this->em->getRepository(DoctrineOrmEntity::class)->findAll()
+            function (ORMEntity $entity) { return $entity->value; },
+            $this->em->getRepository(ORMEntity::class)->findAll()
         );
 
-        $this->assertSame(['new value', 'new value'], $values);
+        $this->assertSame(['new value 1', 'new value 2'], $values);
     }
 
     /**
@@ -57,11 +57,11 @@ abstract class ORMResultTest extends DoctrineResultTestCase
             $this->em->remove($item);
         }
 
-        $this->assertCount(0, $this->em->getRepository(DoctrineOrmEntity::class)->findAll());
+        $this->assertCount(0, $this->em->getRepository(ORMEntity::class)->findAll());
     }
 
     protected function getExpectedValueAtPosition(int $position)
     {
-        return new DoctrineOrmEntity($position);
+        return new ORMEntity('value '.$position, $position);
     }
 }

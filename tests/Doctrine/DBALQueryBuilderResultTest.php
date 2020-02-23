@@ -16,7 +16,7 @@ class DBALQueryBuilderResultTest extends DoctrineResultTestCase
 
         $qb = $this->em->getConnection()->createQueryBuilder()
             ->select('*')
-            ->from('DoctrineOrmEntity', 'e')
+            ->from('ORMEntity', 'e')
         ;
 
         return new DBALQueryBuilderResult($qb);
@@ -24,6 +24,6 @@ class DBALQueryBuilderResultTest extends DoctrineResultTestCase
 
     protected function getExpectedValueAtPosition(int $position)
     {
-        return ['id' => $position, 'value' => 'value'];
+        return ['id' => $position, 'value' => 'value '.$position];
     }
 }

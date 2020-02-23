@@ -14,7 +14,7 @@ abstract class DoctrineResultTestCase extends ResultTestCase
     protected function persistEntities(int $count): void
     {
         for ($i = 0; $i < $count; ++$i) {
-            $this->em->persist(new DoctrineOrmEntity());
+            $this->em->persist(new ORMEntity('value '.($i + 1)));
         }
 
         $this->em->flush();

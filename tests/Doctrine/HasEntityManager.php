@@ -33,7 +33,7 @@ trait HasEntityManager
 
         $schemaTool = new SchemaTool($this->em);
         $schemaTool->createSchema([
-            $this->em->getClassMetadata(__NAMESPACE__.'\\DoctrineOrmEntity'),
+            $this->em->getClassMetadata(ORMEntity::class),
         ]);
     }
 
@@ -49,7 +49,7 @@ trait HasEntityManager
 /**
  * @Entity
  */
-class DoctrineOrmEntity
+class ORMEntity
 {
     /**
      * @Id
@@ -63,9 +63,9 @@ class DoctrineOrmEntity
      */
     public $value;
 
-    public function __construct($id = null, string $value = null)
+    public function __construct(string $value, int $id = null)
     {
         $this->id = $id;
-        $this->value = $value ?: 'value';
+        $this->value = $value;
     }
 }

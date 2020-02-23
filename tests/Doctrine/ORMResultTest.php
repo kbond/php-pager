@@ -24,7 +24,11 @@ abstract class ORMResultTest extends DoctrineResultTestCase
 
         $this->assertSame(['value', 'value'], $values);
 
-        foreach ($result->batchIterator() as $item) {
+        $batchIterator = $result->batchIterator();
+
+        $this->assertCount(2, $batchIterator);
+
+        foreach ($batchIterator as $item) {
             $item->value = 'new value';
         }
 
@@ -46,7 +50,7 @@ abstract class ORMResultTest extends DoctrineResultTestCase
             $this->em->remove($item);
         }
 
-        $this->assertCount(0, $result);
+        $this->assertCount(0, $this->em->getRepository(DoctrineOrmEntity::class)->findAll());
     }
 
     protected function getExpectedValueAtPosition(int $position)

@@ -65,11 +65,35 @@ final class ORMQueryResult implements Result
 
     public function batchIterator(int $batchSize = 100): ORMBatchProcessor
     {
-        $processor = new ORMBatchProcessor($this->query, $batchSize, $this->count());
+        return new ORMBatchProcessor(
+            new class($this->query, $this) implements Result {
+                private $query;
+                private $result;
 
-        $this->count = null; // reset count as entities may have been removed
+                public function __construct(Query $query, ORMQueryResult $result)
+                {
+                    $this->query = $query;
+                    $this->result = $result;
+                }
 
-        return $processor;
+                public function getIterator(): \Traversable
+                {
+                    return $this->query->iterate();
+                }
+
+                public function count(): int
+                {
+                    return $this->result->count();
+                }
+
+                public function take(int $offset, int $limit): Page
+                {
+                    throw new \LogicException('This method cannot be called.');
+                }
+            },
+            $this->query->getEntityManager(),
+            $batchSize
+        );
     }
 
     private function createPaginator(int $offset, int $limit): Paginator

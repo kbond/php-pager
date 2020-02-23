@@ -29,10 +29,13 @@ abstract class ORMResultTest extends DoctrineResultTestCase
         $this->assertCount(2, $batchIterator);
 
         foreach ($batchIterator as $item) {
-            $item->value = 'new value';
+            $item->value = 'new '.$item->value;
         }
 
-        $values = \array_map(function (DoctrineOrmEntity $entity) { return $entity->value; }, \iterator_to_array($result));
+        $values = \array_map(
+            function (DoctrineOrmEntity $entity) { return $entity->value; },
+            $this->em->getRepository(DoctrineOrmEntity::class)->findAll()
+        );
 
         $this->assertSame(['new value', 'new value'], $values);
     }
@@ -46,7 +49,11 @@ abstract class ORMResultTest extends DoctrineResultTestCase
 
         $this->assertCount(2, $result);
 
-        foreach ($result->batchIterator() as $item) {
+        $batchIterator = $result->batchIterator();
+
+        $this->assertCount(2, $batchIterator);
+
+        foreach ($batchIterator as $item) {
             $this->em->remove($item);
         }
 

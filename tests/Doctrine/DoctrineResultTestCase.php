@@ -2,9 +2,6 @@
 
 namespace Zenstruck\Porpaginas\Tests\Doctrine;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\SchemaTool;
-use Doctrine\ORM\Tools\Setup;
 use Zenstruck\Porpaginas\Tests\ResultTestCase;
 
 /**
@@ -12,37 +9,7 @@ use Zenstruck\Porpaginas\Tests\ResultTestCase;
  */
 abstract class DoctrineResultTestCase extends ResultTestCase
 {
-    /** @var EntityManager */
-    protected $em;
-
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $paths = [];
-        $isDevMode = false;
-
-        // the connection configuration
-        $dbParams = [
-            'driver' => 'pdo_sqlite',
-            'memory' => true,
-        ];
-
-        $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
-        $this->em = EntityManager::create($dbParams, $config);
-
-        $schemaTool = new SchemaTool($this->em);
-        $schemaTool->createSchema([
-            $this->em->getClassMetadata(__NAMESPACE__.'\\DoctrineOrmEntity'),
-        ]);
-    }
-
-    protected function tearDown()
-    {
-        parent::tearDown();
-
-        $this->em = null;
-    }
+    use HasEntityManager;
 
     protected function persistEntities(int $count): void
     {
@@ -52,28 +19,5 @@ abstract class DoctrineResultTestCase extends ResultTestCase
 
         $this->em->flush();
         $this->em->clear();
-    }
-}
-
-/**
- * @Entity
- */
-class DoctrineOrmEntity
-{
-    /**
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue
-     */
-    public $id;
-
-    /**
-     * @Column(type="string")
-     */
-    public $value = 'value';
-
-    public function __construct($id = null)
-    {
-        $this->id = $id;
     }
 }

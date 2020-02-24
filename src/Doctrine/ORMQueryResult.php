@@ -63,10 +63,10 @@ final class ORMQueryResult implements Result
         $this->query->getEntityManager()->getConfiguration()->setSQLLogger($logger);
     }
 
-    public function batchIterator(int $batchSize = 100): ORMBatchProcessor
+    public function batchIterator(int $batchSize = 100): ORMCountableBatchProcessor
     {
-        return new ORMBatchProcessor(
-            new class($this->query, $this) implements Result {
+        return new ORMCountableBatchProcessor(
+            new class($this->query, $this) implements \IteratorAggregate, \Countable {
                 private $query;
                 private $result;
 
@@ -84,11 +84,6 @@ final class ORMQueryResult implements Result
                 public function count(): int
                 {
                     return $this->result->count();
-                }
-
-                public function take(int $offset, int $limit): Page
-                {
-                    throw new \LogicException('This method cannot be called.');
                 }
             },
             $this->query->getEntityManager(),

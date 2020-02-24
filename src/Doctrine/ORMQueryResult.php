@@ -54,8 +54,8 @@ final class ORMQueryResult implements Result
         $logger = $this->query->getEntityManager()->getConfiguration()->getSQLLogger();
         $this->query->getEntityManager()->getConfiguration()->setSQLLogger(null);
 
-        foreach ($this->query->iterate() as $row) {
-            yield $row[0];
+        foreach ($this->query->iterate() as $key => $value) {
+            yield $key => IterableQueryResultNormalizer::normalize($value);
 
             $this->query->getEntityManager()->clear();
         }

@@ -1,8 +1,12 @@
 The MIT License
 
-Copyright for portions of project "zenstruck\porpaginas" are held by
-Benjamin Eberlei, 2015 as part of project "beberlei/porpaginas". All other
-copyright for project "zenstruck\porpaginas" are held by Kevin Bond, 2015.
+Copyright for portions of project "zenstruck\porpaginas" are held by:
+
+- Benjamin Eberlei, 2015 as part of project "beberlei/porpaginas"
+- Marco Pivetta, 2015 as part of project "ocramius/doctrine-batch-utils"
+
+All other copyright for project "zenstruck\porpaginas" are held by
+Kevin Bond, 2015.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

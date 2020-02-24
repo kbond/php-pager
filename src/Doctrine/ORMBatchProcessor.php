@@ -3,10 +3,10 @@
 namespace Zenstruck\Porpaginas\Doctrine;
 
 use Doctrine\ORM\EntityManagerInterface;
-use DoctrineBatchUtils\BatchProcessing\SimpleBatchIteratorAggregate;
 use Zenstruck\Porpaginas\Result;
 
 /**
+ * @author Marco Pivetta <ocramius@gmail.com>
  * @author Kevin Bond <kevinbond@gmail.com>
  */
 final class ORMBatchProcessor implements \IteratorAggregate, \Countable
@@ -17,10 +17,6 @@ final class ORMBatchProcessor implements \IteratorAggregate, \Countable
 
     public function __construct(Result $result, EntityManagerInterface $em, int $batchSize = 100)
     {
-        if (!\class_exists(SimpleBatchIteratorAggregate::class)) {
-            throw new \RuntimeException('To enable batch processing, you must install "ocramius/doctrine-batch-utils": composer require ocramius/doctrine-batch-utils');
-        }
-
         $this->result = $result;
         $this->em = $em;
         $this->batchSize = $batchSize;
@@ -30,14 +26,52 @@ final class ORMBatchProcessor implements \IteratorAggregate, \Countable
     {
         $logger = $this->em->getConfiguration()->getSQLLogger();
         $this->em->getConfiguration()->setSQLLogger(null);
+        $this->em->beginTransaction();
 
-        yield from SimpleBatchIteratorAggregate::fromTraversableResult($this->result, $this->em, $this->batchSize);
+        $iteration = 0;
 
+        try {
+            foreach ($this->result as $key => $value) {
+                if (\is_array($value)) {
+                    $firstKey = \key($value);
+
+                    if (null !== $firstKey && \is_object($value[$firstKey]) && $value === [$firstKey => $value[$firstKey]]) {
+                        $value = $value[$firstKey];
+                    }
+                }
+
+                yield $key => $value;
+
+                $this->flushAndClearBatch(++$iteration);
+            }
+        } catch (\Throwable $exception) {
+            $this->em->rollback();
+
+            throw $exception;
+        }
+
+        $this->flushAndClear();
+        $this->em->commit();
         $this->em->getConfiguration()->setSQLLogger($logger);
     }
 
     public function count(): int
     {
         return $this->result->count();
+    }
+
+    private function flushAndClearBatch(int $iteration): void
+    {
+        if ($iteration % $this->batchSize) {
+            return;
+        }
+
+        $this->flushAndClear();
+    }
+
+    private function flushAndClear(): void
+    {
+        $this->em->flush();
+        $this->em->clear();
     }
 }

@@ -39,4 +39,31 @@ class ORMBatchProcessorTest extends TestCase
         $this->assertSame('value 200', $entities[199]->value);
         $this->assertSame('value 211', $entities[210]->value);
     }
+
+    /**
+     * @test
+     */
+    public function can_batch_persist_new_entities()
+    {
+        $array = [];
+
+        for ($i = 1; $i <= 211; ++$i) {
+            $array[] = new ORMEntity('value '.$i);
+        }
+
+        $batchProcessor = new ORMBatchProcessor(new ArrayResult($array), $this->em);
+
+        $this->assertCount(211, $batchProcessor);
+
+        foreach ($batchProcessor as $item) {
+            $this->em->persist($item);
+        }
+
+        $entities = $this->em->getRepository(ORMEntity::class)->findAll();
+
+        $this->assertCount(211, $entities);
+        $this->assertSame('value 32', $entities[31]->value);
+        $this->assertSame('value 200', $entities[199]->value);
+        $this->assertSame('value 211', $entities[210]->value);
+    }
 }

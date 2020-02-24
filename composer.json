@@ -26,13 +26,11 @@
     "require-dev": {
         "doctrine/orm": "^2.4",
         "pagerfanta/pagerfanta": "^1.0",
-        "phpunit/phpunit": "^7.5",
-        "ocramius/doctrine-batch-utils": "^2.0"
+        "phpunit/phpunit": "^7.5"
     },
     "suggest": {
         "doctrine/orm": "For integration with Doctrine ORM",
         "doctrine/dbal": "For integration with Doctrine DBAL",
-        "ocramius/doctrine-batch-utils": "For batch processing ORMQueryResult's",
         "pagerfanta/pagerfanta": "For rendering pagination with Pagerfanta"
     },
     "extra": {

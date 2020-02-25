@@ -31,15 +31,7 @@ final class ORMBatchProcessor implements \IteratorAggregate
 
         try {
             foreach ($this->results as $key => $value) {
-                if (\is_array($value)) {
-                    $firstKey = \key($value);
-
-                    if (null !== $firstKey && \is_object($value[$firstKey]) && $value === [$firstKey => $value[$firstKey]]) {
-                        $value = $value[$firstKey];
-                    }
-                }
-
-                yield $key => $value;
+                yield $key => IterableQueryResultNormalizer::normalize($value);
 
                 $this->flushAndClearBatch(++$iteration);
             }

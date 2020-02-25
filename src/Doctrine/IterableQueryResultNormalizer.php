@@ -9,8 +9,17 @@ namespace Zenstruck\Porpaginas\Doctrine;
  */
 final class IterableQueryResultNormalizer
 {
-    public static function normalize(array $result)
+    /**
+     * @param mixed $result
+     *
+     * @return mixed
+     */
+    public static function normalize($result)
     {
+        if (!\is_array($result)) {
+            return $result;
+        }
+
         $firstKey = \key($result);
 
         if (null !== $firstKey && \is_object($result[$firstKey]) && $result === [$firstKey => $result[$firstKey]]) {

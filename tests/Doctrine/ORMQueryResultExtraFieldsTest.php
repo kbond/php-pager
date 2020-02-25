@@ -12,8 +12,6 @@ class ORMQueryResultExtraFieldsTest extends DoctrineResultTestCase
      */
     public function detaches_entity_from_em_on_iterate()
     {
-        $this->markTestIncomplete();
-
         $result = \iterator_to_array($this->createResultWithItems(2))[0][0];
 
         $this->assertFalse($this->em->contains($result));
@@ -24,7 +22,6 @@ class ORMQueryResultExtraFieldsTest extends DoctrineResultTestCase
      */
     public function can_batch_update_results()
     {
-        $this->markTestIncomplete();
         $result = $this->createResultWithItems(2);
         $values = \array_map(function (array $row) { return $row[0]->value; }, \iterator_to_array($result));
 
@@ -51,7 +48,6 @@ class ORMQueryResultExtraFieldsTest extends DoctrineResultTestCase
      */
     public function can_batch_delete_results()
     {
-        $this->markTestIncomplete();
         $result = $this->createResultWithItems(2);
 
         $this->assertCount(2, $result);
@@ -61,7 +57,7 @@ class ORMQueryResultExtraFieldsTest extends DoctrineResultTestCase
         $this->assertCount(2, $batchIterator);
 
         foreach ($batchIterator as $item) {
-            $this->em->remove($item);
+            $this->em->remove($item[0]);
         }
 
         $this->assertCount(0, $this->em->getRepository(ORMEntity::class)->findAll());

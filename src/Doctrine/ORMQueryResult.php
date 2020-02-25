@@ -35,7 +35,9 @@ final class ORMQueryResult implements Result
     {
         return new CallbackPage(
             function ($offset, $limit) {
-                return \iterator_to_array($this->createPaginator($offset, $limit));
+                return \iterator_to_array($this->paginatorFor(
+                    $this->cloneQuery()->setFirstResult($offset)->setMaxResults($limit)
+                ));
             },
             [$this, 'count'],
             $offset,
@@ -49,27 +51,28 @@ final class ORMQueryResult implements Result
             return $this->count;
         }
 
-        return $this->count = \count($this->paginatorFor($this->query));
+        return $this->count = \count($this->paginatorFor($this->cloneQuery()));
     }
 
     public function getIterator(): \Traversable
     {
-        $logger = $this->query->getEntityManager()->getConfiguration()->getSQLLogger();
-        $this->query->getEntityManager()->getConfiguration()->setSQLLogger(null);
+        $query = $this->cloneQuery();
+        $logger = $query->getEntityManager()->getConfiguration()->getSQLLogger();
+        $query->getEntityManager()->getConfiguration()->setSQLLogger(null);
 
-        foreach ($this->query->iterate() as $key => $value) {
+        foreach ($this->cloneQuery()->iterate() as $key => $value) {
             yield $key => IterableQueryResultNormalizer::normalize($value);
 
-            $this->query->getEntityManager()->clear();
+            $query->getEntityManager()->clear();
         }
 
-        $this->query->getEntityManager()->getConfiguration()->setSQLLogger($logger);
+        $query->getEntityManager()->getConfiguration()->setSQLLogger($logger);
     }
 
     public function batchIterator(int $batchSize = 100): ORMCountableBatchProcessor
     {
         return new ORMCountableBatchProcessor(
-            new class($this->query, $this) implements \IteratorAggregate, \Countable {
+            new class($this->cloneQuery(), $this) implements \IteratorAggregate, \Countable {
                 private $query;
                 private $result;
 
@@ -94,7 +97,12 @@ final class ORMQueryResult implements Result
         );
     }
 
-    private function createPaginator(int $offset, int $limit): Paginator
+    private function paginatorFor(Query $query): Paginator
+    {
+        return (new Paginator($query, $this->fetchCollection))->setUseOutputWalkers($this->useOutputWalkers);
+    }
+
+    private function cloneQuery(): Query
     {
         $query = clone $this->query;
         $query->setParameters($this->query->getParameters());
@@ -103,13 +111,6 @@ final class ORMQueryResult implements Result
             $query->setHint($name, $value);
         }
 
-        $query->setFirstResult($offset)->setMaxResults($limit);
-
-        return $this->paginatorFor($query);
-    }
-
-    private function paginatorFor(Query $query): Paginator
-    {
-        return (new Paginator($query, $this->fetchCollection))->setUseOutputWalkers($this->useOutputWalkers);
+        return $query;
     }
 }

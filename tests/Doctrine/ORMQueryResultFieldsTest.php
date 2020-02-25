@@ -10,10 +10,11 @@ class ORMQueryResultFieldsTest extends DoctrineResultTestCase
     /**
      * @test
      */
-    public function can_batch_iterate()
+    public function can_iterate()
     {
-        $result = \iterator_to_array($this->createResultWithItems(2));
+        $result = $this->createResultWithItems(2);
 
+        $this->assertCount(2, $result);
         $this->assertSame([
             [
                 'id' => 1,
@@ -23,7 +24,27 @@ class ORMQueryResultFieldsTest extends DoctrineResultTestCase
                 'id' => 2,
                 'my_value' => 'value 2',
             ],
-        ], $result);
+        ], \iterator_to_array($result));
+    }
+
+    /**
+     * @test
+     */
+    public function can_batch_iterate()
+    {
+        $result = $this->createResultWithItems(2)->batchIterator();
+
+        $this->assertCount(2, $result);
+        $this->assertSame([
+            [
+                'id' => 1,
+                'my_value' => 'value 1',
+            ],
+            [
+                'id' => 2,
+                'my_value' => 'value 2',
+            ],
+        ], \iterator_to_array($result));
     }
 
     protected function createResultWithItems(int $count): Result

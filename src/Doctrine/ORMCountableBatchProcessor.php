@@ -22,7 +22,13 @@ final class ORMCountableBatchProcessor implements \IteratorAggregate, \Countable
             throw new \InvalidArgumentException('$results must be countable.');
         }
 
-        $this->batchProcessor = new ORMBatchProcessor($results, $em, $batchSize);
+        $iterable = $results;
+
+        if ($results instanceof \IteratorAggregate) {
+            $iterable = $results->getIterator();
+        }
+
+        $this->batchProcessor = new ORMBatchProcessor($iterable, $em, $batchSize);
         $this->countable = $results;
     }
 

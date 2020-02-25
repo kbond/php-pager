@@ -3,6 +3,7 @@
 namespace Zenstruck\Porpaginas\Doctrine;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Internal\Hydration\IterableResult;
 
 /**
  * @author Marco Pivetta <ocramius@gmail.com>
@@ -31,7 +32,11 @@ final class ORMBatchProcessor implements \IteratorAggregate
 
         try {
             foreach ($this->results as $key => $value) {
-                yield $key => IterableQueryResultNormalizer::normalize($value);
+                if ($this->results instanceof IterableResult) {
+                    $value = IterableQueryResultNormalizer::normalize($value);
+                }
+
+                yield $key => $value;
 
                 $this->flushAndClearBatch(++$iteration);
             }

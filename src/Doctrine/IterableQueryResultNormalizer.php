@@ -20,16 +20,16 @@ final class IterableQueryResultNormalizer
             return $result;
         }
 
-        $firstKey = \key($result);
+        $firstKey = \array_key_first($result);
 
         if (null !== $firstKey && \is_object($result[$firstKey]) && $result === [$firstKey => $result[$firstKey]]) {
             return $result[$firstKey];
         }
 
-        if (\is_array($result) && 1 < \count($result)) {
+        if (\count($result) > 1) {
             $result = [\array_merge(...$result)];
         }
 
-        return $result[0];
+        return $result[$firstKey];
     }
 }

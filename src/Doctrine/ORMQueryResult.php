@@ -13,12 +13,14 @@ final class ORMQueryResult implements Result
 {
     private $query;
     private $fetchCollection;
+    private $useOutputWalkers;
     private $count;
 
     /**
      * @param Query|QueryBuilder $query
+     * @param bool|null          $useOutputWalkers Set to false if query contains only columns
      */
-    public function __construct($query, bool $fetchCollection = true)
+    public function __construct($query, bool $fetchCollection = true, $useOutputWalkers = null)
     {
         if ($query instanceof QueryBuilder) {
             $query = $query->getQuery();
@@ -26,6 +28,7 @@ final class ORMQueryResult implements Result
 
         $this->query = $query;
         $this->fetchCollection = $fetchCollection;
+        $this->useOutputWalkers = $useOutputWalkers;
     }
 
     public function take(int $offset, int $limit): Page
@@ -46,7 +49,7 @@ final class ORMQueryResult implements Result
             return $this->count;
         }
 
-        return $this->count = \count(new Paginator($this->query, $this->fetchCollection));
+        return $this->count = \count($this->paginatorFor($this->query));
     }
 
     public function getIterator(): \Traversable
@@ -102,6 +105,11 @@ final class ORMQueryResult implements Result
 
         $query->setFirstResult($offset)->setMaxResults($limit);
 
-        return new Paginator($query, $this->fetchCollection);
+        return $this->paginatorFor($query);
+    }
+
+    private function paginatorFor(Query $query): Paginator
+    {
+        return (new Paginator($query, $this->fetchCollection))->setUseOutputWalkers($this->useOutputWalkers);
     }
 }

@@ -17,6 +17,7 @@ abstract class PagerTestCase extends TestCase
     {
         $pager = $this->createPager(\range(1, 504), 1, 20);
 
+        $this->assertTrue($pager->haveToPaginate());
         $this->assertSame(1, $pager->getCurrentPage());
         $this->assertSame(1, $pager->getFirstPage());
         $this->assertSame(2, $pager->getNextPage());
@@ -36,6 +37,7 @@ abstract class PagerTestCase extends TestCase
     {
         $pager = $this->createPager(\range(1, 504), 2, 20);
 
+        $this->assertTrue($pager->haveToPaginate());
         $this->assertSame(2, $pager->getCurrentPage());
         $this->assertSame(1, $pager->getFirstPage());
         $this->assertSame(3, $pager->getNextPage());
@@ -51,6 +53,7 @@ abstract class PagerTestCase extends TestCase
     {
         $pager = $this->createPager(\range(1, 504), 26, 20);
 
+        $this->assertTrue($pager->haveToPaginate());
         $this->assertSame(26, $pager->getCurrentPage());
         $this->assertSame(1, $pager->getFirstPage());
         $this->assertNull($pager->getNextPage());
@@ -66,6 +69,7 @@ abstract class PagerTestCase extends TestCase
     {
         $pager = $this->createPager([], 1, 20);
 
+        $this->assertFalse($pager->haveToPaginate());
         $this->assertSame(1, $pager->getCurrentPage());
         $this->assertSame(1, $pager->getFirstPage());
         $this->assertNull($pager->getNextPage());
@@ -84,6 +88,7 @@ abstract class PagerTestCase extends TestCase
     {
         $pager = $this->createPager(\range(1, 10), 1, 20);
 
+        $this->assertFalse($pager->haveToPaginate());
         $this->assertSame(1, $pager->getCurrentPage());
         $this->assertSame(1, $pager->getFirstPage());
         $this->assertNull($pager->getNextPage());

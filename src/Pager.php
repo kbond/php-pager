@@ -50,6 +50,11 @@ abstract class Pager implements \Countable, \IteratorAggregate
         return $this->getLastPage();
     }
 
+    final public function haveToPaginate(): bool
+    {
+        return $this->pagesCount() > 1;
+    }
+
     abstract public function getCurrentPage(): int;
 
     abstract public function getLimit(): int;

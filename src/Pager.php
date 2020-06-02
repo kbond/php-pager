@@ -7,6 +7,8 @@ namespace Zenstruck\Porpaginas;
  */
 abstract class Pager implements \Countable, \IteratorAggregate
 {
+    use Arrayable;
+
     final public function nextPage(): ?int
     {
         $currentPage = $this->getCurrentPage();
@@ -53,11 +55,6 @@ abstract class Pager implements \Countable, \IteratorAggregate
     final public function haveToPaginate(): bool
     {
         return $this->pagesCount() > 1;
-    }
-
-    final public function toArray(): array
-    {
-        return \iterator_to_array($this);
     }
 
     abstract public function getCurrentPage(): int;

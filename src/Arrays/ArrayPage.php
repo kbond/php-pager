@@ -48,4 +48,9 @@ final class ArrayPage implements Page
     {
         return new \ArrayIterator($this->slice);
     }
+
+    public function toArray(): array
+    {
+        return $this->slice;
+    }
 }

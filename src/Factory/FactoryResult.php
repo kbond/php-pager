@@ -2,6 +2,7 @@
 
 namespace Zenstruck\Porpaginas\Factory;
 
+use Zenstruck\Porpaginas\Arrayable;
 use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
 
@@ -10,6 +11,8 @@ use Zenstruck\Porpaginas\Result;
  */
 final class FactoryResult implements Result
 {
+    use Arrayable;
+
     private $factory;
     private Result $result;
 

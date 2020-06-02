@@ -9,7 +9,7 @@ abstract class ORMResultTest extends DoctrineResultTestCase
      */
     public function detaches_entity_from_em_on_iterate()
     {
-        $result = \iterator_to_array($this->createResultWithItems(2))[0];
+        $result = $this->createResultWithItems(2)->toArray()[0];
 
         $this->assertFalse($this->em->contains($result));
     }
@@ -20,7 +20,7 @@ abstract class ORMResultTest extends DoctrineResultTestCase
     public function can_batch_update_results()
     {
         $result = $this->createResultWithItems(2);
-        $values = \array_map(function (ORMEntity $entity) { return $entity->value; }, \iterator_to_array($result));
+        $values = \array_map(function (ORMEntity $entity) { return $entity->value; }, $result->toArray());
 
         $this->assertSame(['value 1', 'value 2'], $values);
 

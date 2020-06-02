@@ -3,6 +3,7 @@
 namespace Zenstruck\Porpaginas\Doctrine;
 
 use Doctrine\DBAL\Query\QueryBuilder;
+use Zenstruck\Porpaginas\Arrayable;
 use Zenstruck\Porpaginas\Callback\CallbackPage;
 use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
@@ -12,6 +13,8 @@ use Zenstruck\Porpaginas\Result;
  */
 final class DBALQueryBuilderResult implements Result
 {
+    use Arrayable;
+
     private QueryBuilder$qb;
     private $countModifier;
     private ?int $count = null;

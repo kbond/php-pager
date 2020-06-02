@@ -5,12 +5,15 @@ namespace Zenstruck\Porpaginas\Doctrine;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use Zenstruck\Porpaginas\Arrayable;
 use Zenstruck\Porpaginas\Callback\CallbackPage;
 use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
 
 final class ORMQueryResult implements Result
 {
+    use Arrayable;
+
     private Query $query;
     private bool $fetchCollection;
     private ?bool $useOutputWalkers;

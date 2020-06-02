@@ -24,7 +24,7 @@ class ORMQueryResultFieldsTest extends DoctrineResultTestCase
                 'id' => 2,
                 'my_value' => 'value 2',
             ],
-        ], \iterator_to_array($result));
+        ], $result->toArray());
     }
 
     /**

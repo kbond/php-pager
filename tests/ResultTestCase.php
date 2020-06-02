@@ -24,7 +24,7 @@ abstract class ResultTestCase extends TestCase
     {
         $result = $this->createResultWithItems(11);
 
-        $this->assertCount(11, \iterator_to_array($result));
+        $this->assertCount(11, $result->toArray());
     }
 
     /**
@@ -68,7 +68,7 @@ abstract class ResultTestCase extends TestCase
         $page = $result->take(10, 5);
 
         $this->assertCount(5, $page);
-        $this->assertCount(5, \iterator_to_array($page));
+        $this->assertCount(5, $page->toArray());
     }
 
     /**
@@ -80,7 +80,7 @@ abstract class ResultTestCase extends TestCase
 
         $page = $result->take(10, 5);
 
-        $this->assertCount(5, \iterator_to_array($page));
+        $this->assertCount(5, $page->toArray());
         $this->assertCount(5, $page);
     }
 
@@ -91,18 +91,18 @@ abstract class ResultTestCase extends TestCase
     {
         $result = $this->createResultWithItems(11);
 
-        $this->assertEquals($this->getExpectedValueAtPosition(1), \iterator_to_array($result)[0]);
-        $this->assertEquals($this->getExpectedValueAtPosition(5), \iterator_to_array($result)[4]);
-        $this->assertEquals($this->getExpectedValueAtPosition(11), \iterator_to_array($result)[10]);
+        $this->assertEquals($this->getExpectedValueAtPosition(1), $result->toArray()[0]);
+        $this->assertEquals($this->getExpectedValueAtPosition(5), $result->toArray()[4]);
+        $this->assertEquals($this->getExpectedValueAtPosition(11), $result->toArray()[10]);
 
         $page = $result->take(0, 10);
 
-        $this->assertEquals($this->getExpectedValueAtPosition(1), \iterator_to_array($page)[0]);
-        $this->assertEquals($this->getExpectedValueAtPosition(10), \iterator_to_array($page)[9]);
+        $this->assertEquals($this->getExpectedValueAtPosition(1), $page->toArray()[0]);
+        $this->assertEquals($this->getExpectedValueAtPosition(10), $page->toArray()[9]);
 
         $page = $result->take(10, 10);
 
-        $this->assertEquals($this->getExpectedValueAtPosition(11), \iterator_to_array($page)[0]);
+        $this->assertEquals($this->getExpectedValueAtPosition(11), $page->toArray()[0]);
     }
 
     /**
@@ -113,8 +113,8 @@ abstract class ResultTestCase extends TestCase
         $result = $this->createResultWithItems(0);
 
         $this->assertCount(0, $result);
-        $this->assertSame([], \iterator_to_array($result));
-        $this->assertSame([], \iterator_to_array($result->take(0, 10)));
+        $this->assertSame([], $result->toArray());
+        $this->assertSame([], $result->take(0, 10)->toArray());
     }
 
     abstract protected function createResultWithItems(int $count): Result;

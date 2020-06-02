@@ -55,11 +55,6 @@ abstract class Pager implements \Countable, \IteratorAggregate
         return $this->pagesCount() > 1;
     }
 
-    final public function toArray(): array
-    {
-        return \iterator_to_array($this);
-    }
-
     abstract public function getCurrentPage(): int;
 
     abstract public function limit(): int;

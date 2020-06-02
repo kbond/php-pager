@@ -24,7 +24,7 @@ final class ResultPagerTest extends PagerTestCase
         $this->assertNull($pager->nextPage());
         $this->assertSame(25, $pager->previousPage());
         $this->assertCount(4, $pager);
-        $this->assertSame(\range(501, 504), $pager->toArray());
+        $this->assertSame(\range(501, 504), \iterator_to_array($pager));
     }
 
     /**

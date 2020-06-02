@@ -33,9 +33,4 @@ final class ArrayResult implements Result
     {
         return new \ArrayIterator($this->data);
     }
-
-    public function toArray(): array
-    {
-        return $this->data;
-    }
 }

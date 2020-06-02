@@ -18,9 +18,10 @@ class FactoryResultTest extends ResultTestCase
     public function it_uses_factory_callback_to_create_result()
     {
         $result = new FactoryResult([$this, 'factory'], new ArrayResult(\range(0, 30)));
-        $this->assertSame('factory 0', $result->toArray()[0]);
+        $results = \iterator_to_array($result);
+        $this->assertSame('factory 0', $results[0]);
 
-        $results = $result->take(10, 10)->toArray();
+        $results = \iterator_to_array($result->take(10, 10));
         $this->assertSame('factory 10', $results[0]);
     }
 

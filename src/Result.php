@@ -21,6 +21,4 @@ interface Result extends \Countable, \IteratorAggregate
      * Return an iterator over all results of the paginatable.
      */
     public function getIterator(): \Traversable;
-
-    public function toArray(): array;
 }

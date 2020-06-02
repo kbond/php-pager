@@ -2,7 +2,6 @@
 
 namespace Zenstruck\Porpaginas\Callback;
 
-use Zenstruck\Porpaginas\Arrayable;
 use Zenstruck\Porpaginas\Page;
 
 /**
@@ -10,8 +9,6 @@ use Zenstruck\Porpaginas\Page;
  */
 final class CallbackPage implements Page
 {
-    use Arrayable;
-
     private $resultCallback;
     private $totalCountCallback;
     private int $offset;

@@ -1,0 +1,114 @@
+<?php
+
+namespace Zenstruck\Porpaginas\Doctrine\Repository;
+
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectRepository;
+use Zenstruck\Porpaginas\Doctrine\ORMCountableBatchProcessor;
+use Zenstruck\Porpaginas\Doctrine\ORMQueryResult;
+use Zenstruck\Porpaginas\Repository;
+
+/**
+ * @mixin EntityRepository
+ *
+ * @author Kevin Bond <kevinbond@gmail.com>
+ */
+abstract class ORMRepository implements ObjectRepository, Repository
+{
+    private ?EntityManagerInterface $em = null;
+    private ?EntityRepository $repo = null;
+
+    final public function __call($name, $arguments)
+    {
+        return $this->repo()->{$name}(...$arguments);
+    }
+
+    public function getIterator(): ORMQueryResult
+    {
+        return $this->createResult($this->qb());
+    }
+
+    public function batchIterator(int $batchSize = 100): ORMCountableBatchProcessor
+    {
+        return $this->getIterator()->batchIterator($batchSize);
+    }
+
+    public function count(): int
+    {
+        return $this->getIterator()->count();
+    }
+
+    /**
+     * @see EntityRepository::find()
+     */
+    public function find($id, $lockMode = null, $lockVersion = null)
+    {
+        return $this->repo()->find($id, $lockMode, $lockVersion);
+    }
+
+    /**
+     * @see EntityRepository::findAll()
+     */
+    public function findAll()
+    {
+        return $this->repo()->findAll();
+    }
+
+    /**
+     * @see EntityRepository::findBy()
+     */
+    public function findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null)
+    {
+        return $this->repo()->findBy($criteria, $orderBy, $limit, $offset);
+    }
+
+    /**
+     * @see EntityRepository::findOneBy()
+     */
+    public function findOneBy(array $criteria)
+    {
+        return $this->repo()->findOneBy($criteria);
+    }
+
+    final protected function createResult(QueryBuilder $qb): ORMQueryResult
+    {
+        return new ORMQueryResult($qb);
+    }
+
+    final protected function qb(string $alias = 'entity', string $indexBy = null): QueryBuilder
+    {
+        return $this->repo()->createQueryBuilder($alias, $indexBy);
+    }
+
+    /**
+     * @return EntityManagerInterface
+     */
+    final protected function em(): ObjectManager
+    {
+        if ($this->em) {
+            return $this->em;
+        }
+
+        return $this->em = $this->managerRegistry()->getManagerForClass($this->getClassName());
+    }
+
+    /**
+     * @return EntityRepository
+     */
+    final protected function repo(): ObjectRepository
+    {
+        return $this->repo ?: $this->repo = static::createEntityRepository($this->em(), $this->em()->getClassMetadata($this->getClassName()));
+    }
+
+    abstract protected function managerRegistry(): ManagerRegistry;
+
+    protected static function createEntityRepository(EntityManagerInterface $em, ClassMetadata $class): EntityRepository
+    {
+        return new EntityRepository($em, $class);
+    }
+}

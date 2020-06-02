@@ -11,10 +11,10 @@ final class CallbackPage implements Page
 {
     private $resultCallback;
     private $totalCountCallback;
-    private $offset;
-    private $limit;
-    private $totalCount;
-    private $results;
+    private int $offset;
+    private int $limit;
+    private ?int $totalCount = null;
+    private ?\ArrayIterator $results = null;
 
     /**
      * @param callable $resultCallback     Returns an array
@@ -35,7 +35,7 @@ final class CallbackPage implements Page
 
     public function currentPage(): int
     {
-        return (int) (\floor($this->offset / $this->limit) + 1);
+        return \floor($this->offset / $this->limit) + 1;
     }
 
     public function currentLimit(): int

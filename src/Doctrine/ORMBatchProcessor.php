@@ -11,9 +11,9 @@ use Doctrine\ORM\Internal\Hydration\IterableResult;
  */
 final class ORMBatchProcessor implements \IteratorAggregate
 {
-    private $results;
-    private $em;
-    private $batchSize;
+    private iterable $results;
+    private EntityManagerInterface $em;
+    private int $batchSize;
 
     public function __construct(iterable $results, EntityManagerInterface $em, int $batchSize = 100)
     {

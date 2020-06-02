@@ -13,7 +13,7 @@ use Zenstruck\Porpaginas\Result;
  */
 final class FactoryPager extends Pager
 {
-    private $inner;
+    private Pager $inner;
 
     private function __construct(Pager $inner)
     {

@@ -6,10 +6,10 @@ use Zenstruck\Porpaginas\Page;
 
 final class ArrayPage implements Page
 {
-    private $slice;
-    private $offset;
-    private $limit;
-    private $totalCount;
+    private array $slice;
+    private int $offset;
+    private int $limit;
+    private int $totalCount;
 
     public function __construct(array $slice, int $offset, int $limit, int $totalCount)
     {
@@ -26,7 +26,7 @@ final class ArrayPage implements Page
 
     public function currentPage(): int
     {
-        return (int) (\floor($this->offset / $this->limit) + 1);
+        return \floor($this->offset / $this->limit) + 1;
     }
 
     public function currentLimit(): int

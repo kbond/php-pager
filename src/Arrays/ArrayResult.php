@@ -7,7 +7,7 @@ use Zenstruck\Porpaginas\Result;
 
 final class ArrayResult implements Result
 {
-    private $data;
+    private array $data;
 
     public function __construct(array $data)
     {

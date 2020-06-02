@@ -10,7 +10,7 @@ use Zenstruck\Porpaginas\Page;
 final class FactoryPage implements Page
 {
     private $factory;
-    private $page;
+    private Page $page;
 
     public function __construct(callable $factory, Page $page)
     {

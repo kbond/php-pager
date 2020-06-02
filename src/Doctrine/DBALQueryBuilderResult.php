@@ -12,9 +12,9 @@ use Zenstruck\Porpaginas\Result;
  */
 final class DBALQueryBuilderResult implements Result
 {
-    private $qb;
+    private QueryBuilder$qb;
     private $countModifier;
-    private $count;
+    private ?int $count = null;
 
     public function __construct(QueryBuilder $qb, callable $countModifier = null)
     {
@@ -49,7 +49,7 @@ final class DBALQueryBuilderResult implements Result
 
         \call_user_func($this->countModifier, $qb);
 
-        return $this->count = (int) $qb->execute()->fetchColumn();
+        return $this->count = $qb->execute()->fetchColumn();
     }
 
     public function getIterator(): \Traversable

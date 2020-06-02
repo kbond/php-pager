@@ -10,7 +10,7 @@ use Zenstruck\Porpaginas\Pager;
  */
 final class PagePager extends Pager
 {
-    private $page;
+    private Page $page;
 
     public function __construct(Page $page)
     {

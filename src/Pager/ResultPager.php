@@ -13,12 +13,10 @@ final class ResultPager extends Pager
 {
     public const DEFAULT_LIMIT = 20;
 
-    private $result;
-    private $page;
-    private $limit;
-
-    /** @var Page|null */
-    private $cachedPage;
+    private Result $result;
+    private int $page;
+    private int $limit;
+    private ?Page $cachedPage = null;
 
     public function __construct(Result $result, int $page = 1, int $limit = self::DEFAULT_LIMIT)
     {

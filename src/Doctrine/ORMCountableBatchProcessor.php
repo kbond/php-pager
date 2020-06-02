@@ -10,8 +10,8 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 final class ORMCountableBatchProcessor implements \IteratorAggregate, \Countable
 {
-    private $batchProcessor;
-    private $countable;
+    private ORMBatchProcessor $batchProcessor;
+    private iterable $countable;
 
     /**
      * @param iterable|\Countable $results

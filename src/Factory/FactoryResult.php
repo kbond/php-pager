@@ -11,7 +11,7 @@ use Zenstruck\Porpaginas\Result;
 final class FactoryResult implements Result
 {
     private $factory;
-    private $result;
+    private Result $result;
 
     public function __construct(callable $factory, Result $result)
     {

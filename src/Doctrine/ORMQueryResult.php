@@ -11,16 +11,16 @@ use Zenstruck\Porpaginas\Result;
 
 final class ORMQueryResult implements Result
 {
-    private $query;
-    private $fetchCollection;
-    private $useOutputWalkers;
-    private $count;
+    private Query $query;
+    private bool $fetchCollection;
+    private ?bool $useOutputWalkers;
+    private ?int $count = null;
 
     /**
      * @param Query|QueryBuilder $query
      * @param bool|null          $useOutputWalkers Set to false if query contains only columns
      */
-    public function __construct($query, bool $fetchCollection = true, $useOutputWalkers = null)
+    public function __construct($query, bool $fetchCollection = true, ?bool $useOutputWalkers = null)
     {
         if ($query instanceof QueryBuilder) {
             $query = $query->getQuery();

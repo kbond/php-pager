@@ -42,7 +42,7 @@ abstract class Pager implements \Countable, \IteratorAggregate
             return 1;
         }
 
-        return (int) \ceil($totalCount / $this->limit());
+        return \ceil($totalCount / $this->limit());
     }
 
     final public function pagesCount(): int

@@ -28,17 +28,17 @@ final class CallbackPage implements Page
         $this->limit = $limit;
     }
 
-    public function getCurrentOffset(): int
+    public function currentOffset(): int
     {
         return $this->offset;
     }
 
-    public function getCurrentPage(): int
+    public function currentPage(): int
     {
         return (int) (\floor($this->offset / $this->limit) + 1);
     }
 
-    public function getCurrentLimit(): int
+    public function currentLimit(): int
     {
         return $this->limit;
     }

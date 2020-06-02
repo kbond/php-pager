@@ -35,9 +35,9 @@ final class FactoryPager extends Pager
         return $this->inner->getCurrentPage();
     }
 
-    public function getLimit(): int
+    public function limit(): int
     {
-        return $this->inner->getLimit();
+        return $this->inner->limit();
     }
 
     public function count(): int

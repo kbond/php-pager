@@ -7,11 +7,11 @@ namespace Zenstruck\Porpaginas;
  */
 interface Page extends \Countable, \IteratorAggregate
 {
-    public function getCurrentOffset(): int;
+    public function currentOffset(): int;
 
-    public function getCurrentPage(): int;
+    public function currentPage(): int;
 
-    public function getCurrentLimit(): int;
+    public function currentLimit(): int;
 
     /**
      * Return the number of results on the current page of the {@link Result}.

@@ -29,7 +29,7 @@ final class ResultPager extends Pager
 
     public function getCurrentPage(): int
     {
-        $lastPage = $this->getLastPage();
+        $lastPage = $this->lastPage();
 
         if ($this->page > $lastPage) {
             return $lastPage;
@@ -38,7 +38,7 @@ final class ResultPager extends Pager
         return $this->page;
     }
 
-    public function getLimit(): int
+    public function limit(): int
     {
         return $this->limit;
     }
@@ -64,8 +64,8 @@ final class ResultPager extends Pager
             return $this->cachedPage;
         }
 
-        $offset = $this->getCurrentPage() * $this->getLimit() - $this->getLimit();
+        $offset = $this->getCurrentPage() * $this->limit() - $this->limit();
 
-        return $this->cachedPage = $this->result->take($offset, $this->getLimit());
+        return $this->cachedPage = $this->result->take($offset, $this->limit());
     }
 }

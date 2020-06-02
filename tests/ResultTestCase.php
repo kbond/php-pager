@@ -36,9 +36,9 @@ abstract class ResultTestCase extends TestCase
 
         $page = $result->take(0, 10);
 
-        $this->assertEquals(1, $page->getCurrentPage());
-        $this->assertEquals(0, $page->getCurrentOffset());
-        $this->assertEquals(10, $page->getCurrentLimit());
+        $this->assertEquals(1, $page->currentPage());
+        $this->assertEquals(0, $page->currentOffset());
+        $this->assertEquals(10, $page->currentLimit());
         $this->assertCount(10, $page);
         $this->assertEquals(11, $page->totalCount());
     }
@@ -52,9 +52,9 @@ abstract class ResultTestCase extends TestCase
 
         $page = $result->take(10, 10);
 
-        $this->assertEquals(2, $page->getCurrentPage());
-        $this->assertEquals(10, $page->getCurrentOffset());
-        $this->assertEquals(10, $page->getCurrentLimit());
+        $this->assertEquals(2, $page->currentPage());
+        $this->assertEquals(10, $page->currentOffset());
+        $this->assertEquals(10, $page->currentLimit());
         $this->assertCount(1, $page);
     }
 

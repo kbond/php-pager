@@ -7,18 +7,18 @@ namespace Zenstruck\Porpaginas;
  */
 abstract class Pager implements \Countable, \IteratorAggregate
 {
-    final public function getNextPage(): ?int
+    final public function nextPage(): ?int
     {
         $currentPage = $this->getCurrentPage();
 
-        if ($currentPage === $this->getLastPage()) {
+        if ($currentPage === $this->lastPage()) {
             return null;
         }
 
         return ++$currentPage;
     }
 
-    final public function getPreviousPage(): ?int
+    final public function previousPage(): ?int
     {
         $page = $this->getCurrentPage();
 
@@ -29,12 +29,12 @@ abstract class Pager implements \Countable, \IteratorAggregate
         return --$page;
     }
 
-    final public function getFirstPage(): int
+    final public function firstPage(): int
     {
         return 1;
     }
 
-    final public function getLastPage(): int
+    final public function lastPage(): int
     {
         $totalCount = $this->totalCount();
 
@@ -42,12 +42,12 @@ abstract class Pager implements \Countable, \IteratorAggregate
             return 1;
         }
 
-        return (int) \ceil($totalCount / $this->getLimit());
+        return (int) \ceil($totalCount / $this->limit());
     }
 
     final public function pagesCount(): int
     {
-        return $this->getLastPage();
+        return $this->lastPage();
     }
 
     final public function haveToPaginate(): bool
@@ -57,7 +57,7 @@ abstract class Pager implements \Countable, \IteratorAggregate
 
     abstract public function getCurrentPage(): int;
 
-    abstract public function getLimit(): int;
+    abstract public function limit(): int;
 
     /**
      * The result count for the current page.

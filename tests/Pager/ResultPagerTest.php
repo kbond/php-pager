@@ -20,9 +20,9 @@ final class ResultPagerTest extends PagerTestCase
         $pager = $this->createPager(\range(1, 504), 30, 20);
 
         $this->assertSame(26, $pager->getCurrentPage());
-        $this->assertSame(1, $pager->getFirstPage());
-        $this->assertNull($pager->getNextPage());
-        $this->assertSame(25, $pager->getPreviousPage());
+        $this->assertSame(1, $pager->firstPage());
+        $this->assertNull($pager->nextPage());
+        $this->assertSame(25, $pager->previousPage());
         $this->assertCount(4, $pager);
         $this->assertSame(\range(501, 504), \iterator_to_array($pager));
     }
@@ -45,10 +45,10 @@ final class ResultPagerTest extends PagerTestCase
     public function invalid_limit()
     {
         $pager = new ResultPager(new ArrayResult([]), 1, 0);
-        $this->assertSame(20, $pager->getLimit());
+        $this->assertSame(20, $pager->limit());
 
         $pager = new ResultPager(new ArrayResult([]), 1, -1);
-        $this->assertSame(20, $pager->getLimit());
+        $this->assertSame(20, $pager->limit());
     }
 
     protected function createPager(array $results, int $page, int $limit): Pager

@@ -18,19 +18,19 @@ final class FactoryPage implements Page
         $this->page = $page;
     }
 
-    public function getCurrentOffset(): int
+    public function currentOffset(): int
     {
-        return $this->page->getCurrentOffset();
+        return $this->page->currentOffset();
     }
 
-    public function getCurrentPage(): int
+    public function currentPage(): int
     {
-        return $this->page->getCurrentPage();
+        return $this->page->currentPage();
     }
 
-    public function getCurrentLimit(): int
+    public function currentLimit(): int
     {
-        return $this->page->getCurrentLimit();
+        return $this->page->currentLimit();
     }
 
     public function count(): int

@@ -46,7 +46,7 @@ abstract class ORMRepository implements ObjectRepository, Repository
     /**
      * @see EntityRepository::find()
      */
-    public function find($id, $lockMode = null, $lockVersion = null)
+    public function find($id, $lockMode = null, $lockVersion = null): ?object
     {
         return $this->repo()->find($id, $lockMode, $lockVersion);
     }
@@ -54,7 +54,7 @@ abstract class ORMRepository implements ObjectRepository, Repository
     /**
      * @see EntityRepository::findAll()
      */
-    public function findAll()
+    public function findAll(): array
     {
         return $this->repo()->findAll();
     }
@@ -62,7 +62,7 @@ abstract class ORMRepository implements ObjectRepository, Repository
     /**
      * @see EntityRepository::findBy()
      */
-    public function findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null)
+    public function findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null): array
     {
         return $this->repo()->findBy($criteria, $orderBy, $limit, $offset);
     }
@@ -70,7 +70,7 @@ abstract class ORMRepository implements ObjectRepository, Repository
     /**
      * @see EntityRepository::findOneBy()
      */
-    public function findOneBy(array $criteria)
+    public function findOneBy(array $criteria): ?object
     {
         return $this->repo()->findOneBy($criteria);
     }

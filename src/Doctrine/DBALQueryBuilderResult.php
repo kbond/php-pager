@@ -19,7 +19,7 @@ final class DBALQueryBuilderResult implements Result
     public function __construct(QueryBuilder $qb, callable $countModifier = null)
     {
         $this->qb = $qb;
-        $this->countModifier = $countModifier ?: function (QueryBuilder $qb) {
+        $this->countModifier = $countModifier ?: static function (QueryBuilder $qb) {
             return $qb->select('COUNT(*)');
         };
     }
@@ -27,7 +27,7 @@ final class DBALQueryBuilderResult implements Result
     public function take(int $offset, int $limit): Page
     {
         $qb = clone $this->qb;
-        $results = function ($offset, $limit) use ($qb) {
+        $results = static function ($offset, $limit) use ($qb) {
             return $qb
                 ->setFirstResult($offset)
                 ->setMaxResults($limit)

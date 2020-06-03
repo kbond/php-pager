@@ -2,7 +2,6 @@
 
 namespace Zenstruck\Porpaginas\Doctrine;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -57,16 +56,11 @@ final class ORMQueryResult implements Result
 
     public function getIterator(): \Traversable
     {
-        $logger = $this->em()->getConfiguration()->getSQLLogger();
-        $this->em()->getConfiguration()->setSQLLogger(null);
-
         foreach (new ORMIterableResultDecorator($this->cloneQuery()->iterate()) as $key => $value) {
             yield $key => $value;
 
-            $this->em()->clear();
+            $this->query->getEntityManager()->clear();
         }
-
-        $this->em()->getConfiguration()->setSQLLogger($logger);
     }
 
     public function batchIterator(int $batchSize = 100): ORMCountableBatchProcessor
@@ -92,14 +86,9 @@ final class ORMQueryResult implements Result
                     return $this->result->count();
                 }
             },
-            $this->em(),
+            $this->query->getEntityManager(),
             $batchSize
         );
-    }
-
-    private function em(): EntityManager
-    {
-        return $this->query->getEntityManager();
     }
 
     private function paginatorFor(Query $query): Paginator

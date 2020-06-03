@@ -16,7 +16,7 @@ abstract class DBALObjectRepository implements Repository
 {
     public function getIterator(): Result
     {
-        return self::createResult($this->qb());
+        return static::createResult($this->qb());
     }
 
     public function count(): int
@@ -36,7 +36,7 @@ abstract class DBALObjectRepository implements Repository
             static function (array $data) {
                 return static::createObject($data);
             },
-            self::createDBALQueryBuilderResult($qb)
+            static::createDBALQueryBuilderResult($qb)
         );
     }
 

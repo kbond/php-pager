@@ -2,19 +2,37 @@
 
 namespace Zenstruck\Porpaginas\Doctrine;
 
+use Doctrine\ORM\Internal\Hydration\IterableResult;
+
 /**
  * Fixes https://github.com/doctrine/orm/issues/2821.
  *
+ * @internal
+ *
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-final class IterableQueryResultNormalizer
+final class ORMIterableResultDecorator implements \IteratorAggregate
 {
+    private $result;
+
+    public function __construct(IterableResult $result)
+    {
+        $this->result = $result;
+    }
+
+    public function getIterator(): \Traversable
+    {
+        foreach ($this->result as $key => $value) {
+            yield $key => self::normalizeResult($value);
+        }
+    }
+
     /**
      * @param mixed $result
      *
      * @return mixed
      */
-    public static function normalize($result)
+    private static function normalizeResult($result)
     {
         if (!\is_array($result)) {
             return $result;

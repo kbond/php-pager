@@ -5,31 +5,26 @@ namespace Zenstruck\Porpaginas\Doctrine;
 use Doctrine\ORM\EntityManagerInterface;
 
 /**
- * @author Marco Pivetta <ocramius@gmail.com>
  * @author Kevin Bond <kevinbond@gmail.com>
  */
 final class ORMCountableBatchProcessor implements \IteratorAggregate, \Countable
 {
     private ORMBatchProcessor $batchProcessor;
+
+    /** @var iterable|array|\Countable */
     private iterable $countable;
 
     /**
-     * @param iterable|\Countable $results
+     * @param array|\Countable $items
      */
-    public function __construct(iterable $results, EntityManagerInterface $em, int $batchSize = 100)
+    public function __construct(iterable $items, EntityManagerInterface $em, int $batchSize = 100)
     {
-        if (!\is_countable($results)) {
-            throw new \InvalidArgumentException('$results must be countable.');
+        if (!\is_countable($items)) {
+            throw new \InvalidArgumentException('$items must be countable.');
         }
 
-        $iterable = $results;
-
-        if ($results instanceof \IteratorAggregate) {
-            $iterable = $results->getIterator();
-        }
-
-        $this->batchProcessor = new ORMBatchProcessor($iterable, $em, $batchSize);
-        $this->countable = $results;
+        $this->batchProcessor = new ORMBatchProcessor($items, $em, $batchSize);
+        $this->countable = &$items;
     }
 
     public function getIterator(): \Traversable

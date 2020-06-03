@@ -2,6 +2,7 @@
 
 namespace Zenstruck\Porpaginas\Doctrine;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -56,27 +57,26 @@ final class ORMQueryResult implements Result
 
     public function getIterator(): \Traversable
     {
-        $query = $this->cloneQuery();
-        $logger = $query->getEntityManager()->getConfiguration()->getSQLLogger();
-        $query->getEntityManager()->getConfiguration()->setSQLLogger(null);
+        $logger = $this->em()->getConfiguration()->getSQLLogger();
+        $this->em()->getConfiguration()->setSQLLogger(null);
 
-        foreach ($this->cloneQuery()->iterate() as $key => $value) {
-            yield $key => IterableQueryResultNormalizer::normalize($value);
+        foreach (new ORMIterableResultDecorator($this->cloneQuery()->iterate()) as $key => $value) {
+            yield $key => $value;
 
-            $query->getEntityManager()->clear();
+            $this->em()->clear();
         }
 
-        $query->getEntityManager()->getConfiguration()->setSQLLogger($logger);
+        $this->em()->getConfiguration()->setSQLLogger($logger);
     }
 
     public function batchIterator(int $batchSize = 100): ORMCountableBatchProcessor
     {
         return new ORMCountableBatchProcessor(
             new class($this->cloneQuery(), $this) implements \IteratorAggregate, \Countable {
-                private $query;
-                private $result;
+                private Query $query;
+                private Result $result;
 
-                public function __construct(Query $query, ORMQueryResult $result)
+                public function __construct(Query $query, Result $result)
                 {
                     $this->query = $query;
                     $this->result = $result;
@@ -84,7 +84,7 @@ final class ORMQueryResult implements Result
 
                 public function getIterator(): \Traversable
                 {
-                    return $this->query->iterate();
+                    return new ORMIterableResultDecorator($this->query->iterate());
                 }
 
                 public function count(): int
@@ -92,9 +92,14 @@ final class ORMQueryResult implements Result
                     return $this->result->count();
                 }
             },
-            $this->query->getEntityManager(),
+            $this->em(),
             $batchSize
         );
+    }
+
+    private function em(): EntityManager
+    {
+        return $this->query->getEntityManager();
     }
 
     private function paginatorFor(Query $query): Paginator

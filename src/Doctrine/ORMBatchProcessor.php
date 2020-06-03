@@ -11,13 +11,17 @@ use Doctrine\ORM\Internal\Hydration\IterableResult;
  */
 final class ORMBatchProcessor implements \IteratorAggregate
 {
-    private iterable $results;
+    private iterable $items;
     private EntityManagerInterface $em;
     private int $batchSize;
 
-    public function __construct(iterable $results, EntityManagerInterface $em, int $batchSize = 100)
+    public function __construct(iterable $items, EntityManagerInterface $em, int $batchSize = 100)
     {
-        $this->results = $results;
+        if ($items instanceof IterableResult) {
+            $items = new ORMIterableResultDecorator($items);
+        }
+
+        $this->items = $items;
         $this->em = $em;
         $this->batchSize = $batchSize;
     }
@@ -31,11 +35,7 @@ final class ORMBatchProcessor implements \IteratorAggregate
         $iteration = 0;
 
         try {
-            foreach ($this->results as $key => $value) {
-                if ($this->results instanceof IterableResult) {
-                    $value = IterableQueryResultNormalizer::normalize($value);
-                }
-
+            foreach ($this->items as $key => $value) {
                 yield $key => $value;
 
                 $this->flushAndClearBatch(++$iteration);

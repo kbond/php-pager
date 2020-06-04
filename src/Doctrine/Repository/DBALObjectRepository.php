@@ -33,7 +33,7 @@ abstract class DBALObjectRepository implements Repository
     final protected static function createResult(QueryBuilder $qb): Result
     {
         return new FactoryResult(
-            static function (array $data) {
+            static function(array $data) {
                 return static::createObject($data);
             },
             static::createDBALQueryBuilderResult($qb)

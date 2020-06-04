@@ -27,7 +27,7 @@ class ORMQueryResultExtraFieldsTest extends ResultTestCase
     public function can_batch_update_results(): void
     {
         $result = $this->createResultWithItems(2);
-        $values = \array_map(static function (array $row) { return $row[0]->value; }, \iterator_to_array($result));
+        $values = \array_map(static function(array $row) { return $row[0]->value; }, \iterator_to_array($result));
 
         $this->assertSame(['value 1', 'value 2'], $values);
 
@@ -40,7 +40,7 @@ class ORMQueryResultExtraFieldsTest extends ResultTestCase
         }
 
         $values = \array_map(
-            static function (ORMEntity $entity) { return $entity->value; },
+            static function(ORMEntity $entity) { return $entity->value; },
             $this->em->getRepository(ORMEntity::class)->findAll()
         );
 

@@ -104,7 +104,7 @@ class ORMCountableBatchProcessorTest extends TestCase
      */
     public function results_must_be_countable(): void
     {
-        $iterator = static function () {
+        $iterator = static function() {
             yield 'foo';
         };
 

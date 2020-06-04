@@ -35,7 +35,7 @@ final class ORMQueryResult implements Result
     public function take(int $offset, int $limit): Page
     {
         return new CallbackPage(
-            function ($offset, $limit) {
+            function($offset, $limit) {
                 return \iterator_to_array($this->paginatorFor(
                     $this->cloneQuery()->setFirstResult($offset)->setMaxResults($limit)
                 ));

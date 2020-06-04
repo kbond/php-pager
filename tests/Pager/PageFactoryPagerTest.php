@@ -18,7 +18,7 @@ final class PageFactoryPagerTest extends PagerTestCase
         $slice = \array_values(\array_slice($results, $offset, $limit));
 
         return FactoryPager::fromPage(
-            static function ($value) {
+            static function($value) {
                 return $value;
             },
             new ArrayPage($slice, $offset, $limit, \count($results))

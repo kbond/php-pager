@@ -120,7 +120,7 @@ class ORMBatchProcessorTest extends TestCase
      */
     public function results_do_not_have_to_be_countable(): void
     {
-        $iterator = static function () {
+        $iterator = static function() {
             yield 'foo';
         };
         $batchProcessor = new ORMBatchProcessor($iterator(), $this->em);

@@ -12,13 +12,12 @@ use Zenstruck\Porpaginas\Tests\Doctrine\Fixtures\ORMEntity;
  */
 trait HasEntityManager
 {
-    /** @var EntityManager */
-    protected $em;
+    protected ?EntityManager $em = null;
 
     /**
      * @before
      */
-    protected function setupEntityManager()
+    protected function setupEntityManager(): void
     {
         $paths = [];
         $isDevMode = false;
@@ -41,8 +40,18 @@ trait HasEntityManager
     /**
      * @after
      */
-    protected function teardownEntityManager()
+    protected function teardownEntityManager(): void
     {
         $this->em = null;
+    }
+
+    protected function persistEntities(int $count): void
+    {
+        for ($i = 0; $i < $count; ++$i) {
+            $this->em->persist(new ORMEntity('value '.($i + 1)));
+        }
+
+        $this->em->flush();
+        $this->em->clear();
     }
 }

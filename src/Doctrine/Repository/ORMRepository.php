@@ -33,7 +33,7 @@ abstract class ORMRepository implements ObjectRepository, Repository
         return $this->createResult($this->qb());
     }
 
-    public function batchIterator(int $chunkSize = 100): ORMCountableBatchProcessor
+    public function batchProcessor(int $chunkSize = 100): ORMCountableBatchProcessor
     {
         return $this->getIterator()->batchProcessor($chunkSize);
     }

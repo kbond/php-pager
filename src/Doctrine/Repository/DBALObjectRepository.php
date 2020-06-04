@@ -28,7 +28,7 @@ abstract class DBALObjectRepository implements Repository
 
     abstract protected static function tableName(): string;
 
-    abstract protected function getConnection(): Connection;
+    abstract protected function connection(): Connection;
 
     final protected static function createResult(QueryBuilder $qb): Result
     {
@@ -47,6 +47,6 @@ abstract class DBALObjectRepository implements Repository
 
     protected function qb(): QueryBuilder
     {
-        return $this->getConnection()->createQueryBuilder()->select('*')->from(static::tableName());
+        return $this->connection()->createQueryBuilder()->select('*')->from(static::tableName());
     }
 }

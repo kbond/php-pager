@@ -87,10 +87,7 @@ abstract class ORMRepository implements ObjectRepository, Repository
         return $this->repo()->createQueryBuilder($alias, $indexBy);
     }
 
-    /**
-     * @return EntityRepository
-     */
-    final protected function repo(): ObjectRepository
+    final protected function repo(): EntityRepository
     {
         return $this->repo ?: $this->repo = static::createEntityRepository($this->em(), $this->em()->getClassMetadata($this->getClassName()));
     }

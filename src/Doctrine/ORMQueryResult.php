@@ -63,7 +63,7 @@ final class ORMQueryResult implements Result
         }
     }
 
-    public function batchIterator(int $batchSize = 100): ORMCountableBatchProcessor
+    public function batchIterator(int $chunkSize = 100): ORMCountableBatchProcessor
     {
         return new ORMCountableBatchProcessor(
             new class($this->cloneQuery(), $this) implements \IteratorAggregate, \Countable {
@@ -87,7 +87,7 @@ final class ORMQueryResult implements Result
                 }
             },
             $this->query->getEntityManager(),
-            $batchSize
+            $chunkSize
         );
     }
 

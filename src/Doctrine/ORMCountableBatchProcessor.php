@@ -17,13 +17,13 @@ final class ORMCountableBatchProcessor implements \IteratorAggregate, \Countable
     /**
      * @param array|\Countable $items
      */
-    public function __construct(iterable $items, EntityManagerInterface $em, int $batchSize = 100)
+    public function __construct(iterable $items, EntityManagerInterface $em, int $chunkSize = 100)
     {
         if (!\is_countable($items)) {
             throw new \InvalidArgumentException('$items must be countable.');
         }
 
-        $this->batchProcessor = new ORMBatchProcessor($items, $em, $batchSize);
+        $this->batchProcessor = new ORMBatchProcessor($items, $em, $chunkSize);
         $this->countable = &$items;
     }
 

@@ -13,9 +13,9 @@ final class ORMBatchProcessor implements \IteratorAggregate
 {
     private iterable $items;
     private EntityManagerInterface $em;
-    private int $batchSize;
+    private int $chunkSize;
 
-    public function __construct(iterable $items, EntityManagerInterface $em, int $batchSize = 100)
+    public function __construct(iterable $items, EntityManagerInterface $em, int $chunkSize = 100)
     {
         if ($items instanceof IterableResult) {
             $items = new ORMIterableResultDecorator($items);
@@ -23,7 +23,7 @@ final class ORMBatchProcessor implements \IteratorAggregate
 
         $this->items = $items;
         $this->em = $em;
-        $this->batchSize = $batchSize;
+        $this->chunkSize = $chunkSize;
     }
 
     public function getIterator(): \Traversable
@@ -53,7 +53,7 @@ final class ORMBatchProcessor implements \IteratorAggregate
 
     private function flushAndClearBatch(int $iteration): void
     {
-        if ($iteration % $this->batchSize) {
+        if ($iteration % $this->chunkSize) {
             return;
         }
 

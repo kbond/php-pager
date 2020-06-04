@@ -6,8 +6,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
 use Zenstruck\Porpaginas\Doctrine\Batch\ORMCountableBatchProcessor;
 use Zenstruck\Porpaginas\Doctrine\ORMQueryResult;
@@ -20,7 +18,6 @@ use Zenstruck\Porpaginas\Repository;
  */
 abstract class ORMRepository implements ObjectRepository, Repository
 {
-    private ?EntityManagerInterface $em = null;
     private ?EntityRepository $repo = null;
 
     final public function __call($name, $arguments)
@@ -91,18 +88,6 @@ abstract class ORMRepository implements ObjectRepository, Repository
     }
 
     /**
-     * @return EntityManagerInterface
-     */
-    final protected function em(): ObjectManager
-    {
-        if ($this->em) {
-            return $this->em;
-        }
-
-        return $this->em = $this->managerRegistry()->getManagerForClass($this->getClassName());
-    }
-
-    /**
      * @return EntityRepository
      */
     final protected function repo(): ObjectRepository
@@ -110,7 +95,7 @@ abstract class ORMRepository implements ObjectRepository, Repository
         return $this->repo ?: $this->repo = static::createEntityRepository($this->em(), $this->em()->getClassMetadata($this->getClassName()));
     }
 
-    abstract protected function managerRegistry(): ManagerRegistry;
+    abstract protected function em(): EntityManagerInterface;
 
     protected static function createEntityRepository(EntityManagerInterface $em, ClassMetadata $class): EntityRepository
     {

@@ -58,11 +58,24 @@ final class ORMQueryResult implements Result
 
     public function getIterator(): \Traversable
     {
+        return $this->batchIterator();
+    }
+
+    public function batchIterator(int $chunkSize = 100): \Traversable
+    {
+        $iteration = 0;
+
         foreach (new ORMIterableResultDecorator($this->cloneQuery()->iterate()) as $key => $value) {
             yield $key => $value;
 
+            if (++$iteration % $chunkSize) {
+                continue;
+            }
+
             $this->query->getEntityManager()->clear();
         }
+
+        $this->query->getEntityManager()->clear();
     }
 
     public function batchProcessor(int $chunkSize = 100): ORMCountableBatchProcessor

@@ -15,7 +15,7 @@ final class ResultFactoryPagerTest extends PagerTestCase
     protected function createPager(array $results, int $page, int $limit): Pager
     {
         return FactoryPager::fromResult(
-            function ($value) {
+            static function($value) {
                 return $value;
             },
             new ArrayResult($results),

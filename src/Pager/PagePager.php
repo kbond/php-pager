@@ -10,7 +10,7 @@ use Zenstruck\Porpaginas\Pager;
  */
 final class PagePager extends Pager
 {
-    private $page;
+    private Page $page;
 
     public function __construct(Page $page)
     {
@@ -19,12 +19,12 @@ final class PagePager extends Pager
 
     public function getCurrentPage(): int
     {
-        return $this->page->getCurrentPage();
+        return $this->page->currentPage();
     }
 
-    public function getLimit(): int
+    public function limit(): int
     {
-        return $this->page->getCurrentLimit();
+        return $this->page->currentLimit();
     }
 
     public function count(): int
@@ -37,7 +37,7 @@ final class PagePager extends Pager
         return $this->page->totalCount();
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): \Traversable
     {
         return $this->page->getIterator();
     }

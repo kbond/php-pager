@@ -13,12 +13,10 @@ final class ResultPager extends Pager
 {
     public const DEFAULT_LIMIT = 20;
 
-    private $result;
-    private $page;
-    private $limit;
-
-    /** @var Page|null */
-    private $cachedPage;
+    private Result $result;
+    private int $page;
+    private int $limit;
+    private ?Page $cachedPage = null;
 
     public function __construct(Result $result, int $page = 1, int $limit = self::DEFAULT_LIMIT)
     {
@@ -29,7 +27,7 @@ final class ResultPager extends Pager
 
     public function getCurrentPage(): int
     {
-        $lastPage = $this->getLastPage();
+        $lastPage = $this->lastPage();
 
         if ($this->page > $lastPage) {
             return $lastPage;
@@ -38,7 +36,7 @@ final class ResultPager extends Pager
         return $this->page;
     }
 
-    public function getLimit(): int
+    public function limit(): int
     {
         return $this->limit;
     }
@@ -53,7 +51,7 @@ final class ResultPager extends Pager
         return $this->result->count();
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): \Traversable
     {
         return $this->getPage()->getIterator();
     }
@@ -64,8 +62,8 @@ final class ResultPager extends Pager
             return $this->cachedPage;
         }
 
-        $offset = $this->getCurrentPage() * $this->getLimit() - $this->getLimit();
+        $offset = $this->getCurrentPage() * $this->limit() - $this->limit();
 
-        return $this->cachedPage = $this->result->take($offset, $this->getLimit());
+        return $this->cachedPage = $this->result->take($offset, $this->limit());
     }
 }

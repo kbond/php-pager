@@ -10,7 +10,7 @@ abstract class ResultTestCase extends TestCase
     /**
      * @test
      */
-    public function it_counts_total_items()
+    public function it_counts_total_items(): void
     {
         $result = $this->createResultWithItems(2);
 
@@ -20,7 +20,7 @@ abstract class ResultTestCase extends TestCase
     /**
      * @test
      */
-    public function it_iterates_over_all_items()
+    public function it_iterates_over_all_items(): void
     {
         $result = $this->createResultWithItems(11);
 
@@ -30,15 +30,15 @@ abstract class ResultTestCase extends TestCase
     /**
      * @test
      */
-    public function it_takes_slice_as_page()
+    public function it_takes_slice_as_page(): void
     {
         $result = $this->createResultWithItems(11);
 
         $page = $result->take(0, 10);
 
-        $this->assertEquals(1, $page->getCurrentPage());
-        $this->assertEquals(0, $page->getCurrentOffset());
-        $this->assertEquals(10, $page->getCurrentLimit());
+        $this->assertEquals(1, $page->currentPage());
+        $this->assertEquals(0, $page->currentOffset());
+        $this->assertEquals(10, $page->currentLimit());
         $this->assertCount(10, $page);
         $this->assertEquals(11, $page->totalCount());
     }
@@ -46,22 +46,22 @@ abstract class ResultTestCase extends TestCase
     /**
      * @test
      */
-    public function it_counts_last_page_of_slice_correctly()
+    public function it_counts_last_page_of_slice_correctly(): void
     {
         $result = $this->createResultWithItems(11);
 
         $page = $result->take(10, 10);
 
-        $this->assertEquals(2, $page->getCurrentPage());
-        $this->assertEquals(10, $page->getCurrentOffset());
-        $this->assertEquals(10, $page->getCurrentLimit());
+        $this->assertEquals(2, $page->currentPage());
+        $this->assertEquals(10, $page->currentOffset());
+        $this->assertEquals(10, $page->currentLimit());
         $this->assertCount(1, $page);
     }
 
     /**
      * @test
      */
-    public function it_counts_page_first_then_iterates()
+    public function it_counts_page_first_then_iterates(): void
     {
         $result = $this->createResultWithItems(16);
 
@@ -74,7 +74,7 @@ abstract class ResultTestCase extends TestCase
     /**
      * @test
      */
-    public function it_itereates_first_then_counts_page()
+    public function it_itereates_first_then_counts_page(): void
     {
         $result = $this->createResultWithItems(16);
 
@@ -87,17 +87,28 @@ abstract class ResultTestCase extends TestCase
     /**
      * @test
      */
-    public function results_match_the_expected_value()
+    public function results_match_the_expected_value(): void
     {
-        $result = $this->createResultWithItems(1);
+        $result = $this->createResultWithItems(11);
 
-        $this->assertEquals($this->getExpectedFirstValue(), \iterator_to_array($result)[0]);
+        $this->assertEquals($this->getExpectedValueAtPosition(1), \iterator_to_array($result)[0]);
+        $this->assertEquals($this->getExpectedValueAtPosition(5), \iterator_to_array($result)[4]);
+        $this->assertEquals($this->getExpectedValueAtPosition(11), \iterator_to_array($result)[10]);
+
+        $page = $result->take(0, 10);
+
+        $this->assertEquals($this->getExpectedValueAtPosition(1), \iterator_to_array($page)[0]);
+        $this->assertEquals($this->getExpectedValueAtPosition(10), \iterator_to_array($page)[9]);
+
+        $page = $result->take(10, 10);
+
+        $this->assertEquals($this->getExpectedValueAtPosition(11), \iterator_to_array($page)[0]);
     }
 
     /**
      * @test
      */
-    public function it_can_have_empty_results()
+    public function it_can_have_empty_results(): void
     {
         $result = $this->createResultWithItems(0);
 
@@ -106,27 +117,10 @@ abstract class ResultTestCase extends TestCase
         $this->assertSame([], \iterator_to_array($result->take(0, 10)));
     }
 
-    /**
-     * @test
-     */
-    public function result_is_json_serialzable()
-    {
-        $result = $this->createResultWithItems(10);
-
-        $this->assertSame(\json_encode(\iterator_to_array($result)), \json_encode($result));
-    }
-
-    /**
-     * @test
-     */
-    public function page_is_json_serializable()
-    {
-        $page = $this->createResultWithItems(10)->take(5, 3);
-
-        $this->assertSame(\json_encode(\iterator_to_array($page)), \json_encode($page));
-    }
-
     abstract protected function createResultWithItems(int $count): Result;
 
-    abstract protected function getExpectedFirstValue();
+    /**
+     * @return mixed
+     */
+    abstract protected function getExpectedValueAtPosition(int $position);
 }

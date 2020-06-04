@@ -4,13 +4,15 @@ namespace Zenstruck\Porpaginas\Tests\Doctrine;
 
 use Zenstruck\Porpaginas\Doctrine\ORMQueryResult;
 use Zenstruck\Porpaginas\Result;
+use Zenstruck\Porpaginas\Tests\Doctrine\Fixtures\ORMEntity;
 
-class ORMQueryResultTest extends DoctrineResultTestCase
+class ORMQueryResultTest extends ORMResultTest
 {
     protected function createResultWithItems(int $count): Result
     {
-        $entityManager = $this->setupEntityManager($count);
-        $query = $entityManager->createQuery(\sprintf('SELECT e FROM %s e', DoctrineOrmEntity::class));
+        $this->persistEntities($count);
+
+        $query = $this->em->createQuery(\sprintf('SELECT e FROM %s e', ORMEntity::class));
 
         return new ORMQueryResult($query);
     }

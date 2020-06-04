@@ -13,7 +13,7 @@ use Zenstruck\Porpaginas\Result;
  */
 final class FactoryPager extends Pager
 {
-    private $inner;
+    private Pager $inner;
 
     private function __construct(Pager $inner)
     {
@@ -35,9 +35,9 @@ final class FactoryPager extends Pager
         return $this->inner->getCurrentPage();
     }
 
-    public function getLimit(): int
+    public function limit(): int
     {
-        return $this->inner->getLimit();
+        return $this->inner->limit();
     }
 
     public function count(): int
@@ -50,7 +50,7 @@ final class FactoryPager extends Pager
         return $this->inner->totalCount();
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): \Traversable
     {
         return $this->inner->getIterator();
     }

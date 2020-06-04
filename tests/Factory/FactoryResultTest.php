@@ -15,7 +15,7 @@ class FactoryResultTest extends ResultTestCase
     /**
      * @test
      */
-    public function it_uses_factory_callback_to_create_result()
+    public function it_uses_factory_callback_to_create_result(): void
     {
         $result = new FactoryResult([$this, 'factory'], new ArrayResult(\range(0, 30)));
         $results = \iterator_to_array($result);
@@ -25,18 +25,24 @@ class FactoryResultTest extends ResultTestCase
         $this->assertSame('factory 10', $results[0]);
     }
 
-    public function factory($result)
+    public function factory($result): string
     {
         return 'factory '.$result;
     }
 
     protected function createResultWithItems(int $count): Result
     {
-        return new FactoryResult([$this, 'factory'], new ArrayResult($count ? \array_fill(0, $count, 'value') : []));
+        $array = [];
+
+        for ($i = 1; $i <= $count; ++$i) {
+            $array[] = 'value '.$i;
+        }
+
+        return new FactoryResult([$this, 'factory'], new ArrayResult($array));
     }
 
-    protected function getExpectedFirstValue()
+    protected function getExpectedValueAtPosition(int $position)
     {
-        return 'factory value';
+        return 'factory value '.$position;
     }
 }

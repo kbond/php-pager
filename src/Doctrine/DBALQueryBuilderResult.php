@@ -4,7 +4,6 @@ namespace Zenstruck\Porpaginas\Doctrine;
 
 use Doctrine\DBAL\Query\QueryBuilder;
 use Zenstruck\Porpaginas\Callback\CallbackPage;
-use Zenstruck\Porpaginas\JsonSerializable;
 use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
 
@@ -13,16 +12,14 @@ use Zenstruck\Porpaginas\Result;
  */
 final class DBALQueryBuilderResult implements Result
 {
-    use JsonSerializable;
+    private QueryBuilder$qb;
+    private $countModifier;
+    private ?int $count = null;
 
-    private $qb;
-    private $countQueryBuilderModifier;
-    private $count;
-
-    public function __construct(QueryBuilder $qb, callable $countQueryBuilderModifier = null)
+    public function __construct(QueryBuilder $qb, callable $countModifier = null)
     {
         $this->qb = $qb;
-        $this->countQueryBuilderModifier = $countQueryBuilderModifier ?: function (QueryBuilder $qb) {
+        $this->countModifier = $countModifier ?: static function(QueryBuilder $qb) {
             return $qb->select('COUNT(*)');
         };
     }
@@ -30,7 +27,7 @@ final class DBALQueryBuilderResult implements Result
     public function take(int $offset, int $limit): Page
     {
         $qb = clone $this->qb;
-        $results = function ($offset, $limit) use ($qb) {
+        $results = static function($offset, $limit) use ($qb) {
             return $qb
                 ->setFirstResult($offset)
                 ->setMaxResults($limit)
@@ -50,12 +47,12 @@ final class DBALQueryBuilderResult implements Result
 
         $qb = clone $this->qb;
 
-        \call_user_func($this->countQueryBuilderModifier, $qb);
+        \call_user_func($this->countModifier, $qb);
 
-        return $this->count = (int) $qb->execute()->fetchColumn();
+        return $this->count = $qb->execute()->fetchColumn();
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): \Traversable
     {
         $stmt = $this->qb->execute();
 

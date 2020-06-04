@@ -4,25 +4,29 @@ namespace Zenstruck\Porpaginas\Tests\Doctrine;
 
 use Zenstruck\Porpaginas\Doctrine\DBALQueryBuilderResult;
 use Zenstruck\Porpaginas\Result;
+use Zenstruck\Porpaginas\Tests\ResultTestCase;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class DBALQueryBuilderResultTest extends DoctrineResultTestCase
+class DBALQueryBuilderResultTest extends ResultTestCase
 {
+    use HasEntityManager;
+
     protected function createResultWithItems(int $count): Result
     {
-        $em = $this->setupEntityManager($count);
-        $qb = $em->getConnection()->createQueryBuilder()
+        $this->persistEntities($count);
+
+        $qb = $this->em->getConnection()->createQueryBuilder()
             ->select('*')
-            ->from('DoctrineOrmEntity', 'e')
+            ->from('ORMEntity', 'e')
         ;
 
         return new DBALQueryBuilderResult($qb);
     }
 
-    protected function getExpectedFirstValue()
+    protected function getExpectedValueAtPosition(int $position)
     {
-        return ['id' => 1];
+        return ['id' => $position, 'value' => 'value '.$position];
     }
 }

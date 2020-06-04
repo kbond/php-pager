@@ -2,17 +2,14 @@
 
 namespace Zenstruck\Porpaginas\Arrays;
 
-use Zenstruck\Porpaginas\JsonSerializable;
 use Zenstruck\Porpaginas\Page;
 
 final class ArrayPage implements Page
 {
-    use JsonSerializable;
-
-    private $slice;
-    private $offset;
-    private $limit;
-    private $totalCount;
+    private array $slice;
+    private int $offset;
+    private int $limit;
+    private int $totalCount;
 
     public function __construct(array $slice, int $offset, int $limit, int $totalCount)
     {
@@ -22,17 +19,17 @@ final class ArrayPage implements Page
         $this->totalCount = $totalCount;
     }
 
-    public function getCurrentOffset(): int
+    public function currentOffset(): int
     {
         return $this->offset;
     }
 
-    public function getCurrentPage(): int
+    public function currentPage(): int
     {
-        return (int) (\floor($this->offset / $this->limit) + 1);
+        return \floor($this->offset / $this->limit) + 1;
     }
 
-    public function getCurrentLimit(): int
+    public function currentLimit(): int
     {
         return $this->limit;
     }
@@ -47,7 +44,7 @@ final class ArrayPage implements Page
         return $this->totalCount;
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->slice);
     }

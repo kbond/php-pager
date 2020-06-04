@@ -5,16 +5,16 @@ namespace Zenstruck\Porpaginas;
 /**
  * Interface for lazy paginators.
  */
-interface Page extends \Countable, \IteratorAggregate, \JsonSerializable
+interface Page extends \Countable, \IteratorAggregate
 {
-    public function getCurrentOffset(): int;
+    public function currentOffset(): int;
 
-    public function getCurrentPage(): int;
+    public function currentPage(): int;
 
-    public function getCurrentLimit(): int;
+    public function currentLimit(): int;
 
     /**
-     * Return the number of results on the currrent page of the {@link Result}.
+     * Return the number of results on the current page of the {@link Result}.
      */
     public function count(): int;
 
@@ -26,5 +26,5 @@ interface Page extends \Countable, \IteratorAggregate, \JsonSerializable
     /**
      * Return an iterator over selected windows of results of the paginatable.
      */
-    public function getIterator(): \Iterator;
+    public function getIterator(): \Traversable;
 }

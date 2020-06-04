@@ -5,20 +5,20 @@ namespace Zenstruck\Porpaginas;
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-abstract class Pager implements \Countable, \IteratorAggregate, \JsonSerializable
+abstract class Pager implements \Countable, \IteratorAggregate
 {
-    final public function getNextPage(): ?int
+    final public function nextPage(): ?int
     {
         $currentPage = $this->getCurrentPage();
 
-        if ($currentPage === $this->getLastPage()) {
+        if ($currentPage === $this->lastPage()) {
             return null;
         }
 
         return ++$currentPage;
     }
 
-    final public function getPreviousPage(): ?int
+    final public function previousPage(): ?int
     {
         $page = $this->getCurrentPage();
 
@@ -29,12 +29,12 @@ abstract class Pager implements \Countable, \IteratorAggregate, \JsonSerializabl
         return --$page;
     }
 
-    final public function getFirstPage(): int
+    final public function firstPage(): int
     {
         return 1;
     }
 
-    final public function getLastPage(): int
+    final public function lastPage(): int
     {
         $totalCount = $this->totalCount();
 
@@ -42,33 +42,22 @@ abstract class Pager implements \Countable, \IteratorAggregate, \JsonSerializabl
             return 1;
         }
 
-        return (int) \ceil($totalCount / $this->getLimit());
+        return \ceil($totalCount / $this->limit());
     }
 
     final public function pagesCount(): int
     {
-        return $this->getLastPage();
+        return $this->lastPage();
     }
 
-    public function jsonSerialize(): array
+    final public function haveToPaginate(): bool
     {
-        return [
-            'items' => \iterator_to_array($this),
-            'count' => $this->count(),
-            'total' => $this->totalCount(),
-            'limit' => $this->getLimit(),
-            'pages' => $this->pagesCount(),
-            'first' => $this->getFirstPage(),
-            'previous' => $this->getPreviousPage(),
-            'current' => $this->getCurrentPage(),
-            'next' => $this->getNextPage(),
-            'last' => $this->getLastPage(),
-        ];
+        return $this->pagesCount() > 1;
     }
 
     abstract public function getCurrentPage(): int;
 
-    abstract public function getLimit(): int;
+    abstract public function limit(): int;
 
     /**
      * The result count for the current page.
@@ -83,5 +72,5 @@ abstract class Pager implements \Countable, \IteratorAggregate, \JsonSerializabl
     /**
      * Return an iterator over selected windows of results of the paginatable.
      */
-    abstract public function getIterator(): \Iterator;
+    abstract public function getIterator(): \Traversable;
 }

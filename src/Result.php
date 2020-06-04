@@ -8,7 +8,7 @@ namespace Zenstruck\Porpaginas;
  * It allows iterating over the result either paginated using the {@link take}
  * method or non-paginated using the iterator aggregate API.
  */
-interface Result extends \Countable, \IteratorAggregate, \JsonSerializable
+interface Result extends \Countable, \IteratorAggregate
 {
     public function take(int $offset, int $limit): Page;
 
@@ -20,5 +20,5 @@ interface Result extends \Countable, \IteratorAggregate, \JsonSerializable
     /**
      * Return an iterator over all results of the paginatable.
      */
-    public function getIterator(): \Iterator;
+    public function getIterator(): \Traversable;
 }

@@ -2,7 +2,6 @@
 
 namespace Zenstruck\Porpaginas\Callback;
 
-use Zenstruck\Porpaginas\JsonSerializable;
 use Zenstruck\Porpaginas\Page;
 
 /**
@@ -10,14 +9,12 @@ use Zenstruck\Porpaginas\Page;
  */
 final class CallbackPage implements Page
 {
-    use JsonSerializable;
-
     private $resultCallback;
     private $totalCountCallback;
-    private $offset;
-    private $limit;
-    private $totalCount;
-    private $results;
+    private int $offset;
+    private int $limit;
+    private ?int $totalCount = null;
+    private ?\ArrayIterator $results = null;
 
     /**
      * @param callable $resultCallback     Returns an array
@@ -31,17 +28,17 @@ final class CallbackPage implements Page
         $this->limit = $limit;
     }
 
-    public function getCurrentOffset(): int
+    public function currentOffset(): int
     {
         return $this->offset;
     }
 
-    public function getCurrentPage(): int
+    public function currentPage(): int
     {
-        return (int) (\floor($this->offset / $this->limit) + 1);
+        return \floor($this->offset / $this->limit) + 1;
     }
 
-    public function getCurrentLimit(): int
+    public function currentLimit(): int
     {
         return $this->limit;
     }
@@ -60,7 +57,7 @@ final class CallbackPage implements Page
         return $this->totalCount = \call_user_func($this->totalCountCallback);
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): \Traversable
     {
         return $this->getResults();
     }

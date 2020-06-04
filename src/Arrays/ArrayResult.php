@@ -2,15 +2,12 @@
 
 namespace Zenstruck\Porpaginas\Arrays;
 
-use Zenstruck\Porpaginas\JsonSerializable;
 use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
 
 final class ArrayResult implements Result
 {
-    use JsonSerializable;
-
-    private $data;
+    private array $data;
 
     public function __construct(array $data)
     {
@@ -32,7 +29,7 @@ final class ArrayResult implements Result
         return \count($this->data);
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->data);
     }

@@ -2,7 +2,6 @@
 
 namespace Zenstruck\Porpaginas\Factory;
 
-use Zenstruck\Porpaginas\JsonSerializable;
 use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
 
@@ -11,10 +10,8 @@ use Zenstruck\Porpaginas\Result;
  */
 final class FactoryResult implements Result
 {
-    use JsonSerializable;
-
     private $factory;
-    private $result;
+    private Result $result;
 
     public function __construct(callable $factory, Result $result)
     {
@@ -32,7 +29,7 @@ final class FactoryResult implements Result
         return $this->result->count();
     }
 
-    public function getIterator(): \Iterator
+    public function getIterator(): \Traversable
     {
         foreach ($this->result as $result) {
             yield \call_user_func($this->factory, $result);

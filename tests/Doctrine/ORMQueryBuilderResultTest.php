@@ -4,6 +4,7 @@ namespace Zenstruck\Porpaginas\Tests\Doctrine;
 
 use Zenstruck\Porpaginas\Doctrine\ORMQueryResult;
 use Zenstruck\Porpaginas\Result;
+use Zenstruck\Porpaginas\Tests\Doctrine\Fixtures\ORMEntity;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>

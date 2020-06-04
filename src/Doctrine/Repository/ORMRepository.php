@@ -9,7 +9,7 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Persistence\ObjectRepository;
-use Zenstruck\Porpaginas\Doctrine\ORMCountableBatchProcessor;
+use Zenstruck\Porpaginas\Doctrine\Batch\ORMCountableBatchProcessor;
 use Zenstruck\Porpaginas\Doctrine\ORMQueryResult;
 use Zenstruck\Porpaginas\Repository;
 

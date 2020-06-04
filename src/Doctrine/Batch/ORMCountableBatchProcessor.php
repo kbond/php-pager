@@ -1,6 +1,6 @@
 <?php
 
-namespace Zenstruck\Porpaginas\Doctrine;
+namespace Zenstruck\Porpaginas\Doctrine\Batch;
 
 use Doctrine\ORM\EntityManagerInterface;
 

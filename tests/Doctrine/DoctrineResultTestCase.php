@@ -2,6 +2,7 @@
 
 namespace Zenstruck\Porpaginas\Tests\Doctrine;
 
+use Zenstruck\Porpaginas\Tests\Doctrine\Fixtures\ORMEntity;
 use Zenstruck\Porpaginas\Tests\ResultTestCase;
 
 /**

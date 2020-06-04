@@ -2,6 +2,8 @@
 
 namespace Zenstruck\Porpaginas\Tests\Doctrine;
 
+use Zenstruck\Porpaginas\Tests\Doctrine\Fixtures\ORMEntity;
+
 abstract class ORMResultTest extends DoctrineResultTestCase
 {
     /**

@@ -5,6 +5,7 @@ namespace Zenstruck\Porpaginas\Tests\Doctrine;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\ORM\Tools\Setup;
+use Zenstruck\Porpaginas\Tests\Doctrine\Fixtures\ORMEntity;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
@@ -43,29 +44,5 @@ trait HasEntityManager
     protected function teardownEntityManager()
     {
         $this->em = null;
-    }
-}
-
-/**
- * @Entity
- */
-class ORMEntity
-{
-    /**
-     * @Id
-     * @Column(type="integer")
-     * @GeneratedValue
-     */
-    public $id;
-
-    /**
-     * @Column(type="string")
-     */
-    public $value;
-
-    public function __construct(string $value, int $id = null)
-    {
-        $this->id = $id;
-        $this->value = $value;
     }
 }

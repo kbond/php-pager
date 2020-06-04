@@ -6,6 +6,8 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Zenstruck\Porpaginas\Callback\CallbackPage;
+use Zenstruck\Porpaginas\Doctrine\Batch\ORMCountableBatchProcessor;
+use Zenstruck\Porpaginas\Doctrine\Batch\ORMIterableResultDecorator;
 use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
 

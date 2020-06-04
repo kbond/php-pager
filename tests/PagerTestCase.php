@@ -13,7 +13,7 @@ abstract class PagerTestCase extends TestCase
     /**
      * @test
      */
-    public function it_properly_handles_page1()
+    public function it_properly_handles_page1(): void
     {
         $pager = $this->createPager(\range(1, 504), 1, 20);
 
@@ -33,7 +33,7 @@ abstract class PagerTestCase extends TestCase
     /**
      * @test
      */
-    public function it_properly_handles_page2()
+    public function it_properly_handles_page2(): void
     {
         $pager = $this->createPager(\range(1, 504), 2, 20);
 
@@ -49,7 +49,7 @@ abstract class PagerTestCase extends TestCase
     /**
      * @test
      */
-    public function it_properly_handles_the_last_page()
+    public function it_properly_handles_the_last_page(): void
     {
         $pager = $this->createPager(\range(1, 504), 26, 20);
 
@@ -65,7 +65,7 @@ abstract class PagerTestCase extends TestCase
     /**
      * @test
      */
-    public function it_properly_handles_an_empty_page()
+    public function it_properly_handles_an_empty_page(): void
     {
         $pager = $this->createPager([], 1, 20);
 
@@ -84,7 +84,7 @@ abstract class PagerTestCase extends TestCase
     /**
      * @test
      */
-    public function it_properly_handles_a_single_page()
+    public function it_properly_handles_a_single_page(): void
     {
         $pager = $this->createPager(\range(1, 10), 1, 20);
 

@@ -20,7 +20,6 @@ final class ORMQueryResult implements Result
 
     /**
      * @param Query|QueryBuilder $query
-     * @param bool|null          $useOutputWalkers Set to false if query contains only columns
      */
     public function __construct($query, bool $fetchCollection = true, ?bool $useOutputWalkers = null)
     {

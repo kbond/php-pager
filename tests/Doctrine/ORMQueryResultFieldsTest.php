@@ -14,7 +14,7 @@ class ORMQueryResultFieldsTest extends ResultTestCase
     /**
      * @test
      */
-    public function can_iterate()
+    public function can_iterate(): void
     {
         $result = $this->createResultWithItems(2);
 
@@ -34,7 +34,7 @@ class ORMQueryResultFieldsTest extends ResultTestCase
     /**
      * @test
      */
-    public function can_batch_iterate()
+    public function can_batch_iterate(): void
     {
         $result = $this->createResultWithItems(2)->batchProcessor();
 

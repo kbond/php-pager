@@ -15,7 +15,7 @@ class FactoryResultTest extends ResultTestCase
     /**
      * @test
      */
-    public function it_uses_factory_callback_to_create_result()
+    public function it_uses_factory_callback_to_create_result(): void
     {
         $result = new FactoryResult([$this, 'factory'], new ArrayResult(\range(0, 30)));
         $results = \iterator_to_array($result);
@@ -25,7 +25,7 @@ class FactoryResultTest extends ResultTestCase
         $this->assertSame('factory 10', $results[0]);
     }
 
-    public function factory($result)
+    public function factory($result): string
     {
         return 'factory '.$result;
     }

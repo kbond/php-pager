@@ -18,7 +18,7 @@ class ORMCountableBatchProcessorTest extends TestCase
     /**
      * @test
      */
-    public function can_batch_persist_results()
+    public function can_batch_persist_results(): void
     {
         $array = [];
 
@@ -46,7 +46,7 @@ class ORMCountableBatchProcessorTest extends TestCase
     /**
      * @test
      */
-    public function can_batch_persist_new_entities()
+    public function can_batch_persist_new_entities(): void
     {
         $array = [];
 
@@ -74,7 +74,7 @@ class ORMCountableBatchProcessorTest extends TestCase
     /**
      * @test
      */
-    public function can_batch_persist_results_from_array()
+    public function can_batch_persist_results_from_array(): void
     {
         $array = [];
 
@@ -102,9 +102,9 @@ class ORMCountableBatchProcessorTest extends TestCase
     /**
      * @test
      */
-    public function results_must_be_countable()
+    public function results_must_be_countable(): void
     {
-        $iterator = function () {
+        $iterator = static function () {
             yield 'foo';
         };
 

@@ -12,7 +12,7 @@ abstract class ORMResultTest extends ResultTestCase
     /**
      * @test
      */
-    public function detaches_entity_from_em_on_iterate()
+    public function detaches_entity_from_em_on_iterate(): void
     {
         $result = \iterator_to_array($this->createResultWithItems(2))[0];
 
@@ -22,10 +22,10 @@ abstract class ORMResultTest extends ResultTestCase
     /**
      * @test
      */
-    public function can_batch_update_results()
+    public function can_batch_update_results(): void
     {
         $result = $this->createResultWithItems(2);
-        $values = \array_map(function (ORMEntity $entity) { return $entity->value; }, \iterator_to_array($result));
+        $values = \array_map(static function (ORMEntity $entity) { return $entity->value; }, \iterator_to_array($result));
 
         $this->assertSame(['value 1', 'value 2'], $values);
 
@@ -38,7 +38,7 @@ abstract class ORMResultTest extends ResultTestCase
         }
 
         $values = \array_map(
-            function (ORMEntity $entity) { return $entity->value; },
+            static function (ORMEntity $entity) { return $entity->value; },
             $this->em->getRepository(ORMEntity::class)->findAll()
         );
 
@@ -48,7 +48,7 @@ abstract class ORMResultTest extends ResultTestCase
     /**
      * @test
      */
-    public function can_batch_delete_results()
+    public function can_batch_delete_results(): void
     {
         $result = $this->createResultWithItems(2);
 

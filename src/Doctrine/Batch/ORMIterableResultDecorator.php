@@ -13,7 +13,7 @@ use Doctrine\ORM\Internal\Hydration\IterableResult;
  */
 final class ORMIterableResultDecorator implements \IteratorAggregate
 {
-    private $result;
+    private IterableResult $result;
 
     public function __construct(IterableResult $result)
     {

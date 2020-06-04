@@ -15,7 +15,7 @@ final class ResultPagerTest extends PagerTestCase
     /**
      * @test
      */
-    public function it_properly_handles_a_too_large_page_as_the_last_page()
+    public function it_properly_handles_a_too_large_page_as_the_last_page(): void
     {
         $pager = $this->createPager(\range(1, 504), 30, 20);
 
@@ -30,7 +30,7 @@ final class ResultPagerTest extends PagerTestCase
     /**
      * @test
      */
-    public function invalid_page()
+    public function invalid_page(): void
     {
         $pager = new ResultPager(new ArrayResult([]), 0);
         $this->assertSame(1, $pager->getCurrentPage());
@@ -42,7 +42,7 @@ final class ResultPagerTest extends PagerTestCase
     /**
      * @test
      */
-    public function invalid_limit()
+    public function invalid_limit(): void
     {
         $pager = new ResultPager(new ArrayResult([]), 1, 0);
         $this->assertSame(20, $pager->limit());

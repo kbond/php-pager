@@ -10,7 +10,7 @@ abstract class ResultTestCase extends TestCase
     /**
      * @test
      */
-    public function it_counts_total_items()
+    public function it_counts_total_items(): void
     {
         $result = $this->createResultWithItems(2);
 
@@ -20,7 +20,7 @@ abstract class ResultTestCase extends TestCase
     /**
      * @test
      */
-    public function it_iterates_over_all_items()
+    public function it_iterates_over_all_items(): void
     {
         $result = $this->createResultWithItems(11);
 
@@ -30,7 +30,7 @@ abstract class ResultTestCase extends TestCase
     /**
      * @test
      */
-    public function it_takes_slice_as_page()
+    public function it_takes_slice_as_page(): void
     {
         $result = $this->createResultWithItems(11);
 
@@ -46,7 +46,7 @@ abstract class ResultTestCase extends TestCase
     /**
      * @test
      */
-    public function it_counts_last_page_of_slice_correctly()
+    public function it_counts_last_page_of_slice_correctly(): void
     {
         $result = $this->createResultWithItems(11);
 
@@ -61,7 +61,7 @@ abstract class ResultTestCase extends TestCase
     /**
      * @test
      */
-    public function it_counts_page_first_then_iterates()
+    public function it_counts_page_first_then_iterates(): void
     {
         $result = $this->createResultWithItems(16);
 
@@ -74,7 +74,7 @@ abstract class ResultTestCase extends TestCase
     /**
      * @test
      */
-    public function it_itereates_first_then_counts_page()
+    public function it_itereates_first_then_counts_page(): void
     {
         $result = $this->createResultWithItems(16);
 
@@ -87,7 +87,7 @@ abstract class ResultTestCase extends TestCase
     /**
      * @test
      */
-    public function results_match_the_expected_value()
+    public function results_match_the_expected_value(): void
     {
         $result = $this->createResultWithItems(11);
 
@@ -108,7 +108,7 @@ abstract class ResultTestCase extends TestCase
     /**
      * @test
      */
-    public function it_can_have_empty_results()
+    public function it_can_have_empty_results(): void
     {
         $result = $this->createResultWithItems(0);
 

@@ -7,9 +7,9 @@ namespace Zenstruck\Porpaginas\Tests\Doctrine\Fixtures;
  */
 final class DBALObject
 {
-    public $value;
+    public string $value;
 
-    public function __construct($value)
+    public function __construct(string $value)
     {
         $this->value = $value;
     }

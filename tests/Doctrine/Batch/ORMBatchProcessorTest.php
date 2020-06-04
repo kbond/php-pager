@@ -18,7 +18,7 @@ class ORMBatchProcessorTest extends TestCase
     /**
      * @test
      */
-    public function can_batch_persist_results()
+    public function can_batch_persist_results(): void
     {
         $array = [];
 
@@ -43,7 +43,7 @@ class ORMBatchProcessorTest extends TestCase
     /**
      * @test
      */
-    public function can_batch_persist_new_entities()
+    public function can_batch_persist_new_entities(): void
     {
         $array = [];
 
@@ -68,7 +68,7 @@ class ORMBatchProcessorTest extends TestCase
     /**
      * @test
      */
-    public function can_batch_persist_results_from_array()
+    public function can_batch_persist_results_from_array(): void
     {
         $array = [];
 
@@ -93,7 +93,7 @@ class ORMBatchProcessorTest extends TestCase
     /**
      * @test
      */
-    public function can_batch_persist_array_of_arrays()
+    public function can_batch_persist_array_of_arrays(): void
     {
         $array = [];
 
@@ -118,9 +118,9 @@ class ORMBatchProcessorTest extends TestCase
     /**
      * @test
      */
-    public function results_do_not_have_to_be_countable()
+    public function results_do_not_have_to_be_countable(): void
     {
-        $iterator = function () {
+        $iterator = static function () {
             yield 'foo';
         };
         $batchProcessor = new ORMBatchProcessor($iterator(), $this->em);

@@ -10,7 +10,7 @@ use Zenstruck\Porpaginas\Doctrine\Repository\DBALObjectRepository as Repository;
  */
 final class DBALObjectRepository extends Repository
 {
-    private $connection;
+    private Connection $connection;
 
     public function __construct(Connection $connection)
     {

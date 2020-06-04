@@ -14,11 +14,11 @@ final class PageFactoryPagerTest extends PagerTestCase
 {
     protected function createPager(array $results, int $page, int $limit): Pager
     {
-        $offset = (int) (($page - 1) * $limit);
+        $offset = ($page - 1) * $limit;
         $slice = \array_values(\array_slice($results, $offset, $limit));
 
         return FactoryPager::fromPage(
-            function ($value) {
+            static function ($value) {
                 return $value;
             },
             new ArrayPage($slice, $offset, $limit, \count($results))

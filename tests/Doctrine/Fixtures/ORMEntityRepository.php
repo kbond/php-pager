@@ -10,7 +10,7 @@ use Zenstruck\Porpaginas\Doctrine\Repository\ORMRepository;
  */
 final class ORMEntityRepository extends ORMRepository
 {
-    private $em;
+    private EntityManagerInterface $em;
 
     public function __construct(EntityManagerInterface $em)
     {

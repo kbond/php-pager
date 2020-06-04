@@ -12,12 +12,12 @@ class ORMEntity
      * @Column(type="integer")
      * @GeneratedValue
      */
-    public $id;
+    public ?int $id;
 
     /**
      * @Column(type="string")
      */
-    public $value;
+    public string $value;
 
     public function __construct(string $value, int $id = null)
     {

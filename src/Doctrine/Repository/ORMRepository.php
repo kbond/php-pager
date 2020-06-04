@@ -28,19 +28,19 @@ abstract class ORMRepository implements ObjectRepository, Repository
         return $this->repo()->{$name}(...$arguments);
     }
 
-    public function getIterator(): ORMQueryResult
+    public function getIterator(): \Traversable
     {
-        return $this->createResult($this->qb());
+        return static::createResult($this->qb());
     }
 
     public function batchProcessor(int $chunkSize = 100): ORMCountableBatchProcessor
     {
-        return $this->getIterator()->batchProcessor($chunkSize);
+        return static::createResult($this->qb())->batchProcessor($chunkSize);
     }
 
     public function count(): int
     {
-        return $this->getIterator()->count();
+        return \count(static::createResult($this->qb()));
     }
 
     /**
@@ -75,7 +75,7 @@ abstract class ORMRepository implements ObjectRepository, Repository
         return $this->repo()->findOneBy($criteria);
     }
 
-    final protected function createResult(QueryBuilder $qb): ORMQueryResult
+    final protected static function createResult(QueryBuilder $qb): ORMQueryResult
     {
         return new ORMQueryResult($qb);
     }

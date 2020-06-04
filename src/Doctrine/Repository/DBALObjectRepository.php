@@ -14,14 +14,14 @@ use Zenstruck\Porpaginas\Result;
  */
 abstract class DBALObjectRepository implements Repository
 {
-    public function getIterator(): Result
+    public function getIterator(): \Traversable
     {
         return static::createResult($this->qb());
     }
 
     public function count(): int
     {
-        return $this->getIterator()->count();
+        return \count(static::createResult($this->qb()));
     }
 
     abstract protected static function createObject(array $data): object;

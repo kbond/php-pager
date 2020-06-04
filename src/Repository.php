@@ -7,5 +7,4 @@ namespace Zenstruck\Porpaginas;
  */
 interface Repository extends \IteratorAggregate, \Countable
 {
-    public function getIterator(): Result;
 }

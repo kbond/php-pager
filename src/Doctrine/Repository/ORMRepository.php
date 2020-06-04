@@ -30,7 +30,12 @@ abstract class ORMRepository implements ObjectRepository, Repository
 
     public function getIterator(): \Traversable
     {
-        return static::createResult($this->qb());
+        return $this->batchIterator();
+    }
+
+    public function batchIterator(int $chunkSize = 100): \Traversable
+    {
+        return static::createResult($this->qb())->batchIterator($chunkSize);
     }
 
     public function batchProcessor(int $chunkSize = 100): ORMCountableBatchProcessor

@@ -24,7 +24,7 @@ abstract class ORMResultTest extends DoctrineResultTestCase
 
         $this->assertSame(['value 1', 'value 2'], $values);
 
-        $batchIterator = $result->batchIterator();
+        $batchIterator = $result->batchProcessor();
 
         $this->assertCount(2, $batchIterator);
 
@@ -49,7 +49,7 @@ abstract class ORMResultTest extends DoctrineResultTestCase
 
         $this->assertCount(2, $result);
 
-        $batchIterator = $result->batchIterator();
+        $batchIterator = $result->batchProcessor();
 
         $this->assertCount(2, $batchIterator);
 

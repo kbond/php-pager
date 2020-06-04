@@ -32,7 +32,7 @@ class ORMQueryResultFieldsTest extends DoctrineResultTestCase
      */
     public function can_batch_iterate()
     {
-        $result = $this->createResultWithItems(2)->batchIterator();
+        $result = $this->createResultWithItems(2)->batchProcessor();
 
         $this->assertCount(2, $result);
         $this->assertSame([

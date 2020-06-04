@@ -35,7 +35,7 @@ abstract class ORMRepository implements ObjectRepository, Repository
 
     public function batchIterator(int $chunkSize = 100): ORMCountableBatchProcessor
     {
-        return $this->getIterator()->batchIterator($chunkSize);
+        return $this->getIterator()->batchProcessor($chunkSize);
     }
 
     public function count(): int

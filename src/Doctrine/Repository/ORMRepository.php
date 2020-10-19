@@ -5,6 +5,7 @@ namespace Zenstruck\Porpaginas\Doctrine\Repository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ObjectRepository;
 use Zenstruck\Porpaginas\Doctrine\Batch\ORMCountableBatchProcessor;
@@ -77,9 +78,12 @@ abstract class ORMRepository implements ObjectRepository, Repository
         return $this->repo()->findOneBy($criteria);
     }
 
-    final protected static function createResult(QueryBuilder $qb): ORMQueryResult
+    /**
+     * @param Query|QueryBuilder $query
+     */
+    final protected static function createResult($query): ORMQueryResult
     {
-        return new ORMQueryResult($qb);
+        return new ORMQueryResult($query);
     }
 
     final protected function qb(string $alias = 'entity', string $indexBy = null): QueryBuilder

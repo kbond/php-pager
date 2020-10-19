@@ -12,7 +12,7 @@ use Zenstruck\Porpaginas\Result;
  */
 final class DBALQueryBuilderResult implements Result
 {
-    private QueryBuilder$qb;
+    private QueryBuilder $qb;
     private $countModifier;
     private ?int $count = null;
 

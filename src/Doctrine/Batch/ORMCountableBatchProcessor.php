@@ -10,12 +10,10 @@ use Doctrine\ORM\EntityManagerInterface;
 final class ORMCountableBatchProcessor implements \IteratorAggregate, \Countable
 {
     private ORMBatchProcessor $batchProcessor;
-
-    /** @var iterable|array|\Countable */
     private iterable $countable;
 
     /**
-     * @param array|\Countable $items
+     * @param iterable $items Must be countable
      */
     public function __construct(iterable $items, EntityManagerInterface $em, int $chunkSize = 100)
     {

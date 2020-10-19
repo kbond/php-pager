@@ -10,6 +10,7 @@ use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ObjectRepository;
 use Zenstruck\Porpaginas\Doctrine\Batch\ORMCountableBatchProcessor;
 use Zenstruck\Porpaginas\Doctrine\ORMQueryResult;
+use Zenstruck\Porpaginas\Exception\NotFound;
 use Zenstruck\Porpaginas\Repository;
 
 /**
@@ -19,6 +20,8 @@ use Zenstruck\Porpaginas\Repository;
  */
 abstract class ORMRepository implements ObjectRepository, Repository
 {
+    private const DEFAULT_ALIAS = 'entity';
+
     private ?EntityRepository $repo = null;
 
     final public function __call($name, $arguments)
@@ -79,6 +82,26 @@ abstract class ORMRepository implements ObjectRepository, Repository
     }
 
     /**
+     * @param callable(QueryBuilder $qb, string $alias) $specification
+     */
+    final public function get(callable $specification)
+    {
+        if (null === $result = $this->queryForSpecification($specification)->getOneOrNullResult()) {
+            throw new NotFound("{$this->getClassName()} not found for given specification.");
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param callable(QueryBuilder $qb, string $alias) $specification
+     */
+    final public function filter(callable $specification): ORMQueryResult
+    {
+        return self::createResult($this->queryForSpecification($specification));
+    }
+
+    /**
      * @param Query|QueryBuilder $query
      */
     final protected static function createResult($query): ORMQueryResult
@@ -86,7 +109,7 @@ abstract class ORMRepository implements ObjectRepository, Repository
         return new ORMQueryResult($query);
     }
 
-    final protected function qb(string $alias = 'entity', string $indexBy = null): QueryBuilder
+    final protected function qb(string $alias = self::DEFAULT_ALIAS, string $indexBy = null): QueryBuilder
     {
         return $this->repo()->createQueryBuilder($alias, $indexBy);
     }
@@ -101,5 +124,12 @@ abstract class ORMRepository implements ObjectRepository, Repository
     protected static function createEntityRepository(EntityManagerInterface $em, ClassMetadata $class): EntityRepository
     {
         return new EntityRepository($em, $class);
+    }
+
+    private function queryForSpecification(callable $specification): Query
+    {
+        $specification($qb = $this->qb(self::DEFAULT_ALIAS), self::DEFAULT_ALIAS);
+
+        return $qb->getQuery();
     }
 }

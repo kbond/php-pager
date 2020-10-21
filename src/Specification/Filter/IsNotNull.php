@@ -2,9 +2,11 @@
 
 namespace Zenstruck\Porpaginas\Specification\Filter;
 
+use Zenstruck\Porpaginas\Specification\Field;
+
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-final class EqualTo extends Comparison
+final class IsNotNull extends Field
 {
 }

@@ -1,8 +1,9 @@
 <?php
 
-namespace Zenstruck\Porpaginas\Doctrine\ORM\Specification\Normalizer;
+namespace Zenstruck\Porpaginas\Doctrine\DBAL\Specification\Normalizer;
 
-use Zenstruck\Porpaginas\Doctrine\ORM\Specification\ORMContext;
+use Doctrine\DBAL\Connection;
+use Zenstruck\Porpaginas\Doctrine\DBAL\Specification\DBALContext;
 use Zenstruck\Porpaginas\Specification\Filter\Comparison;
 use Zenstruck\Porpaginas\Specification\Filter\Equal;
 use Zenstruck\Porpaginas\Specification\Filter\GreaterThan;
@@ -22,19 +23,24 @@ use Zenstruck\Porpaginas\Specification\Normalizer\ClassMethodMap;
  */
 final class ComparisonNormalizer implements Normalizer
 {
-    use ORMNormalizer, ClassMethodMap;
+    use DBALNormalizer, ClassMethodMap;
 
     /**
-     * @param Comparison $specification
-     * @param ORMContext $context
+     * @param Comparison  $specification
+     * @param DBALContext $context
      */
     public function normalize($specification, $context): string
     {
-        $parameter = \sprintf('comparison_%d', $context->qb()->getParameters()->count());
-        $context->qb()->setParameter($parameter, $specification->value());
+        $parameter = \sprintf('comparison_%d', \count($context->qb()->getParameters()));
+
+        $context->qb()->setParameter(
+            $parameter,
+            $specification->value(),
+            \is_array($specification->value()) ? Connection::PARAM_STR_ARRAY : null
+        );
 
         return $context->qb()->expr()->{self::methodFor($specification)}(
-            "{$context->alias()}.{$specification->field()}",
+            $specification->field(),
             ":{$parameter}"
         );
     }

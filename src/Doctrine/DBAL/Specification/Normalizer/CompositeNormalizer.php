@@ -1,9 +1,9 @@
 <?php
 
-namespace Zenstruck\Porpaginas\Doctrine\ORM\Specification\Normalizer;
+namespace Zenstruck\Porpaginas\Doctrine\DBAL\Specification\Normalizer;
 
-use Doctrine\ORM\Query\Expr;
-use Zenstruck\Porpaginas\Doctrine\ORM\Specification\ORMContext;
+use Doctrine\DBAL\Query\Expression\CompositeExpression;
+use Zenstruck\Porpaginas\Doctrine\DBAL\Specification\DBALContext;
 use Zenstruck\Porpaginas\Specification\Logic\AndX;
 use Zenstruck\Porpaginas\Specification\Logic\Composite;
 use Zenstruck\Porpaginas\Specification\Logic\OrX;
@@ -17,13 +17,13 @@ use Zenstruck\Porpaginas\Specification\Normalizer\WithNormalizer;
  */
 final class CompositeNormalizer implements Normalizer, NormalizerAware
 {
-    use ORMNormalizer, WithNormalizer, ClassMethodMap;
+    use DBALNormalizer, WithNormalizer, ClassMethodMap;
 
     /**
-     * @param Composite  $specification
-     * @param ORMContext $context
+     * @param Composite   $specification
+     * @param DBALContext $context
      */
-    public function normalize($specification, $context): ?Expr\Composite
+    public function normalize($specification, $context): ?CompositeExpression
     {
         $children = \array_filter(\array_map(
             function($child) use ($context) {

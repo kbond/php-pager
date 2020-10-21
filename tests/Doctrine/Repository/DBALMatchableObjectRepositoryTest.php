@@ -12,16 +12,6 @@ use Zenstruck\Porpaginas\Tests\Doctrine\Fixtures\DBALObjectRepository;
 final class DBALMatchableObjectRepositoryTest extends MatchableRepositoryTest
 {
     /**
-     * TODO remove.
-     *
-     * @before
-     */
-    public function incomplete()
-    {
-        $this->markTestIncomplete();
-    }
-
-    /**
      * @test
      */
     public function can_match_one_with_callable(): void

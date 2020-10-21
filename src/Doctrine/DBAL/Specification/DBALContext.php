@@ -1,30 +1,28 @@
 <?php
 
-namespace Zenstruck\Porpaginas\Doctrine\ORM\Specification;
+namespace Zenstruck\Porpaginas\Doctrine\DBAL\Specification;
 
-use Doctrine\ORM\QueryBuilder;
-use Zenstruck\Porpaginas\Doctrine\ORM\Specification\Normalizer\CallableNormalizer;
-use Zenstruck\Porpaginas\Doctrine\ORM\Specification\Normalizer\ComparisonNormalizer;
-use Zenstruck\Porpaginas\Doctrine\ORM\Specification\Normalizer\CompositeNormalizer;
-use Zenstruck\Porpaginas\Doctrine\ORM\Specification\Normalizer\NullNormalizer;
-use Zenstruck\Porpaginas\Doctrine\ORM\Specification\Normalizer\OrderByNormalizer;
+use Doctrine\DBAL\Query\QueryBuilder;
+use Zenstruck\Porpaginas\Doctrine\DBAL\Specification\Normalizer\CallableNormalizer;
+use Zenstruck\Porpaginas\Doctrine\DBAL\Specification\Normalizer\ComparisonNormalizer;
+use Zenstruck\Porpaginas\Doctrine\DBAL\Specification\Normalizer\CompositeNormalizer;
+use Zenstruck\Porpaginas\Doctrine\DBAL\Specification\Normalizer\NullNormalizer;
+use Zenstruck\Porpaginas\Doctrine\DBAL\Specification\Normalizer\OrderByNormalizer;
 use Zenstruck\Porpaginas\Specification\Normalizer\NestedNormalizer;
 use Zenstruck\Porpaginas\Specification\SpecificationNormalizer;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-final class ORMContext
+final class DBALContext
 {
     private static ?SpecificationNormalizer $defaultNormalizer = null;
 
     private QueryBuilder $qb;
-    private string $alias;
 
-    public function __construct(QueryBuilder $qb, string $alias)
+    public function __construct(QueryBuilder $qb)
     {
         $this->qb = $qb;
-        $this->alias = $alias;
     }
 
     public static function defaultNormalizer(): SpecificationNormalizer
@@ -42,10 +40,5 @@ final class ORMContext
     public function qb(): QueryBuilder
     {
         return $this->qb;
-    }
-
-    public function alias(): string
-    {
-        return $this->alias;
     }
 }

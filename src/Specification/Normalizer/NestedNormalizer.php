@@ -3,12 +3,15 @@
 namespace Zenstruck\Porpaginas\Specification\Normalizer;
 
 use Zenstruck\Porpaginas\Specification\Nested;
+use Zenstruck\Porpaginas\Specification\Normalizer;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-final class NestedNormalizer extends NormalizerAware
+final class NestedNormalizer implements Normalizer, NormalizerAware
 {
+    use WithNormalizer;
+
     /**
      * @param Nested $specification
      * @param mixed  $context

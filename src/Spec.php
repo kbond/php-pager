@@ -2,16 +2,19 @@
 
 namespace Zenstruck\Porpaginas;
 
-use Zenstruck\Porpaginas\Specification\Filter\EqualTo;
+use Zenstruck\Porpaginas\Specification\Filter\Equal;
 use Zenstruck\Porpaginas\Specification\Filter\GreaterThan;
 use Zenstruck\Porpaginas\Specification\Filter\GreaterThanOrEqual;
 use Zenstruck\Porpaginas\Specification\Filter\In;
+use Zenstruck\Porpaginas\Specification\Filter\IsNotNull;
 use Zenstruck\Porpaginas\Specification\Filter\IsNull;
 use Zenstruck\Porpaginas\Specification\Filter\LessThan;
 use Zenstruck\Porpaginas\Specification\Filter\LessThanOrEqual;
 use Zenstruck\Porpaginas\Specification\Filter\Like;
+use Zenstruck\Porpaginas\Specification\Filter\NotEqual;
+use Zenstruck\Porpaginas\Specification\Filter\NotIn;
+use Zenstruck\Porpaginas\Specification\Filter\NotLike;
 use Zenstruck\Porpaginas\Specification\Logic\AndX;
-use Zenstruck\Porpaginas\Specification\Logic\Not;
 use Zenstruck\Porpaginas\Specification\Logic\OrX;
 use Zenstruck\Porpaginas\Specification\OrderBy;
 
@@ -30,19 +33,14 @@ final class Spec
         return new OrX(...$children);
     }
 
-    public static function not(object $specification): Not
-    {
-        return new Not($specification);
-    }
-
     public static function like(string $field, $value): Like
     {
         return new Like($field, $value);
     }
 
-    public static function notLike(string $field, $value): Not
+    public static function notLike(string $field, $value): NotLike
     {
-        return self::not(self::like($field, $value));
+        return new NotLike($field, $value);
     }
 
     public static function contains(string $field, $value): Like
@@ -50,9 +48,9 @@ final class Spec
         return Like::contains($field, $value);
     }
 
-    public static function notContains(string $field, $value): Not
+    public static function notContains(string $field, $value): NotLike
     {
-        return self::not(self::contains($field, $value));
+        return NotLike::contains($field, $value);
     }
 
     public static function beginsWith(string $field, $value): Like
@@ -60,9 +58,9 @@ final class Spec
         return Like::beginsWith($field, $value);
     }
 
-    public static function notBeginningWith(string $field, $value): Not
+    public static function notBeginningWith(string $field, $value): NotLike
     {
-        return self::not(self::beginsWith($field, $value));
+        return NotLike::beginsWith($field, $value);
     }
 
     public static function endsWith(string $field, $value): Like
@@ -70,19 +68,19 @@ final class Spec
         return Like::endsWith($field, $value);
     }
 
-    public static function notEndingWith(string $field, $value): Not
+    public static function notEndingWith(string $field, $value): NotLike
     {
-        return self::not(self::endsWith($field, $value));
+        return NotLike::endsWith($field, $value);
     }
 
-    public static function eq(string $field, $value): EqualTo
+    public static function eq(string $field, $value): Equal
     {
-        return new EqualTo($field, $value);
+        return new Equal($field, $value);
     }
 
-    public static function neq(string $field, $value): Not
+    public static function neq(string $field, $value): NotEqual
     {
-        return self::not(new EqualTo($field, $value));
+        return new NotEqual($field, $value);
     }
 
     public static function isNull(string $field): IsNull
@@ -90,9 +88,9 @@ final class Spec
         return new IsNull($field);
     }
 
-    public static function isNotNull(string $field): Not
+    public static function isNotNull(string $field): IsNotNull
     {
-        return self::not(new IsNull($field));
+        return new IsNotNull($field);
     }
 
     public static function in(string $field, array $value): In
@@ -100,9 +98,9 @@ final class Spec
         return new In($field, $value);
     }
 
-    public static function notIn(string $field, array $value): Not
+    public static function notIn(string $field, array $value): NotIn
     {
-        return self::not(new In($field, $value));
+        return new NotIn($field, $value);
     }
 
     public static function lt(string $field, $value): LessThan

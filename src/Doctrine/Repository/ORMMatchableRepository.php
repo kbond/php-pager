@@ -7,7 +7,6 @@ use Zenstruck\Porpaginas\Doctrine\ORM\Specification\ORMContext;
 use Zenstruck\Porpaginas\Doctrine\ORMQueryResult;
 use Zenstruck\Porpaginas\Exception\NotFound;
 use Zenstruck\Porpaginas\Matchable;
-use Zenstruck\Porpaginas\Result;
 use Zenstruck\Porpaginas\Specification\Normalizer;
 
 /**
@@ -15,9 +14,9 @@ use Zenstruck\Porpaginas\Specification\Normalizer;
  */
 abstract class ORMMatchableRepository extends ORMRepository implements Matchable
 {
-    final public function match($specification): Result
+    final public function match($specification): ORMQueryResult
     {
-        return new ORMQueryResult($this->qbForSpecification($specification));
+        return static::createResult($this->qbForSpecification($specification));
     }
 
     final public function matchOne($specification)

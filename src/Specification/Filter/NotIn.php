@@ -5,6 +5,6 @@ namespace Zenstruck\Porpaginas\Specification\Filter;
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-final class In extends ArrayComparison
+final class NotIn extends ArrayComparison
 {
 }

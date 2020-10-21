@@ -1,8 +1,8 @@
 <?php
 
-namespace Zenstruck\Porpaginas\Doctrine\ORM\Specification\Normalizer;
+namespace Zenstruck\Porpaginas\Doctrine\DBAL\Specification\Normalizer;
 
-use Zenstruck\Porpaginas\Doctrine\ORM\Specification\ORMContext;
+use Zenstruck\Porpaginas\Doctrine\DBAL\Specification\DBALContext;
 use Zenstruck\Porpaginas\Specification\Normalizer;
 use Zenstruck\Porpaginas\Specification\OrderBy;
 
@@ -11,15 +11,15 @@ use Zenstruck\Porpaginas\Specification\OrderBy;
  */
 final class OrderByNormalizer implements Normalizer
 {
-    use ORMNormalizer;
+    use DBALNormalizer;
 
     /**
-     * @param OrderBy    $specification
-     * @param ORMContext $context
+     * @param OrderBy     $specification
+     * @param DBALContext $context
      */
     public function normalize($specification, $context): void
     {
-        $context->qb()->addOrderBy("{$context->alias()}.{$specification->field()}", $specification->direction());
+        $context->qb()->addOrderBy($specification->field(), $specification->direction());
     }
 
     protected function supportsSpecification($specification): bool

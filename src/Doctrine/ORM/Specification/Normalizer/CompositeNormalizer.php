@@ -27,7 +27,7 @@ final class CompositeNormalizer extends NormalizerAware
     {
         $children = \array_filter(\array_map(
             function($child) use ($context) {
-                return $this->normalize($child, $context);
+                return $this->normalizer()->normalize($child, $context);
             },
             $specification->children()
         ));
@@ -36,7 +36,7 @@ final class CompositeNormalizer extends NormalizerAware
             return null;
         }
 
-        return $context->qb()->expr()->{self::CLASS_MAP[\get_class($specification)]}($children);
+        return $context->qb()->expr()->{self::CLASS_MAP[\get_class($specification)]}(...$children);
     }
 
     public function supports($specification, $context): bool
@@ -45,7 +45,7 @@ final class CompositeNormalizer extends NormalizerAware
             return false;
         }
 
-        return isset(self::CLASS_MAP[\get_class($specification)]);
+        return \array_key_exists(\get_class($specification), self::CLASS_MAP);
     }
 
     public function isCacheable(): bool

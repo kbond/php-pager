@@ -50,7 +50,7 @@ final class ComparisonNormalizer implements Normalizer
             return false;
         }
 
-        return isset(self::CLASS_MAP[\get_class($specification)]);
+        return \array_key_exists(\get_class($specification), self::CLASS_MAP);
     }
 
     public function isCacheable(): bool

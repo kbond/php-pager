@@ -20,12 +20,12 @@ use Zenstruck\Porpaginas\Specification\OrderBy;
  */
 final class Spec
 {
-    public function andX(...$children): AndX
+    public static function andX(...$children): AndX
     {
         return new AndX(...$children);
     }
 
-    public function orX(...$children): OrX
+    public static function orX(...$children): OrX
     {
         return new OrX(...$children);
     }

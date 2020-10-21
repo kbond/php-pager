@@ -3,12 +3,12 @@
 namespace Zenstruck\Porpaginas\Tests\Doctrine\Fixtures;
 
 use Doctrine\DBAL\Connection;
-use Zenstruck\Porpaginas\Doctrine\Repository\DBALObjectRepository as Repository;
+use Zenstruck\Porpaginas\Doctrine\Repository\DBALMatchableObjectRepository;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-final class DBALObjectRepository extends Repository
+final class DBALObjectRepository extends DBALMatchableObjectRepository
 {
     private Connection $connection;
 

@@ -76,9 +76,9 @@ abstract class ORMRepository implements ObjectRepository, Repository
     /**
      * @see EntityRepository::findOneBy()
      */
-    public function findOneBy(array $criteria): ?object
+    public function findOneBy(array $criteria, array $orderBy = null): ?object
     {
-        return $this->repo()->findOneBy($criteria);
+        return $this->repo()->findOneBy($criteria, $orderBy);
     }
 
     /**

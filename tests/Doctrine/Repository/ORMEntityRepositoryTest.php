@@ -102,6 +102,21 @@ final class ORMEntityRepositoryTest extends TestCase
     /**
      * @test
      */
+    public function can_find_one_by_with_order(): void
+    {
+        $this->persistEntities(4);
+
+        $repository = new ORMEntityRepository($this->em);
+
+        $entity = $repository->findOneBy([], ['id' => 'DESC']);
+
+        $this->assertInstanceOf(ORMEntity::class, $entity);
+        $this->assertSame('value 4', $entity->value);
+    }
+
+    /**
+     * @test
+     */
     public function can_find_by(): void
     {
         $this->persistEntities(4);

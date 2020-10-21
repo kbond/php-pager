@@ -76,7 +76,7 @@ abstract class ORMRepository implements ObjectRepository, Repository
     /**
      * @see EntityRepository::findOneBy()
      */
-    public function findOneBy(array $criteria, array $orderBy = null): ?object
+    public function findOneBy(array $criteria, ?array $orderBy = null): ?object
     {
         return $this->repo()->findOneBy($criteria, $orderBy);
     }
@@ -109,7 +109,7 @@ abstract class ORMRepository implements ObjectRepository, Repository
         return new ORMQueryResult($query);
     }
 
-    final protected function qb(string $alias = self::DEFAULT_ALIAS, string $indexBy = null): QueryBuilder
+    final protected function qb(string $alias = self::DEFAULT_ALIAS, ?string $indexBy = null): QueryBuilder
     {
         return $this->repo()->createQueryBuilder($alias, $indexBy);
     }

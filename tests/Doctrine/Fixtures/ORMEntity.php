@@ -19,7 +19,7 @@ class ORMEntity
      */
     public string $value;
 
-    public function __construct(string $value, int $id = null)
+    public function __construct(string $value, ?int $id = null)
     {
         $this->id = $id;
         $this->value = $value;

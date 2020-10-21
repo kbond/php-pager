@@ -16,7 +16,7 @@ final class DBALQueryBuilderResult implements Result
     private $countModifier;
     private ?int $count = null;
 
-    public function __construct(QueryBuilder $qb, callable $countModifier = null)
+    public function __construct(QueryBuilder $qb, ?callable $countModifier = null)
     {
         $this->qb = $qb;
         $this->countModifier = $countModifier ?: static function(QueryBuilder $qb) {

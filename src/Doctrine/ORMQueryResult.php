@@ -10,9 +10,12 @@ use Zenstruck\Porpaginas\Doctrine\Batch\ORMCountableBatchProcessor;
 use Zenstruck\Porpaginas\Doctrine\Batch\ORMIterableResultDecorator;
 use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
+use Zenstruck\Porpaginas\ResultPaginator;
 
 final class ORMQueryResult implements Result
 {
+    use ResultPaginator;
+
     private Query $query;
     private bool $fetchCollection;
     private ?bool $useOutputWalkers;

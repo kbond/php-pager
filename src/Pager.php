@@ -37,6 +37,9 @@ final class Pager implements \Countable, \IteratorAggregate
         return $this->limit;
     }
 
+    /**
+     * @return int the count for the current page
+     */
     public function count(): int
     {
         return $this->getPage()->count();

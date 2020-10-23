@@ -4,9 +4,12 @@ namespace Zenstruck\Porpaginas\Arrays;
 
 use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
+use Zenstruck\Porpaginas\ResultPaginator;
 
 final class ArrayResult implements Result
 {
+    use ResultPaginator;
+
     private array $data;
 
     public function __construct(array $data)

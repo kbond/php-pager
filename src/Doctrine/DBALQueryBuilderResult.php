@@ -6,12 +6,15 @@ use Doctrine\DBAL\Query\QueryBuilder;
 use Zenstruck\Porpaginas\Callback\CallbackPage;
 use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
+use Zenstruck\Porpaginas\ResultPaginator;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
 final class DBALQueryBuilderResult implements Result
 {
+    use ResultPaginator;
+
     private QueryBuilder $qb;
     private $countModifier;
     private ?int $count = null;

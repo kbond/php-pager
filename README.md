@@ -143,9 +143,7 @@ class UserController
     {
         $result = $this->userRepository->findAllUsers();
 
-        $pager = new Pager($result, $request->get('page', 1));
-
-        return array('users' => $pager);
+        return array('users' => $result->paginate($request->get('page', 1)));
     }
 }
 ```

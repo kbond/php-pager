@@ -4,12 +4,15 @@ namespace Zenstruck\Porpaginas\Factory;
 
 use Zenstruck\Porpaginas\Page;
 use Zenstruck\Porpaginas\Result;
+use Zenstruck\Porpaginas\ResultPaginator;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
 final class FactoryResult implements Result
 {
+    use ResultPaginator;
+
     private $factory;
     private Result $result;
 

@@ -117,6 +117,26 @@ abstract class ResultTest extends TestCase
         $this->assertSame([], \iterator_to_array($result->take(0, 10)));
     }
 
+    /**
+     * @test
+     */
+    public function it_can_paginate(): void
+    {
+        $result = $this->createResultWithItems(11);
+
+        $pager = $result->paginate();
+
+        $this->assertCount(11, $pager);
+        $this->assertEquals($this->getExpectedValueAtPosition(1), \iterator_to_array($pager)[0]);
+        $this->assertEquals($this->getExpectedValueAtPosition(5), \iterator_to_array($pager)[4]);
+        $this->assertEquals($this->getExpectedValueAtPosition(11), \iterator_to_array($pager)[10]);
+
+        $pager = $result->paginate(2, 10);
+
+        $this->assertCount(1, $pager);
+        $this->assertEquals($this->getExpectedValueAtPosition(11), \iterator_to_array($pager)[0]);
+    }
+
     abstract protected function createResultWithItems(int $count): Result;
 
     /**

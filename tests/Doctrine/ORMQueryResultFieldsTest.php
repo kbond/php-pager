@@ -5,9 +5,9 @@ namespace Zenstruck\Porpaginas\Tests\Doctrine;
 use Zenstruck\Porpaginas\Doctrine\ORMQueryResult;
 use Zenstruck\Porpaginas\Result;
 use Zenstruck\Porpaginas\Tests\Doctrine\Fixtures\ORMEntity;
-use Zenstruck\Porpaginas\Tests\ResultTestCase;
+use Zenstruck\Porpaginas\Tests\ResultTest;
 
-class ORMQueryResultFieldsTest extends ResultTestCase
+class ORMQueryResultFieldsTest extends ResultTest
 {
     use HasEntityManager;
 

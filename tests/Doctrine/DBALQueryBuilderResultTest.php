@@ -4,12 +4,12 @@ namespace Zenstruck\Porpaginas\Tests\Doctrine;
 
 use Zenstruck\Porpaginas\Doctrine\DBALQueryBuilderResult;
 use Zenstruck\Porpaginas\Result;
-use Zenstruck\Porpaginas\Tests\ResultTestCase;
+use Zenstruck\Porpaginas\Tests\ResultTest;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class DBALQueryBuilderResultTest extends ResultTestCase
+class DBALQueryBuilderResultTest extends ResultTest
 {
     use HasEntityManager;
 

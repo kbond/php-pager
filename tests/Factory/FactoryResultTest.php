@@ -5,12 +5,12 @@ namespace Zenstruck\Porpaginas\Tests\Factory;
 use Zenstruck\Porpaginas\Arrays\ArrayResult;
 use Zenstruck\Porpaginas\Factory\FactoryResult;
 use Zenstruck\Porpaginas\Result;
-use Zenstruck\Porpaginas\Tests\ResultTestCase;
+use Zenstruck\Porpaginas\Tests\ResultTest;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-class FactoryResultTest extends ResultTestCase
+class FactoryResultTest extends ResultTest
 {
     /**
      * @test

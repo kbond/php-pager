@@ -3,9 +3,9 @@
 namespace Zenstruck\Porpaginas\Tests\Doctrine;
 
 use Zenstruck\Porpaginas\Tests\Doctrine\Fixtures\ORMEntity;
-use Zenstruck\Porpaginas\Tests\ResultTestCase;
+use Zenstruck\Porpaginas\Tests\ResultTest;
 
-abstract class ORMResultTest extends ResultTestCase
+abstract class ORMResultTest extends ResultTest
 {
     use HasEntityManager;
 

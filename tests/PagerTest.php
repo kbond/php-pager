@@ -8,7 +8,7 @@ use Zenstruck\Porpaginas\Pager;
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-abstract class PagerTestCase extends TestCase
+abstract class PagerTest extends TestCase
 {
     /**
      * @test

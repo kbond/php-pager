@@ -4,9 +4,9 @@ namespace Zenstruck\Porpaginas\Tests\Arrays;
 
 use Zenstruck\Porpaginas\Arrays\ArrayResult;
 use Zenstruck\Porpaginas\Result;
-use Zenstruck\Porpaginas\Tests\ResultTestCase;
+use Zenstruck\Porpaginas\Tests\ResultTest;
 
-class ArrayResultTest extends ResultTestCase
+class ArrayResultTest extends ResultTest
 {
     protected function createResultWithItems(int $count): Result
     {

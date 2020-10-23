@@ -5,12 +5,12 @@ namespace Zenstruck\Porpaginas\Tests\Pager;
 use Zenstruck\Porpaginas\Arrays\ArrayResult;
 use Zenstruck\Porpaginas\Pager;
 use Zenstruck\Porpaginas\Pager\ResultPager;
-use Zenstruck\Porpaginas\Tests\PagerTestCase;
+use Zenstruck\Porpaginas\Tests\PagerTest;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-final class ResultPagerTest extends PagerTestCase
+final class ResultPagerTest extends PagerTest
 {
     /**
      * @test

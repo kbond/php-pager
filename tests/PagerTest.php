@@ -3,12 +3,13 @@
 namespace Zenstruck\Porpaginas\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Zenstruck\Porpaginas\Arrays\ArrayResult;
 use Zenstruck\Porpaginas\Pager;
 
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-abstract class PagerTest extends TestCase
+final class PagerTest extends TestCase
 {
     /**
      * @test
@@ -100,5 +101,47 @@ abstract class PagerTest extends TestCase
         $this->assertSame(\range(1, 10), \iterator_to_array($pager));
     }
 
-    abstract protected function createPager(array $results, int $page, int $limit): Pager;
+    /**
+     * @test
+     */
+    public function it_properly_handles_a_too_large_page_as_the_last_page(): void
+    {
+        $pager = $this->createPager(\range(1, 504), 30, 20);
+
+        $this->assertSame(26, $pager->getCurrentPage());
+        $this->assertSame(1, $pager->firstPage());
+        $this->assertNull($pager->nextPage());
+        $this->assertSame(25, $pager->previousPage());
+        $this->assertCount(4, $pager);
+        $this->assertSame(\range(501, 504), \iterator_to_array($pager));
+    }
+
+    /**
+     * @test
+     */
+    public function invalid_page(): void
+    {
+        $pager = $this->createPager([], 0);
+        $this->assertSame(1, $pager->getCurrentPage());
+
+        $pager = $this->createPager([], -1);
+        $this->assertSame(1, $pager->getCurrentPage());
+    }
+
+    /**
+     * @test
+     */
+    public function invalid_limit(): void
+    {
+        $pager = $this->createPager([], 1, 0);
+        $this->assertSame(20, $pager->limit());
+
+        $pager = $this->createPager([], 1, -1);
+        $this->assertSame(20, $pager->limit());
+    }
+
+    protected function createPager(array $results, int $page, int $limit = Pager::DEFAULT_LIMIT): Pager
+    {
+        return new Pager(new ArrayResult($results), $page, $limit);
+    }
 }

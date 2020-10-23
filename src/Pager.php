@@ -5,9 +5,54 @@ namespace Zenstruck\Porpaginas;
 /**
  * @author Kevin Bond <kevinbond@gmail.com>
  */
-abstract class Pager implements \Countable, \IteratorAggregate
+final class Pager implements \Countable, \IteratorAggregate
 {
-    final public function nextPage(): ?int
+    public const DEFAULT_LIMIT = 20;
+
+    private Result $result;
+    private int $page;
+    private int $limit;
+    private ?Page $cachedPage = null;
+
+    public function __construct(Result $result, int $page = 1, int $limit = self::DEFAULT_LIMIT)
+    {
+        $this->result = $result;
+        $this->page = $page < 1 ? 1 : $page;
+        $this->limit = $limit < 1 ? self::DEFAULT_LIMIT : $limit;
+    }
+
+    public function getCurrentPage(): int
+    {
+        $lastPage = $this->lastPage();
+
+        if ($this->page > $lastPage) {
+            return $lastPage;
+        }
+
+        return $this->page;
+    }
+
+    public function limit(): int
+    {
+        return $this->limit;
+    }
+
+    public function count(): int
+    {
+        return $this->getPage()->count();
+    }
+
+    public function totalCount(): int
+    {
+        return $this->result->count();
+    }
+
+    public function getIterator(): \Traversable
+    {
+        return $this->getPage()->getIterator();
+    }
+
+    public function nextPage(): ?int
     {
         $currentPage = $this->getCurrentPage();
 
@@ -18,7 +63,7 @@ abstract class Pager implements \Countable, \IteratorAggregate
         return ++$currentPage;
     }
 
-    final public function previousPage(): ?int
+    public function previousPage(): ?int
     {
         $page = $this->getCurrentPage();
 
@@ -29,12 +74,12 @@ abstract class Pager implements \Countable, \IteratorAggregate
         return --$page;
     }
 
-    final public function firstPage(): int
+    public function firstPage(): int
     {
         return 1;
     }
 
-    final public function lastPage(): int
+    public function lastPage(): int
     {
         $totalCount = $this->totalCount();
 
@@ -45,32 +90,24 @@ abstract class Pager implements \Countable, \IteratorAggregate
         return \ceil($totalCount / $this->limit());
     }
 
-    final public function pagesCount(): int
+    public function pagesCount(): int
     {
         return $this->lastPage();
     }
 
-    final public function haveToPaginate(): bool
+    public function haveToPaginate(): bool
     {
         return $this->pagesCount() > 1;
     }
 
-    abstract public function getCurrentPage(): int;
+    private function getPage(): Page
+    {
+        if ($this->cachedPage) {
+            return $this->cachedPage;
+        }
 
-    abstract public function limit(): int;
+        $offset = $this->getCurrentPage() * $this->limit() - $this->limit();
 
-    /**
-     * The result count for the current page.
-     */
-    abstract public function count(): int;
-
-    /**
-     * The total result count.
-     */
-    abstract public function totalCount(): int;
-
-    /**
-     * Return an iterator over selected windows of results of the paginatable.
-     */
-    abstract public function getIterator(): \Traversable;
+        return $this->cachedPage = $this->result->take($offset, $this->limit());
+    }
 }

@@ -126,11 +126,11 @@ class UserController
 }
 ```
 
-This library also comes with `Pager` helpers. Using the `ResultPager`, the above controller's
+This library also comes with a pagination helper. Using the `Pager`, the above controller's
 `porpaginasListAction()` could be re-written as follows:
 
 ```php
-use Zenstruck\Porpaginas\Pager\ResultPager;
+use Zenstruck\Porpaginas\Pager;
 
 class UserController
 {
@@ -143,7 +143,7 @@ class UserController
     {
         $result = $this->userRepository->findAllUsers();
 
-        $pager = new ResultPager($result, $request->get('page', 1);
+        $pager = new Pager($result, $request->get('page', 1));
 
         return array('users' => $pager);
     }

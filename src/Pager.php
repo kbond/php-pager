@@ -21,9 +21,9 @@ final class Pager implements \Countable, \IteratorAggregate
         $this->limit = $limit < 1 ? self::DEFAULT_LIMIT : $limit;
     }
 
-    public function getCurrentPage(): int
+    public function current(): int
     {
-        $lastPage = $this->lastPage();
+        $lastPage = $this->last();
 
         if ($this->page > $lastPage) {
             return $lastPage;
@@ -52,20 +52,20 @@ final class Pager implements \Countable, \IteratorAggregate
         return $this->getPage()->getIterator();
     }
 
-    public function nextPage(): ?int
+    public function next(): ?int
     {
-        $currentPage = $this->getCurrentPage();
+        $currentPage = $this->current();
 
-        if ($currentPage === $this->lastPage()) {
+        if ($currentPage === $this->last()) {
             return null;
         }
 
         return ++$currentPage;
     }
 
-    public function previousPage(): ?int
+    public function previous(): ?int
     {
-        $page = $this->getCurrentPage();
+        $page = $this->current();
 
         if (1 === $page) {
             return null;
@@ -74,12 +74,12 @@ final class Pager implements \Countable, \IteratorAggregate
         return --$page;
     }
 
-    public function firstPage(): int
+    public function first(): int
     {
         return 1;
     }
 
-    public function lastPage(): int
+    public function last(): int
     {
         $totalCount = $this->totalCount();
 
@@ -90,14 +90,14 @@ final class Pager implements \Countable, \IteratorAggregate
         return \ceil($totalCount / $this->limit());
     }
 
-    public function pagesCount(): int
+    public function pageCount(): int
     {
-        return $this->lastPage();
+        return $this->last();
     }
 
     public function haveToPaginate(): bool
     {
-        return $this->pagesCount() > 1;
+        return $this->pageCount() > 1;
     }
 
     private function getPage(): Page
@@ -106,7 +106,7 @@ final class Pager implements \Countable, \IteratorAggregate
             return $this->cachedPage;
         }
 
-        $offset = $this->getCurrentPage() * $this->limit() - $this->limit();
+        $offset = $this->current() * $this->limit() - $this->limit();
 
         return $this->cachedPage = $this->result->take($offset, $this->limit());
     }

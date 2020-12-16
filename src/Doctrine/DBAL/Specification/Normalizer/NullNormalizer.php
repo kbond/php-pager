@@ -14,7 +14,7 @@ use Zenstruck\Porpaginas\Specification\Normalizer\ClassMethodMap;
  */
 final class NullNormalizer implements Normalizer
 {
-    use DBALNormalizer, ClassMethodMap;
+    use ClassMethodMap, DBALNormalizer;
 
     /**
      * @param Field       $specification

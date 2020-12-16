@@ -22,7 +22,7 @@ use Zenstruck\Porpaginas\Specification\Normalizer\ClassMethodMap;
  */
 final class ComparisonNormalizer implements Normalizer
 {
-    use ORMNormalizer, ClassMethodMap;
+    use ClassMethodMap, ORMNormalizer;
 
     /**
      * @param Comparison $specification

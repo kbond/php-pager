@@ -17,7 +17,7 @@ use Zenstruck\Porpaginas\Specification\Normalizer\WithNormalizer;
  */
 final class CompositeNormalizer implements Normalizer, NormalizerAware
 {
-    use DBALNormalizer, WithNormalizer, ClassMethodMap;
+    use ClassMethodMap, DBALNormalizer, WithNormalizer;
 
     /**
      * @param Composite   $specification
